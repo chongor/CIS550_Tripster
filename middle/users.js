@@ -1,6 +1,10 @@
 module.exports = function(){
-	var db;
 	return function(req, res, next){
+		if(!req.db){
+			req.user = {"login": false, "user": null};
+			next();
+			return;
+		}
 		setTimeout(function(){
 			// Read the database
 			req.user = {

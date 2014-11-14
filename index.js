@@ -1,4 +1,11 @@
-var config = require('./config.js');
+try{
+	var config = require('./config.js');
+}catch(e){
+	console.log("[Err] Could not find a 'config.js' file. Please make a copy of 'config.sample.js' as 'config.js' and fill in the corresponding credentials.");
+	console.log("DO NOT DELETE config.sample.js!");
+	console.log("DO NOT ADD config.js TO VERSION CONTROL!");
+	process.exit(0);
+}
 // Load Express & Middleware
 var express = require('express');
 var estatic = require('serve-static');
