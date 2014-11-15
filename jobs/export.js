@@ -7,11 +7,19 @@ var fs = require("fs");
 function outputTable(tableName, xml, cb){
 	connection.query("SELECT * FROM `" + tableName +"`", function(err, rows){
 		console.log("[Log] Generating XML data for table `" + tableName +"`.");
+		if(err){
+			console.log("[Err]" );
+			console.log(err);
+			return;
+		}
 		xml.startElement(tableName);
 		for(var row in rows){
 			xml.startElement("tuple");
 			for(var field in rows[row]){
-				xml.writeElement(field, rows[row][field]);
+				if(rows[row][field] instanceof Date || rows[row][field].toISOString != null){
+					rows[row][field] = rows[row][field].toISOString();
+				}
+				xml.writeElement(field, rows[row][field].toString());
 			}
 			xml.endElement();
 		}

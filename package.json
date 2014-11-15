@@ -21,6 +21,7 @@
   "homepage": "https://github.com/chongor/CIS550_Tripster",
   "dependencies": {
     "xml-writer": "*",
+    "node-xml": "*",
     "express": "*",
     "cookie-session":"*",
     "cookie-parser":"*",
