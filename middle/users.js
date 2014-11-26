@@ -1,10 +1,13 @@
+var userlib = require('../lib/users.js');
+
 module.exports = function(){
 	return function(req, res, next){
-		if(!req.db){
+		if(!req.db || !userlib){
 			req.user = {"login": false, "user": null};
 			next();
 			return;
 		}
+		var userInst = new userlib(req.db);
 		setTimeout(function(){
 			// Read the database
 			req.user = {
