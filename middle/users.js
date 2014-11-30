@@ -9,8 +9,8 @@ var User = function(userdata, reqref){
 	};
 	
 	this.authenticate = function(username, password, callback){
-		var userInst = new userlib(req.db);
-		userlib.authenticate(username, password, function(result, userd){
+		var userInst = new userlib(reqref.db);
+		userInst.authenticate(username, password, function(result, userd){
 			if(result){
 				this.login = true;
 				this.user = userd;
@@ -21,6 +21,9 @@ var User = function(userdata, reqref){
 			} else {
 				this.login = false;
 				this.user = null;
+				reqref.session.user = {
+					'uid': -1
+				}
 				callback(false, userd);
 			}
 		});
@@ -34,22 +37,15 @@ module.exports = function(){
 			next();
 			return;
 		}
-		
-		if(!req.session.user || !req.session.user.id || req.session.user.id < 0){
+		if(!req.session.user || !req.session.user.uid || req.session.user.uid < 0){
 			req.user = new User(null, req);
 			next();
 			return;
 		}else{
 			// Read the database
 			var userInst = new userlib(req.db);
-			userInst.getUser(req.session.user.id, function(){
-				req.user = new User({
-					"uid":0,
-					"username": "testuser",
-					"fullname": "Test User",
-					"email": "userEmail@test.com"
-				});
-				req.user = new User();
+			userInst.getUser(req.session.user.uid, function(user){
+				req.user = new User(user, req);
 				next();
 			});
 		}

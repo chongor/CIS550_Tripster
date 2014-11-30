@@ -1,6 +1,5 @@
 exports.main = function(req, res){
 	if(req.user.login){
-		console.log(req.user);
 		res.render('index', {
 			login:req.user.login,
 			user:req.user.user
@@ -31,17 +30,18 @@ exports.loginPost = function(req, res){
 			res.redirect(302, '/login?error=1');
 			return;	
 		}
-		req.user.authenticate(req.body.username, req.body.password, function(result){
+		req.user.authenticate(req.body.username, req.body.password, function(result, data){
 			if(result){
 				res.redirect(302, '/');
 			}else{
 				res.redirect(302, '/login?error=2');
 			}
+			console.log("LOGIN " + req.body.username + " " + (result ? "OK" : "FAIL") + " " + JSON.stringify(data));
 		});
 	}
 };
 
 exports.logout = function(req, res){
-	res.user.logout();
+	req.user.logout();
 	res.redirect(302,'/login?referer=logout');
 };
