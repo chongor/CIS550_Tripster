@@ -23,13 +23,14 @@
     "xml-writer": "*",
     "node-xml": "*",
     "express": "*",
-    "cookie-session":"*",
+    "express-session":"*",
     "cookie-parser":"*",
     "serve-static":"*",
     "morgan":"*",
     "body-parser":"*",
     "jade": "*",
     "mysql":"*",
-    "node-redis":"*"
+    "node-redis":"*",
+    "connect-redis":"*"
   }
 }

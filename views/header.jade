@@ -1,0 +1,32 @@
+div.navbar.navbar-default.navbar-fixed-top(role="navigation")
+	div.container
+		button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-collapse")
+			span.sr-only Toggle navigation
+			span.icon-bar
+			span.icon-bar
+			span.icon-bar
+		div.navbar-header
+			a.navbar-brand(href="/") Tripster
+		div.navbar-collapse.collapse
+			ul.nav.navbar-nav
+				li
+					div(style="margin-top:8px")
+						form.form-group(style="margin-bottom:0", action="/search", method="GET")
+							input.form-control(id="search", name="s", placeholder="Search", style="min-width:500px;")
+				
+			ul.nav.navbar-nav.navbar-right
+				li.dropdown
+					a.dropdown-toggle(data-toggle="dropdown",href="#") Notifications 
+						span.badge(id="notifications-badge", style="display:none;") 0
+					ul.dropdown-menu(id="notifications-menu")
+						li Foo
+				li(class="#{page == 'timeline' ? 'active' : ''}")
+					a(href="/user/#{user.username}") Timeline
+				li.dropdown
+					a.dropdown-toggle(data-toggle="dropdown",href="#") #{user.fullname}
+						b.caret
+					ul.dropdown-menu
+						li
+							a(href="/user/settings") Settings
+						li
+							a(href="/logout") Logout
