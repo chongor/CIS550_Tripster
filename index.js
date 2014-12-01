@@ -20,6 +20,7 @@ var db = require('./middle/db.js');
 // Load routest
 var routes = require('./routes/routes.js');
 var routes_users = require('./routes/users.js');
+var routes_media = require('./routes/media.js');
 // Setup app
 var app = express();
 
@@ -50,6 +51,8 @@ app.post('/login', routes.loginPost);
 app.get('/logout', routes.logout);
 app.get('/user/settings', routes_users.settings);
 app.get('/profile/:login', routes_users.profile);
+app.get('/photo/:id', routes_media.photos);
+app.get('/album/:id', routes_media.albums);
 
 
 // Run the server

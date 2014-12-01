@@ -8,12 +8,12 @@ block content
 			div.col-md-1
 			div.col-md-10
 				div.row
-					div.col-md-12(style="background:url(/cover.jpg);")
+					div.col-md-12(style="background:url(/img/header-placeholder.jpg) no-repeat right;")
 						div.row(style="min-height:120px")
 							div.col-md-12
 						div.row
 							div.col-md-2
-								img.img-responsive(style="box-shadow: -1px 0 black, 0 1px black, 0, 0 -1px black;",src="#{target.email}?s=200")
+								img.img-responsive(style="box-shadow: -1px 0 black, 0 1px black, 0, 0 -1px black;",src="#{target.avatar}?s=200")
 							div.col-md-10
 								h3.timeline #{target.fullname}
 				div.row
@@ -27,6 +27,9 @@ block content
 								p Affiliation : 
 									strong #{target.affiliation}
 								p Interests : #{target.interests.join(',')}
+								- if(target.isFriend || target.friendType === "from"){
+									p Phone : #{target.phone}
+								- } 
 							- if(!target.isFriend) {
 								- if(target.friendType === "to") {
 									div.panel-body
@@ -41,7 +44,7 @@ block content
 							- } else if(target.uid !== user.uid){
 								div.panel-body
 									button#remove-friend.btn.btn-warning.pull-right Remove Friend
-							- }
+							- } 
 						div#col-left
 					div.col-md-6 
 						- if(target.isFriend) {
