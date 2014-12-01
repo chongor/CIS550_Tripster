@@ -21,7 +21,7 @@ div.navbar.navbar-default.navbar-fixed-top(role="navigation")
 					ul.dropdown-menu(id="notifications-menu")
 						li Foo
 				li(class="#{page == 'timeline' ? 'active' : ''}")
-					a(href="/user/#{user.username}") Timeline
+					a(href="/profile/#{user.username}") Profile
 				li.dropdown
 					a.dropdown-toggle(data-toggle="dropdown",href="#") #{user.fullname}
 						b.caret

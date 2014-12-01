@@ -1,0 +1,66 @@
+extends layout
+
+block content
+	div.container
+		div.row
+			input(type="hidden", value="#{nonce}", id="nonce")
+			div.col-md-2
+				div.list-group
+					a.list-group-item.active(id="set-gen", href="#") General
+					a.list-group-item(id="set-priv", href="#") Privacy
+			div.col-md-10 
+				div(id="settings-general")
+					h2 General Settings
+					table.table.table-bordered
+						tr
+							th(width="200") Login Name
+							td #{user.username}
+						tr
+							th(width="200") Avatar
+							td Change your Avatar at Gravatar!
+						tr
+							th(width="200") Full Name
+							td
+								form.form-inline(id="frm-change-name")
+									div.input-group
+										input.form-control(value="#{user.fullname}", id="fullname")
+										span.input-group-btn
+											button.btn.btn-default(id="change-name",href="#") Change
+						tr
+							th Email
+							td 
+								form.form-inline(id="frm-change-email")
+									div.input-group
+										input.form-control(value="#{user.email}", id="email")
+										span.input-group-btn
+											button.btn.btn-default(id="change-email",href="#") Change
+						tr
+							th Affiliation
+							td 
+								form.form-inline(id="frm-change-aff")
+									div.input-group
+										input.form-control(value="#{user.affiliation}", id="affiliation")
+										span.input-group-btn
+											button.btn.btn-default(id="change-affiliation",href="#") Change
+						tr
+							th Interests
+							td 
+								form.form-inline(id="frm-change-interest")
+									div.input-group
+										input.form-control(value="#{user.interests.join(',')}", id="interests")
+										span.input-group-btn
+											button.btn.btn-default(id="change-interests",href="#") Change
+						tr
+							th Password
+							td
+								form.form-inline(id="frm-change-password")
+									div.input-group
+										input.form-control(value="", type="password", id="password")
+										span.input-group-btn
+											button.btn.btn-default(id="change-password",href="#") Change
+				div(id="settings-privacy", style="display:none;")
+					h2 Privacy
+					table.table.table-bordered
+						tr
+							th(width="200") Default Privacy Value
+							td Public

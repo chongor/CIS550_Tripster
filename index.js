@@ -19,6 +19,7 @@ var users = require('./middle/users.js');
 var db = require('./middle/db.js');
 // Load routest
 var routes = require('./routes/routes.js');
+var routes_users = require('./routes/users.js');
 // Setup app
 var app = express();
 
@@ -47,6 +48,8 @@ app.get('/', routes.main);
 app.get('/login', routes.login);
 app.post('/login', routes.loginPost);
 app.get('/logout', routes.logout);
+app.get('/user/settings', routes_users.settings);
+app.get('/profile/:login', routes_users.profile);
 
 
 // Run the server

@@ -1,0 +1,60 @@
+extends layout
+block scripts
+	script(src="/js/feedobject.js")
+	script(src="/js/timeline.js")
+block content
+	div.container(style="min-height:800px;")
+		div.row
+			div.col-md-1
+			div.col-md-10
+				div.row
+					div.col-md-12(style="background:url(/cover.jpg);")
+						div.row(style="min-height:120px")
+							div.col-md-12
+						div.row
+							div.col-md-2
+								img.img-responsive(style="box-shadow: -1px 0 black, 0 1px black, 0, 0 -1px black;",src="#{target.email}?s=200")
+							div.col-md-10
+								h3.timeline #{target.fullname}
+				div.row
+					div.col-md-6
+						div.status.panel.panel-default
+							div.panel-heading Profile Information
+							div.panel-body 
+								p Full Name : #{target.fullname}
+								p Email : 
+									a(href="mailto:#{target.email}") #{target.email}
+								p Affiliation : 
+									strong #{target.affiliation}
+								p Interests : #{target.interests.join(',')}
+							- if(!target.isFriend) {
+								- if(target.friendType === "to") {
+									div.panel-body
+										button#add-friend(disabled="disabled").btn.btn-primary.pull-right Request Pending
+								- } else if (target.friendType === "from") {
+									div.panel-body
+										button#add-friend.btn.btn-success.pull-right Confirm Friend Request
+								- } else {
+									div.panel-body
+										button#add-friend.btn.btn-primary.pull-right Add Friend
+								- }
+							- } else if(target.uid !== user.uid){
+								div.panel-body
+									button#remove-friend.btn.btn-warning.pull-right Remove Friend
+							- }
+						div#col-left
+					div.col-md-6 
+						- if(target.isFriend) {
+							div.status.panel.panel-default
+								div.panel-body
+									form(action="", method="POST")
+										div.form-group
+											textarea.form-control(id="statustext", name="statustext", placeholder="Post on wall", style="resize: none;height:80px;")
+											input(id="pusername", type="hidden", value="#{target.username}")
+										div.form-group
+											button#post-btn.pull-right.btn.btn-primary Post
+						- } else {
+							input(id="pusername", type="hidden", value="#{target.username}")
+						- }
+						div#col-right
+			div.col-md-1
