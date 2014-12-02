@@ -1,5 +1,8 @@
 extends layout
 
+block scripts
+	script(src="/js/settings.js")
+
 block content
 	div.container(style="padding-top:20px")
 		div.row
@@ -58,6 +61,14 @@ block content
 										input.form-control(value="", type="password", id="password")
 										span.input-group-btn
 											button.btn.btn-default(id="change-password",href="#") Change
+						tr
+							th Password
+							td
+								form.form-inline(id="frm-change-password")
+									div.input-group
+										input.form-control(value="#{user.phone}", type="text", id="phone")
+										span.input-group-btn
+											button.btn.btn-default(id="change-phone",href="#") Change
 				div(id="settings-privacy", style="display:none;")
 					h2 Privacy
 					table.table.table-bordered

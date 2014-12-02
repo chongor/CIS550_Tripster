@@ -45,3 +45,14 @@ exports.logout = function(req, res){
 	req.user.logout();
 	res.redirect(302,'/login?referer=logout');
 };
+
+exports.fourohfour = function(req, res){
+	if(!req.user.login){
+		res.redirect(302, '/login');
+		return;
+	}
+	res.render('404', {
+		login:req.user.login,
+		user:req.user.user
+	});
+};
