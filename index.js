@@ -49,6 +49,8 @@ app.use(users());
 app.get('/', routes.main);
 app.get('/login', routes.login);
 app.post('/login', routes.loginPost);
+app.get('/register', routes.register);
+app.post('/register', routes.registerPost);
 app.get('/logout', routes.logout);
 app.get('/user/settings', routes_users.settings);
 app.get('/profile/:login', routes_users.profile);
