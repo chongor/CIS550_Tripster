@@ -1,0 +1,67 @@
+extends layout-login
+block scripts
+	script(src="/js/register.js") 
+block content
+	div.container
+		div.row(style="padding-top:50px")
+			div.col-md-2
+			div.col-md-7(style="padding-right:0;")
+				div.status.panel.panel-default
+					div.panel-heading Register
+					div.panel-body
+						- if(error === "2") {
+							div.alert.alert-danger
+								strong Error
+								p Username taken
+						- } else if(error  === "1"){
+							div.alert.alert-danger
+								Strong Oops!
+								p Passwords do not match!
+						- } else if(error  === "3"){
+							div.alert.alert-danger
+								Strong Oops!
+								p Required fields were left blank
+						- } else if(error  === "4"){
+							div.alert.alert-danger
+								Strong Error
+								p Internal error prevented registration. Please retry.
+						- }
+						form.register(action="", method="POST")
+							div.form-group
+								label(for="fullname") Your name
+									sup *
+								input.form-control(name="fullname", id="fullname", type="text", placeholder="John Doe")
+							div.form-group
+								label(for="username") Pick a username
+									sup *
+								input.form-control(name="username", id="username", type="text", placeholder="Username")
+							div.form-group
+								label(for="email") Email
+									sup *
+								input.form-control(name="email", id="email", type="text", placeholder="foo@bar.com")
+							div.form-group
+								label(for"password") Choose your password
+									sup *
+								input.form-control(name="password", id="password", type="password")
+							div.form-group
+								label(for"password-repeat") Type it in again
+								input.form-control(name="passwordrpt", id="password-repeat", type="password")
+							
+							h3 Tell us a bit about yourself
+							div.form-group
+								label(for="affiliate") Affiliation 
+								input.form-control(name="aff", id="aff", type="text", placeholder="University of Pennsylvania")
+							div.form-group
+								label(for="interests") Interests 
+								input.form-control(name="interests", id="interests", type="text", placeholder="hacking, travelling, swimming")
+							div.form-group
+								label(for="phone") Phone Number
+								input.form-control(name="phone", id="phone", type="text", placeholder="(XXX) XXX-XXXX")
+							
+							button(id="submit", type="submit").btn.btn-primary.btn-block Register Now
+							br
+							label(for="register") Already have an account?
+							a(id="register",href="/login").btn.btn-success.btn-block Login
+			div.col-md-3(style="padding-left:0;")
+				div(style="background:url(/img/register-banner.png) no-repeat bottom right;height:700px;")
+				

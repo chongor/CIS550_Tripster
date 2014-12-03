@@ -21,6 +21,7 @@ var db = require('./middle/db.js');
 var routes = require('./routes/routes.js');
 var routes_users = require('./routes/users.js');
 var routes_media = require('./routes/media.js');
+var routes_trips = require('./routes/trips.js');
 // Setup app
 var app = express();
 
@@ -48,11 +49,16 @@ app.use(users());
 app.get('/', routes.main);
 app.get('/login', routes.login);
 app.post('/login', routes.loginPost);
+app.get('/register', routes.register);
+app.post('/register', routes.registerPost);
 app.get('/logout', routes.logout);
 app.get('/user/settings', routes_users.settings);
 app.get('/profile/:login', routes_users.profile);
 app.get('/photo/:id', routes_media.photos);
 app.get('/album/:id', routes_media.albums);
+app.get('/trip/create', routes_trips.create);
+app.get('/trip/:id', routes_trips.view);
+app.get('*', routes.fourohfour);
 
 
 // Run the server

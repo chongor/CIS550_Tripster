@@ -1,0 +1,29 @@
+extends layout
+block scripts
+
+block content
+	div.container(style="min-height:800px;")
+		div.row
+			div.col-md-12
+				h2 #{trip.name}
+				div.row
+					div.col-md-12
+						p
+							span.glyphicon.glyphicon-calendar
+							span &nbsp;#{trip.start.toDateString()} - #{trip.end.toDateString()}&nbsp;&nbsp;&nbsp;
+							span.glyphicon.glyphicon-eye-open
+							span &nbsp;#{trip.privacy === 0 ? "Public": "Limited"}
+						blockquote #{trip.description}
+				div.row
+					div.col-md-8
+						div.row
+							div.col-md-12
+								h3 Schedule
+								div
+						div.row
+							div.col-md-12
+								h3 Members
+								div
+					div.col-md-4
+						h2 Ratings
+			

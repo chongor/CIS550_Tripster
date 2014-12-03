@@ -31,6 +31,10 @@ exports.profile = function(req, res){
 };
 
 exports.settings = function(req, res){
+	if(!req.user.login){
+		res.redirect(302, '/login');
+		return;
+	}
 	res.render('settings', {
 			login:req.user.login,
 			user:req.user.user,
