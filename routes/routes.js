@@ -16,7 +16,8 @@ exports.login = function(req, res){
 	} else {
 		res.render('login', {
 			'referer':req.query.referer,
-			'error':req.query.error
+			'error':req.query.error,
+			nonce: req.nonce.get('login')
 		});
 	}
 };
@@ -27,7 +28,8 @@ exports.register = function(req, res){
 		res.redirect(302, '/');
 	} else {
 		res.render('register', {
-			error: req.query.error
+			error: req.query.error,
+			nonce: req.nonce.get('register')
 		});
 	}
 };

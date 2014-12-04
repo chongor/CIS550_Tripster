@@ -17,6 +17,7 @@ var bparser = require('body-parser');
 // Load our own middleware
 var users = require('./middle/users.js');
 var db = require('./middle/db.js');
+var nonce = require('./middle/nonce.js');
 // Load routest
 var routes = require('./routes/routes.js');
 var routes_users = require('./routes/users.js');
@@ -44,20 +45,32 @@ app.use(bparser.urlencoded({ extended: false }));
 // Load our user middleware
 app.use(db());
 app.use(users());
+app.use(nonce());
 
 // Routes
+// -- Basics
 app.get('/', routes.main);
 app.get('/login', routes.login);
 app.post('/login', routes.loginPost);
 app.get('/register', routes.register);
 app.post('/register', routes.registerPost);
 app.get('/logout', routes.logout);
+
+// -- User Stuff
 app.get('/user/settings', routes_users.settings);
 app.get('/profile/:login', routes_users.profile);
+
+// -- Media Stuff (shares)
 app.get('/photo/:id', routes_media.photos);
 app.get('/album/:id', routes_media.albums);
+
+// -- Trip Stuff
 app.get('/trip/create', routes_trips.create);
 app.get('/trip/:id', routes_trips.view);
+
+// -- JS Endpoints
+
+// -- Error and bad url handling
 app.get('*', routes.fourohfour);
 
 
