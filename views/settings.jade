@@ -20,7 +20,10 @@ block content
 							td #{user.username}
 						tr
 							th(width="200") Avatar
-							td Change your Avatar at Gravatar!
+							td 
+								img(src="#{user.avatar}")
+								p Change your Avatar at 
+									a(href="http://gravatar.com") Gravatar!
 						tr
 							th(width="200") Full Name
 							td
@@ -56,13 +59,17 @@ block content
 						tr
 							th Password
 							td
-								form.form-inline(id="frm-change-password")
-									div.input-group
+								form(id="frm-change-password")
+									div.form-group 
+										label Old Password:
 										input.form-control(value="", type="password", id="password")
-										span.input-group-btn
-											button.btn.btn-default(id="change-password",href="#") Change
+									div.form-group 
+										label New Password:
+										input.form-control(value="", type="password", id="password")
+									div.form-group
+										button.btn.btn-default(id="change-password",href="#") Change
 						tr
-							th Password
+							th Phone
 							td
 								form.form-inline(id="frm-change-password")
 									div.input-group
@@ -73,5 +80,5 @@ block content
 					h2 Privacy
 					table.table.table-bordered
 						tr
-							th(width="200") Default Privacy Value
+							th(width="200") Profile Visibility
 							td Public
