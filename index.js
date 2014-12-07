@@ -69,6 +69,8 @@ app.get('/trip/create', routes_trips.create);
 app.get('/trip/:id', routes_trips.view);
 
 // -- JS Endpoints
+app.post('/api/user/friend', routes_users.addfriend);
+
 
 // -- Error and bad url handling
 app.get('*', routes.fourohfour);

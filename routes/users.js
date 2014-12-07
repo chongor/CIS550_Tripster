@@ -41,3 +41,35 @@ exports.settings = function(req, res){
 			nonce:''
 	});
 };
+
+exports.addfriend = function(req, res){
+	if(!req.user.login){
+		res.end(JSON.stringify({
+			code:503,
+			msg:"Access denied."
+		}));
+		return;
+	}
+	if(typeof req.body.friend === "undefined" || req.body.friend === null ||
+		req.body.friend === ""){
+		res.end(JSON.stringify({
+			code:400,
+			msg:"Bad Request. (No friend uid provided)"
+		}));
+		return;
+	}
+	var userInst = new userlib(req.db);
+	userInst.friendRequest(req.user.user.uid, parseInt(req.body.friend), function(success, msg){
+		if(success){ 
+			res.end(JSON.stringify({
+				code:200,
+				msg:"Added"
+			}));
+		} else {
+			res.end(JSON.stringify({
+				code:400,
+				msg:msg
+			}));
+		}
+	});
+};

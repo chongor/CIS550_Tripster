@@ -1,8 +1,10 @@
 extends layout
 block scripts
+	script(src="/js/profile.js")
 
 block content
 	div.container(style="min-height:800px;")
+		div#uid(style="display:none;") #{target.uid}
 		div.row
 			div.col-md-1
 			div.col-md-10
