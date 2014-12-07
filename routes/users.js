@@ -17,11 +17,19 @@ exports.profile = function(req, res){
 					var target = data;
 					target.isFriend = (rel === "friend");
 					target.friendType = rel;
-					res.render('profile', {
-						login:req.user.login,
-						user:req.user.user,
-						target:target
-					});
+					if(target.privacy === 0 || rel === "friend" || rel === "from"){
+						res.render('profile', {
+							login:req.user.login,
+							user:req.user.user,
+							target:target
+						});
+					} else {
+						res.render('500', {
+							login:req.user.login,
+							user:req.user.user,
+							msg: "This user's profile is private and you're not a friend."
+						});
+					}
 				});
 			}
 		}else{
@@ -64,6 +72,38 @@ exports.addfriend = function(req, res){
 			res.end(JSON.stringify({
 				code:200,
 				msg:"Added"
+			}));
+		} else {
+			res.end(JSON.stringify({
+				code:400,
+				msg:msg
+			}));
+		}
+	});
+};
+
+exports.unfriend = function(req, res){
+	if(!req.user.login){
+		res.end(JSON.stringify({
+			code:503,
+			msg:"Access denied."
+		}));
+		return;
+	}
+	if(typeof req.body.friend === "undefined" || req.body.friend === null ||
+		req.body.friend === ""){
+		res.end(JSON.stringify({
+			code:400,
+			msg:"Bad Request. (No friend uid provided)"
+		}));
+		return;
+	}
+	var userInst = new userlib(req.db);
+	userInst.unfriend(req.user.user.uid, parseInt(req.body.friend), function(success, msg){
+		if(success){ 
+			res.end(JSON.stringify({
+				code:200,
+				msg:"Removed"
 			}));
 		} else {
 			res.end(JSON.stringify({

@@ -70,7 +70,9 @@ app.get('/trip/:id', routes_trips.view);
 
 // -- JS Endpoints
 app.post('/api/user/friend', routes_users.addfriend);
+app.post('/api/user/unfriend', routes_users.unfriend);
 
+app.get('/api/trip/:id/checklist', routes_trips.checklist);
 
 // -- Error and bad url handling
 app.get('*', routes.fourohfour);

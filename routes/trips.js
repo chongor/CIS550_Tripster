@@ -18,7 +18,15 @@ exports.view = function(req, res){
 		return;
 	}
 	var tripinst = new triplib(req.db);
-	tripinst.getTrip(req.param("id"), function(trip){
+	tripinst.canView(req.user.user.uid, req.param("id"), function(canView, trip, msg){
+		if(!canView){
+			res.render('500', {
+				login:req.user.login,
+				user:req.user.user,
+				msg:msg
+			});
+			return;
+		}
 		if(trip !== null){
 			res.render('trip', {
 				login:req.user.login,
@@ -30,6 +38,33 @@ exports.view = function(req, res){
 				login:req.user.login,
 				user:req.user.user
 			});
+		}
+	});
+};
+
+exports.checklist = function(req, res){
+	if(!req.user.login){
+		res.end(JSON.stringify({
+			code:503,
+			msg:"Access denied."
+		}));
+		return;
+	}
+	var tripinst = new triplib(req.db);
+	var trip = req.param('id');
+	tripinst.getChecklist(trip, function(items, err){
+		if(items === null){
+			res.end(JSON.stringify({
+				code:400,
+				msg:err
+			}));
+			return;
+		} else {
+			res.end(JSON.stringify({
+				code:200,
+				checklist: items
+			}));
+			return;
 		}
 	});
 };
