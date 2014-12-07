@@ -97,6 +97,7 @@ exports.members = function(req, res){
 							user: {
 								uid:users[i].uid,
 								login:users[i].username,
+								fullname:users[i].fullname,
 								avatar:users[i].avatar
 							},
 							role: usermap[users[i].uid]

@@ -1,8 +1,9 @@
 extends layout
 block scripts
-
+	script(src="/js/trip.js")
 block content
 	div.container(style="min-height:800px;")
+		div#trip_id(style="display:none") #{trip.trip_id}
 		div.row
 			div.col-md-12
 				h2 #{trip.name}
@@ -23,7 +24,8 @@ block content
 						div.row
 							div.col-md-12
 								h3 Members
-								div
+								div#members
+									
 					div.col-md-4
 						h2 Ratings
 			
