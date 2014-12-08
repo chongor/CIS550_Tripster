@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<launchConfiguration type="org.nodeclipse.ui.npm.LaunchConfigurationType">
-<stringAttribute key="key_file_path" value="/CIS550_tripster/package.json"/>
-<stringAttribute key="key_goal" value="install"/>
-</launchConfiguration>

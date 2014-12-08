@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete resource &apos;CIS550_tripster&apos;" deleteContents="false" description="Delete resource &apos;CIS550_tripster&apos;" element1="/CIS550_tripster" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1416248442252"/>
-</session>
