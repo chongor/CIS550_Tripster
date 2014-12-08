@@ -68,7 +68,7 @@ exports.addfriend = function(req, res){
 	}
 	var userInst = new userlib(req.db);
 	userInst.friendRequest(req.user.user.uid, parseInt(req.body.friend), function(success, msg){
-		if(success){ 
+		if(success){
 			res.end(JSON.stringify({
 				code:200,
 				msg:"Added"
@@ -100,7 +100,7 @@ exports.unfriend = function(req, res){
 	}
 	var userInst = new userlib(req.db);
 	userInst.unfriend(req.user.user.uid, parseInt(req.body.friend), function(success, msg){
-		if(success){ 
+		if(success){
 			res.end(JSON.stringify({
 				code:200,
 				msg:"Removed"

@@ -31,6 +31,8 @@
     "jade": "*",
     "mysql":"*",
     "node-redis":"*",
-    "connect-redis":"*"
+    "connect-redis":"*",
+    "underscore":"*",
+    "moment":"*"
   }
 }

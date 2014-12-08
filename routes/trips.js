@@ -12,6 +12,33 @@ exports.create = function(req, res){
 	});
 };
 
+exports.createTrip = function(req, res){
+	if(!req.user.login){
+		res.redirect(302, '/login');
+		return;
+	}
+	var title = req.body.title;
+	var startDate = req.body.startdate;
+	var endDate = req.body.enddate;
+	var time = null;
+	var description = req.body.description || "";
+	var privacy = +req.body.privacy;
+	if (!title || !startDate || !endDate || !privacy) {
+		res.redirect(302, '/trip/create?error=1');
+		return;
+	}
+	var tripJson = {title: title, startDate: startDate, endDate: endDate, time: time,
+	description: description, privacy: privacy };
+	var tripinst = new triplib(req.db);
+	tripinst.createTrip(+req.user.user.uid, tripJson, function(err, tid) {
+		if (err || tid === null) {
+			res.redirect(302, '/trip/create?error=2');
+			return;
+		}
+		res.redirect(200, '/trip?id=' + tid);
+	}.bind(this));
+};
+
 exports.view = function(req, res){
 	if(!req.user.login){
 		res.redirect(302, '/login');
@@ -52,7 +79,7 @@ exports.members = function(req, res){
 	}
 	var tripinst = new triplib(req.db);
 	var tripid = req.param('id');
-	
+
 	tripinst.canView(req.user.user.uid, tripid, function(canView, trip, msg){
 		if(!canView){
 			res.end(JSON.stringify({

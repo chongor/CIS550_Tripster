@@ -1,0 +1,106 @@
+!SESSION 2014-11-17 13:17:04.895 -----------------------------------------------
+eclipse.buildId=M20130204-1200
+java.version=1.6.0_65
+java.vendor=Apple Inc.
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -keyring /Users/leonard/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -data /Users/leonard/Desktop/Fall 2014/CIS 450/CIS550_Tripster -keyring /Users/leonard/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.jface 2 0 2014-11-17 13:17:09.828
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2014-11-17 13:17:09.828
+!MESSAGE A conflict occurred for ALT+COMMAND+C:
+Binding(ALT+COMMAND+C,
+	ParameterizedCommand(Command(de.bastiankrol.startexplorer.copyResourcePathToClipboardFromResourceView,Copy Resource Path to Clipboard,
+		Copies the path of the resource to the clipboard,
+		Category(de.bastiankrol.startexplorer.commands.category,StartExplorer,null,true),
+		org.eclipse.ui.internal.MakeHandlersGo@2db45934,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+COMMAND+C,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.modify.method.parameters,Change Method Signature,
+		Change method signature includes parameter names and parameter order,
+		Category(org.eclipse.jdt.ui.category.refactoring,Refactor - Java,Java Refactoring Actions,true),
+		org.eclipse.ui.internal.MakeHandlersGo@1b4c7c5d,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,cocoa,system)
+
+!ENTRY org.eclipse.ui 4 4 2014-11-17 13:17:11.184
+!MESSAGE Referenced part does not exist yet: org.eclipse.ui.views.TaskList.
+
+!ENTRY org.eclipse.debug.ui 4 120 2014-11-17 13:17:13.797
+!MESSAGE org.eclipse.debug.ui.toggleBreakpointsTargetFactory extension failed to load breakpoint toggle target because the specified id is already registered.  Specified ID is: org.chromium.debug.ui.ChromiumToggleBreakpointTargetFactory
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2014-11-17 13:17:37.048
+!MESSAGE No repository found at http://www.eclipse.org/dltk/.
+
+!ENTRY org.eclipse.ui.navigator 2 0 2014-11-17 13:17:52.534
+!MESSAGE Can't find Navigator Content Descriptor with id: org.eclipse.jst.servlet.ui.EnhancedJavaRendering
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:38.451
+!MESSAGE RelativityFileSystemStructureProvider.cllectFiles() called. file count=9
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:38.489
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=/var/folders/z9/clw9sh7d433gs9632_3ctp8c0000gn/T/express-work/1416248318278/CIS550_tripster/app.js
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:38.507
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=/var/folders/z9/clw9sh7d433gs9632_3ctp8c0000gn/T/express-work/1416248318278/CIS550_tripster/bin/www
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:38.509
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=/var/folders/z9/clw9sh7d433gs9632_3ctp8c0000gn/T/express-work/1416248318278/CIS550_tripster/package.json
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:38.515
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=/var/folders/z9/clw9sh7d433gs9632_3ctp8c0000gn/T/express-work/1416248318278/CIS550_tripster/public/stylesheets/style.css
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:38.516
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=/var/folders/z9/clw9sh7d433gs9632_3ctp8c0000gn/T/express-work/1416248318278/CIS550_tripster/routes/index.js
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:38.517
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=/var/folders/z9/clw9sh7d433gs9632_3ctp8c0000gn/T/express-work/1416248318278/CIS550_tripster/routes/users.js
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:38.518
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=/var/folders/z9/clw9sh7d433gs9632_3ctp8c0000gn/T/express-work/1416248318278/CIS550_tripster/views/error.jade
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:38.519
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=/var/folders/z9/clw9sh7d433gs9632_3ctp8c0000gn/T/express-work/1416248318278/CIS550_tripster/views/index.jade
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:38.520
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=/var/folders/z9/clw9sh7d433gs9632_3ctp8c0000gn/T/express-work/1416248318278/CIS550_tripster/views/layout.jade
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:38.821
+!MESSAGE templateRoot: /Users/leonard/Documents/eclipse/configuration/org.eclipse.osgi/bundles/621/1/.cp/templates/common-templates
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:38.823
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=/Users/leonard/Documents/eclipse/configuration/org.eclipse.osgi/bundles/621/1/.cp/templates/common-templates/.jshintrc
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:38.841
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=/Users/leonard/Documents/eclipse/configuration/org.eclipse.osgi/bundles/621/1/.cp/templates/common-templates/.settings/.jsdtscope
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:38.842
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=/Users/leonard/Documents/eclipse/configuration/org.eclipse.osgi/bundles/621/1/.cp/templates/common-templates/.settings/com.eclipsesource.jshint.ui.prefs
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:40.593
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=/Users/leonard/Documents/eclipse/configuration/org.eclipse.osgi/bundles/621/1/.cp/templates/common-templates/.settings/org.eclipse.wst.jsdt.core.prefs
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:40.609
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=/Users/leonard/Documents/eclipse/configuration/org.eclipse.osgi/bundles/621/1/.cp/templates/common-templates/.settings/org.eclipse.wst.jsdt.ui.superType.container
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:40.610
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=/Users/leonard/Documents/eclipse/configuration/org.eclipse.osgi/bundles/621/1/.cp/templates/common-templates/.settings/org.eclipse.wst.jsdt.ui.superType.name
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:40.611
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=/Users/leonard/Documents/eclipse/configuration/org.eclipse.osgi/bundles/621/1/.cp/templates/common-templates/README.md
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:40.689
+!MESSAGE templateRoot: /Users/leonard/Documents/eclipse/configuration/org.eclipse.osgi/bundles/621/1/.cp/templates/tern-node
+
+!ENTRY org.nodeclipse.ui 1 0 2014-11-17 13:18:40.690
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=/Users/leonard/Documents/eclipse/configuration/org.eclipse.osgi/bundles/621/1/.cp/templates/tern-node/.tern-project
+
+!ENTRY org.eclipse.ui 2 2 2014-11-17 13:20:35.711
+!MESSAGE Invalid property category path: ValidationPropertiesPage (bundle: org.eclipse.wst.html.ui, propertyPage: org.eclipse.wst.html.ui.propertyPage.project.validation)
+
+!ENTRY org.eclipse.ui 2 2 2014-11-17 13:20:35.712
+!MESSAGE Invalid property category path: ValidationPropertiesPage (bundle: org.eclipse.wst.xml.ui, propertyPage: org.eclipse.wst.xml.ui.propertyPage.project.validation)

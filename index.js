@@ -66,6 +66,7 @@ app.get('/album/:id', routes_media.albums);
 
 // -- Trip Stuff
 app.get('/trip/create', routes_trips.create);
+app.post('/trip/create', routes_trips.createTrip);
 app.get('/trip/:id', routes_trips.view);
 
 // -- JS Endpoints
