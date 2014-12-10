@@ -1,25 +1,25 @@
 extends layout
 block scripts
-	link(rel="stylesheet", href="/css/photoviewer.css")
+	link(rel="stylesheet", href="/css/albumviewer.css")
 block content
 	div.container(style="min-height:800px;")
 		div.row
-			div.col-md-12
+			div.col-md-1
+			div.col-md-10
 				div.row
-					div.col-md-12
+					div.col-12
 						h2 Album
 						p
-							span.glyphicon.glyphicon-user
-							span &nbsp;Owner: #{"unknown"}&nbsp;&nbsp;&nbsp;
-							span.glyphicon.glyphicon-calendar
-							span &nbsp;Time: #{"unknown"}&nbsp;&nbsp;&nbsp;
-							span.glyphicon.glyphicon-heart
-							span &nbsp;Likes: #{"unknown"}&nbsp;&nbsp;&nbsp;
-				div.row.photoviewer
-					div.col-md-12
-						div.row
-							div.col-md-1
-							div.col-md-10
-								div(style="min-height:600px;")
-									img
-							div.col-md-1
+							&nbsp;Time: #{"unknown"}&nbsp;&nbsp;&nbsp;
+						p
+							&nbsp;Description: #{"unknown"}&nbsp;&nbsp;&nbsp;
+				div.row
+					div.col-md-3
+						img(src="#{user.avatar}")
+					div.col-md-3
+						img(src="#{user.avatar}")
+					div.col-md-3
+						img(src="#{user.avatar}")
+					div.col-md-3
+						img(src="#{user.avatar}")
+			div.col-md-1
