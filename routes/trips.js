@@ -23,7 +23,7 @@ exports.createTrip = function(req, res){
 	var time = null;
 	var description = req.body.description || "";
 	var privacy = +req.body.privacy;
-	if (typeof title === "undefined" || 
+	if (typeof title === "undefined" ||
 	typeof startDate === "undefined" || typeof endDate === "undefined" || typeof privacy === "undefined") {
 		res.redirect(302, '/trip/create?error=1');
 		return;
@@ -33,11 +33,10 @@ exports.createTrip = function(req, res){
 	var tripinst = new triplib(req.db);
 	tripinst.createTrip(req.user.user.uid, tripJson, function(success, tid) {
 		if (!success || tid === null) {
-
 			res.redirect(302, '/trip/create?error=2');
 			return;
 		}
-		res.redirect(200, '/trip/' + tid);
+		res.redirect(302, '/trip/' + tid);
 	}.bind(this));
 };
 
@@ -182,7 +181,7 @@ exports.members = function(req, res){
 					userlist.push(members[i].uid);
 					usermap[members[i].uid] = members[i].role;
 				}
-				var isAdmin = usermap[req.user.user.uid] === 'admin';
+				var isAdmin = usermap[req.user.user.uid].isAdmin;
 				userinst.getUsers(userlist, function(users) {
 					if(users === null){
 						res.end(JSON.stringify({
@@ -194,7 +193,8 @@ exports.members = function(req, res){
 					var list = [];
 					for(var i = 0; i < users.length; i++){
 						delete users[i].password;
-						if (!isAdmin && usermap[users[i].uid] === 'request') {
+						var userRole = usermap[users[i].uid];
+						if (!isAdmin && userRole.isRequested && !userRole.isMember) {
 							continue;
 						}
 						list.push({
