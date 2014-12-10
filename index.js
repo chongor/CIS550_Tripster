@@ -23,6 +23,7 @@ var routes = require('./routes/routes.js');
 var routes_users = require('./routes/users.js');
 var routes_media = require('./routes/media.js');
 var routes_trips = require('./routes/trips.js');
+var routes_search = require('./routes/search.js');
 // Setup app
 var app = express();
 
@@ -60,6 +61,9 @@ app.get('/logout', routes.logout);
 app.get('/user/settings', routes_users.settings);
 app.get('/profile/:login', routes_users.profile);
 
+// -- Search Stuff
+app.get('/search', routes_search.search);
+
 // -- Media Stuff (shares)
 app.get('/photo/:id', routes_media.photos);
 app.get('/album/:id', routes_media.albums);
@@ -75,6 +79,11 @@ app.post('/api/user/unfriend', routes_users.unfriend);
 
 app.get('/api/trip/:id/checklist', routes_trips.checklist);
 app.get('/api/trip/:id/members', routes_trips.members);
+
+app.get('/api/user/:id/invitables', routes_trips.invitables);
+app.post('/api/user/invite', routes_trips.inviteJoin);
+app.post('/api/trip/request', routes_trips.requestJoin);
+app.post('/api/trip/approve', routes_trips.approveJoin);
 
 // -- Error and bad url handling
 app.get('*', routes.fourohfour);

@@ -1,0 +1,23 @@
+extends layout
+block scripts
+
+block content
+	div.container(style="min-height:800px;")
+		div.row
+			div.col-md-12
+				h1 Search Results
+				div.row
+					div.col-md-12
+						h2 Users
+						-if (!resultsUsers || resultsUsers.length === 0) { 
+							div.status.panel.panel-default
+								div.panel-body No Hits Found
+						-} else {
+							-for(var i = 0; i < resultsUsers.length; i++){ 
+								a(href="/profile/#{resultsUsers[i].username}",style="text-decoration:none;")
+									div.status.panel.panel-default
+										div.panel-body
+											img.pull-left(src="#{resultsUsers[i].avatar}",style="margin-right:10px;")
+											h3(style="margin:0") #{resultsUsers[i].fullname}
+							-}
+						-}
