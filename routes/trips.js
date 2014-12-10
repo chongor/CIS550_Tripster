@@ -23,15 +23,16 @@ exports.createTrip = function(req, res){
 	var time = null;
 	var description = req.body.description || "";
 	var privacy = +req.body.privacy;
-	if (!title || !startDate || !endDate || !privacy) {
+	if (typeof title === "undefined" || 
+	typeof startDate === "undefined" || typeof endDate === "undefined" || typeof privacy === "undefined") {
 		res.redirect(302, '/trip/create?error=1');
 		return;
 	}
 	var tripJson = {title: title, startDate: startDate, endDate: endDate, time: time,
 	description: description, privacy: privacy };
 	var tripinst = new triplib(req.db);
-	tripinst.createTrip(+req.user.user.uid, tripJson, function(err, tid) {
-		if (err || tid === null) {
+	tripinst.createTrip(req.user.user.uid, tripJson, function(success, tid) {
+		if (!success || tid === null) {
 			res.redirect(302, '/trip/create?error=2');
 			return;
 		}

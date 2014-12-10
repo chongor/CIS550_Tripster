@@ -21,3 +21,18 @@ block content
 											h3(style="margin:0") #{resultsUsers[i].fullname}
 							-}
 						-}
+				div.row
+					div.col-md-12
+						h2 Trips
+						-if (!resultsTrips || resultsTrips.length === 0) { 
+							div.status.panel.panel-default
+								div.panel-body No Hits Found
+						-} else {
+							-for(var i = 0; i < resultsTrips.length; i++){ 
+								a(href="/trip/#{resultsTrips[i].trip_id}",style="text-decoration:none;color:#000;")
+									div.status.panel.panel-default
+										div.panel-body
+											h3(style="margin:0") #{resultsTrips[i].name}
+											p #{resultsTrips[i].description}
+							-}
+						-}

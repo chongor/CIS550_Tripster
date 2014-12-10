@@ -11,10 +11,13 @@ exports.search = function(req, res){
 		searchString = "";
 	}
 	searchInst.searchUsers(searchString, 1000, function(users){
-		res.render('search', {
-			login:req.user.login,
-			user:req.user.user,
-			resultsUsers:users
+		searchInst.searchTrips(searchString, 1000, function(trips){
+			res.render('search', {
+				login:req.user.login,
+				user:req.user.user,
+				resultsUsers:users,
+				resultsTrips:trips
+			});
 		});
 	});
 };
