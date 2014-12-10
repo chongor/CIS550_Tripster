@@ -32,7 +32,6 @@
     "mysql":"*",
     "node-redis":"*",
     "connect-redis":"*",
-    "underscore":"*",
     "moment":"*"
   }
 }
