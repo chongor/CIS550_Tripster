@@ -1,4 +1,6 @@
 window.addEventListener('load', function(){
+
+	// Get trip members
 	$.ajax({
 		type: "GET",
 		url: "/api/trip/" + $("#trip_id").text() + "/members",
@@ -22,9 +24,19 @@ window.addEventListener('load', function(){
 					+ '<h4>' + d.members[i].user.fullname + '</h4>'
 					+ '</div></div>');
 				}
+				if (d.isAdmin) {
+					// Additionally display requests
+					var requestedMembers = [];
+					for (var i = 0; i < d.members.length; i++) {
+						if (d.members[i].role === 'request') {
+							// JIM: Display requested box, with button to accept request
+						}
+					}
+				}
 			}else{
 				$("#members").append("<div class='alert alert-danger'>" + d.msg + "</div>");
 			}
 		}
 	});
+
 });

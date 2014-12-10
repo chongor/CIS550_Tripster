@@ -182,6 +182,7 @@ exports.members = function(req, res){
 					userlist.push(members[i].uid);
 					usermap[members[i].uid] = members[i].role;
 				}
+				var isAdmin = usermap[req.user.user.uid] === 'admin';
 				userinst.getUsers(userlist, function(users) {
 					if(users === null){
 						res.end(JSON.stringify({
@@ -193,6 +194,9 @@ exports.members = function(req, res){
 					var list = [];
 					for(var i = 0; i < users.length; i++){
 						delete users[i].password;
+						if (!isAdmin && usermap[users[i].uid] === 'request') {
+							continue;
+						}
 						list.push({
 							user: {
 								uid:users[i].uid,
@@ -205,10 +209,11 @@ exports.members = function(req, res){
 					};
 					res.end(JSON.stringify({
 						code:200,
-						members:list
+						members:list,
+						isAdmin:isAdmin
 					}));
 					return;
-				});
+				}.bind(this));
 			}
 		});
 	});
