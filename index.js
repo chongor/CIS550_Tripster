@@ -76,6 +76,11 @@ app.post('/api/user/unfriend', routes_users.unfriend);
 app.get('/api/trip/:id/checklist', routes_trips.checklist);
 app.get('/api/trip/:id/members', routes_trips.members);
 
+app.get('/api/user/:id/invitables', routes_trips.invitables);
+app.post('/api/user/invite', routes_trips.inviteJoin);
+app.post('/api/trip/request', routes_trips.requestJoin);
+app.post('/api/trip/approve', routes_trips.approveJoin);
+
 // -- Error and bad url handling
 app.get('*', routes.fourohfour);
 
