@@ -1,49 +1,43 @@
 extends layout
 block scripts
 	script(src="/js/tripcreate.js")
+
 block content
 	div.container
-			br
-			br
+		div.row
 			div.col-md-2
-			div.col-md-7(style="padding-right:0;")
-				div.status.panel.panel-default
-					div.panel-heading Create Trip
-					div.panel-body
-						- if(error === "1") {
-							div.alert.alert-danger
-								strong Error
-								p Please fill in all fields
-						- } else if(error  === "2"){
-							div.alert.alert-danger
-								Strong Oops!
-								p Something weird went wrong. Try again later!
-						- }
-					form.form-group(action="", method="POST")
-						div.form-group
-							label(for="title") Trip Title
-								sup *
-							input.form-control(name="title", id="title", type="text", placeholder="Grand Canyon With Bros")
-						div.form-group
-							label(for="username") Start Date
-								sup *
-							input.form-control(name="startdate", id="startdate", type="text", placeholder="Start Date")
-						div.form-group
-							label(for="email") End Date
-								sup *
-							input.form-control(name="enddate", id="enddate", type="text", placeholder="End Date")
-						div.form-group
-							label(for"password") Description
-							input.form-control(name="description", id="description", type="text", placeholder="Get ready for the trip folks!")
-						div.form-group
-							label(for="affiliate") Privacy
-							input.form-control(name="privacy", id="privacy", type="radio", value="1" checked=privacy=="friends only")
-							|	Friends only
-							input.form-control(name="privacy", id="privacy", type="radio", value="0" checked=privacy=="public")
-							|	Public only
-
+			div.col-md-6
+				h1 Create Trip
+					- if(error === "1") {
+						div.alert.alert-danger
+							strong Error
+							p Please fill in all fields
+					- } else if(error  === "2"){
+						div.alert.alert-danger
+							Strong Oops!
+							p Something weird went wrong. Try again later!
+					- }
+				form.form-group(action="", method="POST")
+					div.form-group
+						label(for="title") Trip Title
+							sup *
+						input.form-control(name="title", id="title", type="text", placeholder="Grand Canyon With Bros")
+					div.form-group
+						label(for="username") Start Date
+							sup *
+						input.form-control(name="startdate", id="startdate", type="text", placeholder="Start Date")
+					div.form-group
+						label(for="email") End Date
+							sup *
+						input.form-control(name="enddate", id="enddate", type="text", placeholder="End Date")
+					div.form-group
+						label(for"password") Description
+						input.form-control(name="description", id="description", type="text", placeholder="Get ready for the trip folks!")
+					div.form-group
+						label(for="affiliate") Privacy
+						select.form-control(name="privacy", id="privacy")
+							option(value="0") Public
+							option(value="1") Private
+					div.form-group
 						button(id="createtrip", type="submit").btn.btn-primary.btn-block Create Trip
-
-
-
-
+			div.col-md-4
