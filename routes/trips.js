@@ -31,12 +31,88 @@ exports.createTrip = function(req, res){
 	var tripJson = {title: title, startDate: startDate, endDate: endDate, time: time,
 	description: description, privacy: privacy };
 	var tripinst = new triplib(req.db);
+<<<<<<< HEAD
 	tripinst.createTrip(req.user.user.uid, tripJson, function(success, tid) {
 		if (!success || tid === null) {
+=======
+	tripinst.createTrip(req.user.user.uid, tripJson, function(err, tid) {
+		if (err || tid === null) {
+>>>>>>> f5c7ffa84ae2ca36367ebe1d2830e28d97370cba
 			res.redirect(302, '/trip/create?error=2');
 			return;
 		}
-		res.redirect(200, '/trip?id=' + tid);
+		res.redirect(200, '/trip/' + tid);
+	}.bind(this));
+};
+
+exports.invitables = function(req,res){
+	if(!req.user.login){
+		res.json({code: 500});
+		return;
+	}
+	var target = req.param('id');
+	var inviter = req.user.user.uid;
+	var tripinst = new triplib(req.db);
+	tripinst.getInvitables(inviter, target, function(data) {
+		if (data === null) {
+			res.json({code: 500});
+			return;
+		}
+		res.json({code: 200, invitables: data});
+		return;
+	}.bind(this));
+};
+
+exports.inviteJoin = function(req, res){
+	if(!req.user.login){
+		res.json({code: 500});
+		return;
+	}
+	var tid = req.body.tid;
+	var target = req.body.target;
+	var inviter = req.user.user.uid;
+	var tripinst = new triplib(req.db);
+	tripinst.inviteJoin(inviter, target, tid, function(success) {
+		if (success) {
+			res.json({code: 200});
+		}
+		else {
+			res.json({code: 500});
+		}
+	}.bind(this));
+};
+
+exports.requestJoin = function(req, res){
+	if(!req.user.login){
+		res.json({code: 500});
+		return;
+	}
+	var requester = req.body.requester;
+	var tid = req.body.tid;
+	var tripinst = new triplib(req.db);
+	tripinst.requestJoin(requester, tid, function(success) {
+		if (success) {
+			res.json({code: 200});
+		} else {
+			res.json({code: 500});
+		}
+	}.bind(this));
+};
+
+exports.approveJoin = function(req, res){
+	if(!req.user.login){
+		res.json({code: 500});
+		return;
+	}
+	var newmember = req.body.newmember;
+	var tid = req.body.tid;
+	var tripinst = new triplib(req.db);
+	tripinst.approveJoin(newmember, tid, function(success) {
+		if (success) {
+			res.json({code: 200});
+		} else {
+			res.json({code: 500});
+		}
 	}.bind(this));
 };
 
