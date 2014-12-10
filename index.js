@@ -23,6 +23,7 @@ var routes = require('./routes/routes.js');
 var routes_users = require('./routes/users.js');
 var routes_media = require('./routes/media.js');
 var routes_trips = require('./routes/trips.js');
+var routes_search = require('./routes/search.js');
 // Setup app
 var app = express();
 
@@ -59,6 +60,9 @@ app.get('/logout', routes.logout);
 // -- User Stuff
 app.get('/user/settings', routes_users.settings);
 app.get('/profile/:login', routes_users.profile);
+
+// -- Search Stuff
+app.get('/search', routes_search.search);
 
 // -- Media Stuff (shares)
 app.get('/photo/:id', routes_media.photos);
