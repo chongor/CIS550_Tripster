@@ -31,13 +31,9 @@ exports.createTrip = function(req, res){
 	var tripJson = {title: title, startDate: startDate, endDate: endDate, time: time,
 	description: description, privacy: privacy };
 	var tripinst = new triplib(req.db);
-<<<<<<< HEAD
 	tripinst.createTrip(req.user.user.uid, tripJson, function(success, tid) {
 		if (!success || tid === null) {
-=======
-	tripinst.createTrip(req.user.user.uid, tripJson, function(err, tid) {
-		if (err || tid === null) {
->>>>>>> f5c7ffa84ae2ca36367ebe1d2830e28d97370cba
+
 			res.redirect(302, '/trip/create?error=2');
 			return;
 		}
