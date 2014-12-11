@@ -1,6 +1,6 @@
 window.addEventListener('load', function(){
 
-	approve = function(uid) {
+	var approve = function(uid) {
 		$.ajax({
 			type: "POST",
 			url:"/api/trip/approve",
@@ -62,10 +62,4 @@ window.addEventListener('load', function(){
 			}
 		}
 	});
-
-
-
-
-
-
 });

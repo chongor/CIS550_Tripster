@@ -50,6 +50,40 @@ exports.settings = function(req, res){
 	});
 };
 
+exports.update = function(req, res){
+	if(!req.user.login){
+		res.end(JSON.stringify({
+			code:503,
+			msg:"Access denied."
+		}));
+		return;
+	}
+	if(typeof req.body.field === "undefined" || req.body.field === null ||
+		req.body.field === ""){
+		res.end(JSON.stringify({
+			code:400,
+			msg:"Bad Request. (No field name provided)"
+		}));
+		return;
+	}
+	var userInst = new userlib(req.db);
+	var updater = {};
+	updater[req.body.field] = req.body.value;
+	userInst.updateUser(req.user.user.uid, updater,function(result, err){
+			if(!result){
+				res.end(JSON.stringify({
+					code:400,
+					msg:(typeof err === "string") ? err : "Database error"
+				}));
+				return;
+			}
+			res.end(JSON.stringify({
+				code:200,
+				msg:"OK"
+			}));
+	});
+};
+
 exports.addfriend = function(req, res){
 	if(!req.user.login){
 		res.end(JSON.stringify({

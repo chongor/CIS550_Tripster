@@ -14,6 +14,12 @@ block content
 			div.col-md-10 
 				div(id="settings-general")
 					h2 General Settings
+					div.alert.alert-success#success-box(style="display:none")
+						strong Completed
+						p Update of informtation completed
+					div.alert.alert-danger#error-box(style="display:none")
+						strong Error
+						p#error-msg
 					table.table.table-bordered
 						tr
 							th(width="200") Login Name
@@ -62,7 +68,7 @@ block content
 								form(id="frm-change-password")
 									div.form-group 
 										label Old Password:
-										input.form-control(value="", type="password", id="password")
+										input.form-control(value="", type="password", id="password-old")
 									div.form-group 
 										label New Password:
 										input.form-control(value="", type="password", id="password")
