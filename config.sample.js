@@ -3,7 +3,8 @@ exports.db = {
 	"port":3306,
 	"database":"tripster",
 	"user":"",
-	"password":""
+	"password":"",
+	"multipleStatements": true
 };
 
 exports.redis = {
