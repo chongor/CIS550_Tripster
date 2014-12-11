@@ -1,4 +1,5 @@
 var userlib = require("../lib/users.js");
+var reclib = require("../lib/recommendations.js");
 exports.profile = function(req, res){
 	var userInst = new userlib(req.db);
 	userInst.getUserByLogin(req.param("login"), function(data){
@@ -144,6 +145,47 @@ exports.unfriend = function(req, res){
 				code:400,
 				msg:msg
 			}));
+		}
+	});
+};
+
+exports.recommendFriend = function(req, res){
+	if(!req.user.login){
+		res.end(JSON.stringify({
+			code:503,
+			msg:"Access denied."
+		}));
+		return;
+	}
+	var userInst = new userlib(req.db);
+	var recInst = new reclib(req.db);
+	recInst.recommendFriend(req.user.user.uid, 20, function(data){
+		if(data.length === 0){
+			res.end(JSON.stringify({
+				code:200,
+				recommend:data
+			}));
+			return;
+		} else {
+			userInst.getUsers(data, function(result){
+				if(result === null){
+					res.end(JSON.stringify({
+						code:400,
+						msg:'Error: Could not get user data'
+					}));
+					return;
+				}else{
+					var users = [];
+					for(var i = 0; i < result.length; i++){
+						delete result[i].password;
+						users.push(result[i]);
+					}
+					res.end(JSON.stringify({
+						code:200,
+						recommend:users
+					}));
+				}
+			});
 		}
 	});
 };

@@ -81,6 +81,7 @@ app.post('/api/user/invite', routes_trips.inviteJoin);
 
 app.get('/api/user/:id/invitables', routes_trips.invitables);
 app.get('/api/user/trips', routes_trips.mine);
+app.get('/api/user/recommend/friends', routes_users.recommendFriend);
 
 app.get('/api/trip/:id/checklist', routes_trips.checklist);
 app.get('/api/trip/:id/members', routes_trips.members);
