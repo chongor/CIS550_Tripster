@@ -44,7 +44,16 @@ window.addEventListener('load', function(){
 	});
 	$("#change-email").click(function(e){
 		e.preventDefault();
-		update('email', $('#email').val());
+		if((new RegExp("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}")).test($('#email').val())){
+			$("#ig-email").removeClass('has-error');
+			update('email', $('#email').val());
+		} else {
+			$("#error-box").hide();
+			$("#success-box").hide();
+			$("#ig-email").addClass('has-error');
+			$("#error-msg").text('Email address not well formatted!');
+			$("#error-box").show();
+		}
 	});
 	$("#change-affiliation").click(function(e){
 		e.preventDefault();
