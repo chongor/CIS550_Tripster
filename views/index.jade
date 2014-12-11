@@ -1,7 +1,60 @@
 extends layout
 
 block content
-	div.container
-		div.centered-single
-			h1 Tripster
-			p.lead Under construction!
+	div.container(style="padding-top:20px;")
+		div.row
+			div.col-md-2
+				div.row
+					div.col-md-12
+						img.img-responsive(src="#{user.avatar}?s=256")
+				div.row
+					div.col-md-12
+						h3 #{user.fullname}
+				div.row
+					div.col-md-12
+						div.list-group
+							a.filters-list-item.list-group-item.active(id="filter-newsfeed",href="#") News Feed
+							a.filters-list-item.list-group-item(id="filter-trips",href="#") Trips
+							a.filters-list-item.list-group-item(id="filter-albums",href="#") Albums
+			div.col-md-8
+				div.row
+					div.col-md-12
+						form(id="new-post" action="/post", method="POST")
+							input(name="sttype",value="status", type="hidden")
+							input(name="stprivacy",value="public", type="hidden")
+							div.form-group
+								textarea.form-control(name="statustext" placeholder="New Status", style="resize: none;height:80px;")
+							div.form-group
+									div.btn-group.pull-right
+										div.btn-group
+											button.btn.btn-default.dropdown-toggle(id="btn-privacy",data-toggle="dropdown") 
+												span.glyphicon.glyphicon-eye-open 
+												| &nbsp;Public 
+												span.caret
+											ul.dropdown-menu
+												li.active
+													a(href="#",id="privacy-public")
+														span.glyphicon.glyphicon-eye-open
+														| &nbsp;Public
+												li
+													a(href="#",id="privacy-private")
+														span.glyphicon.glyphicon-eye-close
+														| &nbsp;Restricted
+										button.btn.btn-primary(id="post-btn") Post
+									div.btn-group.pull-right(style="margin-right:15px;")
+										a(href="#", id="post-type-status").btn.btn-info.ptype
+											span &nbsp;
+											span.glyphicon.glyphicon-bullhorn
+											span &nbsp;
+										a(href="#", id="post-type-image").btn.btn-default.ptype
+											span &nbsp;
+											span.glyphicon.glyphicon-camera
+											span &nbsp;
+										a(href="#", id="post-type-share").btn.btn-default.ptype
+											span &nbsp;
+											span.glyphicon.glyphicon-share-alt
+											span &nbsp;
+						div.alert.alert-danger.pull-right(id="alert-post", style="margin:0 10px 0 0; padding:6px 12px; display:none;") --
+				div.row
+					div.col-md-12(id="feed-stream")
+			div.col-md-2

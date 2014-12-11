@@ -25,3 +25,8 @@ Start the web application by `node index` or `node index.js`.
 DDL
 -------------------------
 The ddl is in `jobs/`
+
+Config.js
+-------------------------
+Please make sure `multipleStatements:true` is supplied for the config file as we
+make use of this feature to speed up our query pipeline.
