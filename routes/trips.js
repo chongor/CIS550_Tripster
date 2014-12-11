@@ -40,6 +40,23 @@ exports.createTrip = function(req, res){
 	}.bind(this));
 };
 
+exports.mine = function(req,res){
+	if(!req.user.login){
+		res.json({code: 500});
+		return;
+	}
+	var uid = req.user.user.uid;
+	var tripinst = new triplib(req.db);
+	tripinst.getTripByOwner(uid, function(data) {
+		if (data === null) {
+			res.json({code: 400});
+			return;
+		}
+		res.json({code: 200, trips: data});
+		return;
+	}.bind(this));
+};
+
 exports.invitables = function(req,res){
 	if(!req.user.login){
 		res.json({code: 500});

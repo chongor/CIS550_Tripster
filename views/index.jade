@@ -1,5 +1,7 @@
 extends layout
-
+block scripts
+	script(src="/js/index.js")
+	
 block content
 	div.container(style="padding-top:20px;")
 		div.row
@@ -16,7 +18,7 @@ block content
 							a.filters-list-item.list-group-item.active(id="filter-newsfeed",href="#") News Feed
 							a.filters-list-item.list-group-item(id="filter-trips",href="#") Trips
 							a.filters-list-item.list-group-item(id="filter-albums",href="#") Albums
-			div.col-md-8
+			div.col-md-7
 				div.row
 					div.col-md-12
 						form(id="new-post" action="/post", method="POST")
@@ -57,4 +59,12 @@ block content
 						div.alert.alert-danger.pull-right(id="alert-post", style="margin:0 10px 0 0; padding:6px 12px; display:none;") --
 				div.row
 					div.col-md-12(id="feed-stream")
-			div.col-md-2
+			div.col-md-3
+				div.row
+					div.col-md-12
+						h3 Managing
+						div.list-group#mytrips
+				div.row
+					div.col-md-12
+						h3 Participating In
+						div#managed
