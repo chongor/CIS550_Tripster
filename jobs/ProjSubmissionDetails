@@ -1,0 +1,77 @@
+Details:
+
+Project report details:
+
+1) Make sure it doesn't exceed 6 pages.
+
+2) don't add code snippets or queries to your report.
+
+3) Please be sure to talk about the design of your overall system(servers side, client side and the communication between them) and the language/library/API's that you have used.
+
+4) Please be sure to talk about the design and implementation details of the following components:               
+                  Add photos/albums to trips, with privacy settings.                
+                  Recommend locations/friends based on previous trips/(interests*) 
+                  Search for users/locations
+                  Implementation of Caching
+
+                  Any others features you think are unique
+
+5) If you have done extra credit, please make sure to include a brief summary/description about it.
+
+                  Yelp Api
+
+                  Expense tracker like split wise
+
+                  Login using facebook/Gmail
+
+                  Bing Search
+
+6) The final code submission and the report are due on 16th at 11:59 PM.
+
+You may NOT add any additional features after you demo. All you can do is code cleanup, if required, post the presentation.
+
+Please make sure your presentation follows the order specified, as we have only 20 minutes to grade this vast project.
+
+-Harshitha
+
+
+Demo details:
+
+1) Please arrive 5 mins before your scheduled time slot.
+
+2) You will have to present on Professor Val's monitor, to ensure that you are not accessing your website locally.
+
+3) Please show that you are using the data we provided (on your monitor)
+
+4) The order in which you present your features should be:
+
+                  A new user should be able to register, with all the personal information
+                  An existing user should be able to login
+                  User should be able to modify his personal information
+                  Should be able to send/accept/decline friend requests
+                  View photos/trips from existing friends as a news feed
+                  Create a new trip
+                  Invite/Accept trip requests from friends
+                  Add photos/albums to trips, with privacy settings.
+                  Comment, like, (rate*) trips/photos
+                  Recommend locations/friends based on previous trips/(interests*) 
+                  Search for users/locations
+                  Implementation of Caching
+
+5) present the extra credit features in the following order
+
+                  Used Yelp Api
+
+                  Expense tracker like split wise
+
+                  Login using facebook/Gmail
+
+                  Bing Search
+
+6) The final code submission and the report are due on 16th at 11:59 PM.
+
+You may NOT add any additional features after you demo. All you can do is code cleanup, if required, post the presentation.
+
+Please make sure your presentation follows the order specified, as we have only 20 minutes to grade this vast project.
+
+-Harshitha
