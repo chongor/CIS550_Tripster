@@ -28,6 +28,8 @@ CREATE TABLE notifications (
 CREATE TABLE newsfeed_items (
 	owner_id INT NOT NULL,
  	fid INT NOT NULL,
+ 	time TIMESTAMP NOT NULL,
+ 	privacy INT NOT NULL,
 	newsfeed TEXT NOT NULL,
 	PRIMARY KEY (owner_id, fid),
 	FOREIGN KEY (owner_id) REFERENCES users(uid)
@@ -49,7 +51,7 @@ CREATE TABLE trips (
 	end_date date NOT NULL,
 	time TIMESTAMP NOT NULL,
 	description TEXT NOT NULL,
-	privacy INT NOT NULL, # 0 - public, 1 - friends only
+	privacy INT NOT NULL,
 	PRIMARY KEY (trip_id),
 	FOREIGN KEY (owner_uid) REFERENCES users(uid)
 );

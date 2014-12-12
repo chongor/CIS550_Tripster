@@ -62,4 +62,30 @@ window.addEventListener('load', function(){
 			}
 		}
 	});
+	
+	// Get trip checklist
+	$.ajax({
+		type: "GET",
+		url: "/api/trip/" + $("#trip_id").text() + "/checklist",
+		dataType:"json",
+		success: function(data){
+			if(typeof data === "string"){
+				try{
+					data = JSON.parse(data);
+				}catch(e){
+					console.log('Parse checklist failed!');
+					return;
+				}
+			}
+			if(data.code === 200){
+				var list = $("<ul></ul>");
+				for(var i = 0; i < data.checklist.length; i++){
+					list.append("<li>" + data.checklist[i].desc + "</li>");
+				}
+				$("#checklist").append(list);
+			}else{
+				$("#checklist").append("<p>Unable to get checklist</p>");
+			}
+		}
+	});
 });
