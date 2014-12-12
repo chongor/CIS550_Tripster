@@ -147,21 +147,20 @@ CREATE TABLE shareables (
 
 CREATE TABLE shareable_albums (
 	id INT NOT NULL,
-	time TIMESTAMP NOT NULL,
 	title TEXT NOT NULL,
 	description TEXT NOT NULL,
+	updateTime TIMESTAMP NOT NULL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES shareables(id)
 );
 
 -- photo_video_type: 'photo' or 'video'
--- photo or video is stored in RDBMS LONGBLOB
+-- photo or video is stored as URL
 -- alternative: store photo/image file in server and store pathname here
 CREATE TABLE multimedia (
 	id INT NOT NULL,
 	title TEXT NOT NULL,
 	url TEXT NOT NULL,
-	time TIMESTAMP NOT NULL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES shareables(id)
 );

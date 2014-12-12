@@ -26,17 +26,16 @@ block content
 						div.row
 							div.col-md-1
 							div.col-md-10
-								div(style="min-height:600px;")
+								div(style="min-height:400px;max-height:600px;overflow:auto;")
 									img.img-responsive(src="http://36.media.tumblr.com/3a60d35b0edf1c87890d0122c4065276/tumblr_n6ro0aGIcX1s662lpo1_r1_1280.jpg")
 							div.col-md-1
 				div.row.ratingviewer
-					div.col-md-1
 					div.col-md-10
 						div.row
 							div.col-md-12
 								h2 Comments
-						div.row.rating1
-							div.col-md-2
+						div.row.rating(style="border-top:1px solid #000;")
+							div.col-md-2(style="border-right:1px solid #000;")
 								div.row
 									div.col-md-12
 										img(src="#{user.avatar}")
@@ -46,33 +45,40 @@ block content
 											strong Username
 							div.col-md-10
 								div.row
-									div.col-md-12
-										span.glyphicon.glyphicon-star
-										span.glyphicon.glyphicon-star
-										span.glyphicon.glyphicon-star
-										span.glyphicon.glyphicon-star
-										span.glyphicon.glyphicon-star
+									div.col-md-12(style="border-bottom:1px solid #888;padding-top:10px;")
+										div.ratings.pull-right
+											span.glyphicon.glyphicon-star
+											span.glyphicon.glyphicon-star
+											span.glyphicon.glyphicon-star
+											span.glyphicon.glyphicon-star
+											span.glyphicon.glyphicon-star
+										p Sent on: 
 								div.row
-									div.col-md-12
+									div.col-md-12(style="padding-top:10px;")
 										p &nbsp;HI GAIS #{"unknown"}&nbsp;&nbsp;&nbsp;
-						div.row.rating1
-							div.col-md-2
+						div.row.rating(style="border-top:1px solid #000;")
+							div.col-md-2(style="border-right:1px solid #000;")
 								div.row
 									div.col-md-12
-										img.img-responsive(src="#{user.avatar}")
+										img(src="#{user.avatar}")
 								div.row
 									div.col-md-12
 										p
 											strong Username
 							div.col-md-10
 								div.row
-									div.col-md-12
-										span.glyphicon.glyphicon-star
-										span.glyphicon.glyphicon-star
-										span.glyphicon.glyphicon-star
-										span.glyphicon.glyphicon-star
-										span.glyphicon.glyphicon-star
+									div.col-md-12(style="border-bottom:1px solid #888;padding-top:10px;")
+										div.ratings.pull-right
+											span.glyphicon.glyphicon-star
+											span.glyphicon.glyphicon-star
+											span.glyphicon.glyphicon-star
+											span.glyphicon.glyphicon-star
+											span.glyphicon.glyphicon-star
+										p Sent on: 
 								div.row
-									div.col-md-12
-										p &nbsp;WHO ARE YOU?! #{"unknown"}&nbsp;&nbsp;&nbsp;
-					div.col-md-1
+									div.col-md-12(style="padding-top:10px;")
+										p &nbsp;Lolz #{"unknown"}&nbsp;&nbsp;&nbsp;
+					div.col-md-2
+						div.row
+							div.col-md-12
+								h2 Share

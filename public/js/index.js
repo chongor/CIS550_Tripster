@@ -54,4 +54,42 @@ window.addEventListener('load', function(){
 			}
 		}
 	});
+	
+	// Bind the ui
+	$("#post-type-link").click(function(e){
+		e.preventDefault();
+		$(".ptype").removeClass('btn-info').addClass('btn-default');
+		$(this).addClass('btn-info').removeClass('btn-default');;
+		$("#post-type").val('url');
+	});
+	
+	$("#post-type-image").click(function(e){
+		e.preventDefault();
+		$(".ptype").removeClass('btn-info').addClass('btn-default');
+		$(this).addClass('btn-info').removeClass('btn-default');
+		$("#post-type").val('image');
+	});
+	
+	$("#post-type-video").click(function(e){
+		e.preventDefault();
+		$(".ptype").removeClass('btn-info').addClass('btn-default');
+		$(this).addClass('btn-info').removeClass('btn-default');
+		$("#post-type").val('video');
+	});
+	
+	$("#privacy-public").click(function(e){
+		e.preventDefault();
+		$(this).parent().addClass('active');
+		$("#privacy-private").parent().removeClass('active');
+		$("#post-privacy").val('0');
+		$("#btn-privacy").html($(this).html() + "<span class='caret'></span>");
+	});
+	
+	$("#privacy-private").click(function(e){
+		e.preventDefault();
+		$(this).parent().addClass('active');
+		$("#privacy-public").parent().removeClass('active');
+		$("#post-privacy").val('1');
+		$("#btn-privacy").html($(this).html() + "<span class='caret'></span>");
+	});
 });

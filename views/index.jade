@@ -22,10 +22,12 @@ block content
 				div.row
 					div.col-md-12
 						form(id="new-post" action="/post", method="POST")
-							input(name="sttype",value="status", type="hidden")
-							input(name="stprivacy",value="public", type="hidden")
+							input(name="type", id="post-type", value="photo", type="hidden")
+							input(name="privacy", id="post-privacy", value="0", type="hidden")
 							div.form-group
-								textarea.form-control(name="statustext" placeholder="New Status", style="resize: none;height:80px;")
+								input.form-control(name="url",placeholder="http://")
+							div.form-group
+								textarea.form-control(name="description" placeholder="Write Description", style="resize: none;height:80px;")
 							div.form-group
 									div.btn-group.pull-right
 										div.btn-group
@@ -44,17 +46,17 @@ block content
 														| &nbsp;Restricted
 										button.btn.btn-primary(id="post-btn") Post
 									div.btn-group.pull-right(style="margin-right:15px;")
-										a(href="#", id="post-type-status").btn.btn-info.ptype
+										a(href="#", id="post-type-link").btn.btn-info.ptype
 											span &nbsp;
-											span.glyphicon.glyphicon-bullhorn
+											span.glyphicon.glyphicon-link
 											span &nbsp;
 										a(href="#", id="post-type-image").btn.btn-default.ptype
 											span &nbsp;
 											span.glyphicon.glyphicon-camera
 											span &nbsp;
-										a(href="#", id="post-type-share").btn.btn-default.ptype
+										a(href="#", id="post-type-video").btn.btn-default.ptype
 											span &nbsp;
-											span.glyphicon.glyphicon-share-alt
+											span.glyphicon.glyphicon-film
 											span &nbsp;
 						div.alert.alert-danger.pull-right(id="alert-post", style="margin:0 10px 0 0; padding:6px 12px; display:none;") --
 				div.row
