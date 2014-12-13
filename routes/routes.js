@@ -1,8 +1,14 @@
+var sharelib = require('../lib/shares.js');
+
 exports.main = function(req, res){
 	if(req.user.login){
-		res.render('index', {
-			login:req.user.login,
-			user:req.user.user
+		var shareinst = new sharelib(req.db);
+		shareinst.getAlbumsByOwner(req.user.user.uid, function(albums){
+			res.render('index', {
+				login:req.user.login,
+				user:req.user.user,
+				albums:albums
+			});
 		});
 	} else {
 		res.redirect(302, '/login');

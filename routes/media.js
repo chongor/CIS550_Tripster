@@ -59,9 +59,23 @@ exports.albums = function(req, res){
 		res.redirect(302, '/login');
 		return;
 	}
-	res.render('album', {
-		login:req.user.login,
-		user:req.user.user
+	var shareInst = new sharelib(req.db);
+	shareInst.getAlbum(req.param('id'), function(data){
+		if(!data){
+			res.render('404', {
+				login:req.user.login,
+				user:req.user.user
+			});
+			return;
+		}
+		shareInst.getAlbumItems(req.param('id'), function(items){
+			res.render('album', {
+				login:req.user.login,
+				user:req.user.user,
+				album:data,
+				albumitems:items
+			});
+		});
 	});
 };
 

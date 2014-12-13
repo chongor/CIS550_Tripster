@@ -8,16 +8,39 @@ block content
 			div.col-md-10
 				div.row
 					div.col-12
-						h2 Album
-						p &nbsp;Time: #{"unknown"}&nbsp;&nbsp;&nbsp;
-						p &nbsp;Description: #{"unknown"}&nbsp;&nbsp;&nbsp;
-				div.row
-					div.col-md-3
-						img.img-responsive.img-thumbnail(src="http://36.media.tumblr.com/158c120500b51cb2fa61011165afb1b0/tumblr_n9m6afRrd61s662lpo1_1280.jpg")
-					div.col-md-3
-						img.img-responsive.img-thumbnail(src="http://fc09.deviantart.net/fs70/i/2014/297/9/0/dark_souls___iron_fall_by_keilink-d83yhxo.png")
-					div.col-md-3
-						img.img-responsive.img-thumbnail(src="http://40.media.tumblr.com/098114dddaf7a808d6e5f7d0b97116e9/tumblr_n1x9mfEF3U1s662lpo1_1280.jpg")
-					div.col-md-3
-						img.img-responsive.img-thumbnail(src="http://36.media.tumblr.com/3a60d35b0edf1c87890d0122c4065276/tumblr_n6ro0aGIcX1s662lpo1_r1_1280.jpg")
+						h2 #{album.title}
+						p 
+							sapn.glyphicon.glyphicon-user
+							| &nbsp;
+							span Owner:
+								a(href="/profile/#{album.owner.login}") #{album.owner.name} &nbsp;
+							span.glyphicon.glyphicon-time
+							| &nbsp;
+							span Time: #{album.creationTime}&nbsp;&nbsp;
+							span.glyphicon.glyphicon-refresh
+							| &nbsp;
+							span Updated: #{album.updateTime}&nbsp;&nbsp;&nbsp;
+						blockquote #{album.description !== "" ? album.description : "(No Description)"}
+				- if ( albumitems && albumitems.length > 0 ) {
+					- for (var i = 0; i <= Math.floor(albumitems.length / 3); i++) {
+						div.row
+							- for (var j = 0; j < 3; j++){
+								- if(albumitems.length > i * 3 + j){
+									div.col-md-3
+										div.thumbnail
+											img.img-responsive(src="#{albumitems[i * 3 + j].url}")
+											div.caption 
+												a(href="/photo/#{albumitems[i * 3 + j].id}") 
+													strong #{albumitems[i * 3 + j].title}
+												div 
+													span.glyphicon.glyphicon-time
+													| &nbsp;
+													span #{albumitems[i * 3 + j].time ? albumitems[i * 3 + j].time.toDateString() : albumitems[i * 3 + j].time}
+								- }
+							- } 
+					- }
+				- } else {
+					div.row
+						div.well This album is empty. Please add some photos.
+				- }
 			div.col-md-1

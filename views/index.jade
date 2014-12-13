@@ -59,9 +59,13 @@ block content
 											span.glyphicon.glyphicon-film
 											span &nbsp;
 									div.pull-right(style="margin-right:15px;")
-										select.form-control(name="album")
+										select.form-control(name="album",id="album-picker",style="display:none;")
 											option(value="-1") None
-											option(value="0") Album 1
+											- if(albums && albums.length > 0) {
+												- for(var i = 0; i < albums.length; i++){
+													option(value="#{albums[i].id}") #{albums[i].title}
+												- }
+											- }
 						div.alert.alert-danger.pull-right(id="alert-post", style="margin:0 10px 0 0; padding:6px 12px; display:none;") --
 				div.row
 					div.col-md-12(id="feed-stream")

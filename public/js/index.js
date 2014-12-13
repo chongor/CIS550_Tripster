@@ -86,6 +86,7 @@ window.addEventListener('load', function(){
 	// Bind the ui
 	$("#post-type-link").click(function(e){
 		e.preventDefault();
+		$("#album-picker").hide();
 		$(".ptype").removeClass('btn-info').addClass('btn-default');
 		$(this).addClass('btn-info').removeClass('btn-default');;
 		$("#post-type").val('url');
@@ -93,6 +94,7 @@ window.addEventListener('load', function(){
 	
 	$("#post-type-image").click(function(e){
 		e.preventDefault();
+		$("#album-picker").show();
 		$(".ptype").removeClass('btn-info').addClass('btn-default');
 		$(this).addClass('btn-info').removeClass('btn-default');
 		$("#post-type").val('image');
@@ -100,6 +102,7 @@ window.addEventListener('load', function(){
 	
 	$("#post-type-video").click(function(e){
 		e.preventDefault();
+		$("#album-picker").show();
 		$(".ptype").removeClass('btn-info').addClass('btn-default');
 		$(this).addClass('btn-info').removeClass('btn-default');
 		$("#post-type").val('video');
