@@ -29,7 +29,11 @@ block content
 						label(for="parent") Associate with Trip:
 						select.form-control(name="parent", id="parent")
 							option(value="") None
-							option(value="") Trip 1s
+							- if(trips && trips.length > 0) {
+								- for(var i = 0; i < trips.length; i++){
+									option(value="#{trips[i].trip_id}") #{trips[i].name}
+								- }
+							- }
 					div.form-group
 						button(id="createtrip", type="submit").btn.btn-primary.btn-block Create Album
 			div.col-md-4

@@ -144,6 +144,9 @@ exports.requestJoin = function(req, res){
 		res.json({code: 500});
 		return;
 	}
+	if(typeof req.body.requester === "undefined"){
+		req.body.requester = req.user.user.uid;
+	}
 	var requester = req.body.requester;
 	var tid = req.body.tid;
 	var tripinst = new triplib(req.db);
@@ -233,6 +236,7 @@ exports.members = function(req, res){
 				if(members.length === 0){
 					res.end(JSON.stringify({
 						code:200,
+						isAdmin:(trip.owner === req.user.user.uid),
 						members:[]
 					}));
 					return;
@@ -243,7 +247,7 @@ exports.members = function(req, res){
 					userlist.push(members[i].uid);
 					usermap[members[i].uid] = members[i].role;
 				}
-				var isAdmin = usermap[req.user.user.uid].isAdmin;
+				var isAdmin = (usermap[req.user.user.uid] && usermap[req.user.user.uid].isAdmin) || req.user.user.uid === trip.owner;
 				userinst.getUsers(userlist, function(users) {
 					if(users === null){
 						res.end(JSON.stringify({

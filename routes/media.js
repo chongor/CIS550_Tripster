@@ -1,5 +1,6 @@
 var userlib = require("../lib/users.js");
 var sharelib= require("../lib/shares.js");
+var triplib = require("../lib/trips.js");
 exports.photos = function(req, res){
 	if(!req.user.login){
 		res.redirect(302, '/login');
@@ -84,9 +85,14 @@ exports.createAlbum = function(req, res){
 		res.redirect(302, '/login');
 		return;
 	}
-	res.render('album-create', {
-		login:req.user.login,
-		user:req.user.user
+	var tripInst = new triplib(req.db);
+	tripInst.getParticipating(req.user.user.uid, function(trips){
+		res.render('album-create', {
+			login:req.user.login,
+			user:req.user.user,
+			trips:trips,
+			error:req.query.error
+		});
 	});
 };
 
@@ -95,7 +101,22 @@ exports.createAlbumPost = function(req, res){
 		res.redirect(302, '/login');
 		return;
 	}
-	res.redirect(302,'/album/');
+	if(!req.body || typeof req.body.title === "undefined" || typeof req.body.description === "undefined"){
+		res.redirect(302, '/album/create?error=1');
+		return;
+	}
+	if(!req.body || req.body.title === ""){
+		res.redirect(302, '/album/create?error=2');
+		return;
+	}
+	var shareInst = new sharelib(req.db);
+	shareInst.createAlbum(req.user.user.uid, req.body.title, req.body.description, function(result, id){
+		if(!result){
+			res.redirect(302, '/album/create?error=3');
+			return;
+		}
+		res.redirect(302,'/album/' + id);
+	});
 };
 
 exports.post = function(req, res){
