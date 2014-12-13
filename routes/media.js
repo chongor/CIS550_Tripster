@@ -6,11 +6,19 @@ exports.photos = function(req, res){
 		return;
 	}
 	var shareinst = new sharelib(req.db);
-	shareinst.getShareable(req.param("id"), function(data){
+	shareinst.getMultimedia(req.param("id"), function(data){
 		console.log(data);
+		if(data === null){
+			res.render('404', {
+				login:req.user.login,
+				user:req.user.user
+			});
+			return;
+		}
 		res.render('photo', {
 			login:req.user.login,
-			user:req.user.user
+			user:req.user.user,
+			media: data
 		});
 	});
 };

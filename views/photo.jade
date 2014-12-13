@@ -7,14 +7,16 @@ block content
 			div.col-md-12
 				div.row
 					div.col-md-12
-						h2 Photo
+						h2 #{media.title}
 						p
 							span.glyphicon.glyphicon-user
-							span &nbsp;Owner: #{"unknown"}&nbsp;&nbsp;&nbsp;
+							span &nbsp;Owner: 
+								a(href="/profile/#{media.owner.login}") #{media.owner.name}
+							span &nbsp;&nbsp;&nbsp;
 							span.glyphicon.glyphicon-calendar
-							span &nbsp;Time: #{"unknown"}&nbsp;&nbsp;&nbsp;
+							span &nbsp;Time: #{media.time}&nbsp;&nbsp;&nbsp;
 							span.glyphicon.glyphicon-heart
-							span &nbsp;Likes: #{"unknown"}&nbsp;&nbsp;&nbsp;
+							span &nbsp;Likes: #{""}&nbsp;&nbsp;&nbsp;
 							span.glyphicon.glyphicon-star
 							span.glyphicon.glyphicon-star
 							span.glyphicon.glyphicon-star
@@ -27,7 +29,7 @@ block content
 							div.col-md-1
 							div.col-md-10
 								div(style="min-height:400px;max-height:600px;overflow:auto;")
-									img.img-responsive(src="http://36.media.tumblr.com/3a60d35b0edf1c87890d0122c4065276/tumblr_n6ro0aGIcX1s662lpo1_r1_1280.jpg")
+									img.img-responsive(src="#{media.url}")
 							div.col-md-1
 				div.row.ratingviewer
 					div.col-md-10
