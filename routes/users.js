@@ -1,5 +1,7 @@
 var userlib = require("../lib/users.js");
 var reclib = require("../lib/recommendations.js");
+var newslib = require("../lib/newsfeed");
+
 exports.profile = function(req, res){
 	var userInst = new userlib(req.db);
 	userInst.getUserByLogin(req.param("login"), function(data){
@@ -82,6 +84,32 @@ exports.update = function(req, res){
 				code:200,
 				msg:"OK"
 			}));
+	});
+};
+
+exports.newsfeed = function(req, res){
+	if(!req.user.login){
+		res.end(JSON.stringify({
+			code:503,
+			msg:"Access denied. Not logged in."
+		}));
+		return;
+	}
+	var newsInst = new newslib(req.db);
+	newsInst.getUserNewsfeed(req.user.user.uid, 30, function(nf, err){
+		if(nf === null){
+			res.end(JSON.stringify({
+				code:400,
+				msg:err
+			}));
+			return;
+		}else{
+			res.end(JSON.stringify({
+				code:200,
+				feed:nf
+			}));
+			return;
+		}
 	});
 };
 

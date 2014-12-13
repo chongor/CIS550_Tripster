@@ -14,7 +14,7 @@ block content
 								a(href="/profile/#{media.owner.login}") #{media.owner.name}
 							span &nbsp;&nbsp;&nbsp;
 							span.glyphicon.glyphicon-calendar
-							span &nbsp;Time: #{media.time}&nbsp;&nbsp;&nbsp;
+							span &nbsp;Time: #{media.time ? media.time.toLocaleString() : "Error"}&nbsp;&nbsp;&nbsp;
 							span.glyphicon.glyphicon-heart
 							span &nbsp;Likes: #{""}&nbsp;&nbsp;&nbsp;
 							span.glyphicon.glyphicon-star

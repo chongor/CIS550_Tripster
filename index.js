@@ -79,9 +79,12 @@ app.post('/api/user/unfriend', routes_users.unfriend);
 app.post('/api/user/update', routes_users.update);
 app.post('/api/user/invite', routes_trips.inviteJoin);
 
+app.get('/api/user/newsfeed', routes_users.newsfeed);
 app.get('/api/user/:id/invitables', routes_trips.invitables);
 app.get('/api/user/trips', routes_trips.mine);
 app.get('/api/user/recommend/friends', routes_users.recommendFriend);
+
+app.get('/api/media/:id/ratings', routes_media.ratings);
 
 app.get('/api/trip/:id/checklist', routes_trips.checklist);
 app.get('/api/trip/:id/members', routes_trips.members);

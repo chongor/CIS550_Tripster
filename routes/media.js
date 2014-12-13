@@ -33,3 +33,28 @@ exports.albums = function(req, res){
 		user:req.user.user
 	});
 };
+
+exports.ratings = function(req, res){
+	if(!req.user.login){
+		res.end(JSON.stringify({
+			code:503,
+			msg: 'Not logged in'
+		}));
+		return;
+	}
+	var shareInst = new sharelib(req.db);
+	shareInst.getRating(req.param('id'), 0, 100, function(list, rating){
+		if(list === null){
+			res.end(JSON.stringify({
+				code:400,
+				msg:'Read Error!'
+			}));
+			return;
+		}
+		res.end(JSON.stringify({
+			code:200,
+			comments:list,
+			rating:rating
+		}));
+	});
+}

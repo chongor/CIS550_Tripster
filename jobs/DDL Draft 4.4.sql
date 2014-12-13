@@ -19,20 +19,22 @@ CREATE TABLE users (
 
 CREATE TABLE notifications (
 	owner_id INT NOT NULL,
- 	nid INT NOT NULL,
+ 	nid INT NOT NULL AUTO_INCREMENT,
 	notification TEXT NOT NULL,
-	PRIMARY KEY (owner_id, nid),
+	PRIMARY KEY (nid),
 	FOREIGN KEY (owner_id) REFERENCES users(uid)
 );
 
 CREATE TABLE newsfeed_items (
 	owner_id INT NOT NULL,
- 	fid INT NOT NULL,
+	from_id INT NOT NULL,
+ 	fid INT NOT NULL AUTO_INCREMENT,
  	time TIMESTAMP NOT NULL,
  	privacy INT NOT NULL,
 	newsfeed TEXT NOT NULL,
-	PRIMARY KEY (owner_id, fid),
-	FOREIGN KEY (owner_id) REFERENCES users(uid)
+	PRIMARY KEY (fid),
+	FOREIGN KEY (owner_id) REFERENCES users(uid),
+	FOREIGN KEY (from_id) REFERENCES users(uid)
 );
 
 CREATE TABLE friends (
@@ -83,6 +85,7 @@ CREATE TABLE locations (
 	lid INT NOT NULL AUTO_INCREMENT,
 	name TEXT NOT NULL,
 	type TEXT NOT NULL,
+	yelp_id TEXT NOT NULL,
 	PRIMARY KEY (lid)
 );
 
@@ -198,6 +201,7 @@ CREATE TABLE shareable_ratings (
 	item_id INT NOT NULL,
 	rating INT NOT NULL,
 	comment TEXT NOT NULL,
+	time TIMESTAMP NOT NULL,
 	rater_id INT NOT NULL,
 	PRIMARY KEY (item_id, rater_id),
 	FOREIGN KEY (rater_id) REFERENCES users(uid),
