@@ -8,7 +8,8 @@ exports.create = function(req, res){
 	}
 	res.render('trip-create', {
 		login:req.user.login,
-		user:req.user.user
+		user:req.user.user,
+		error:req.query.error
 	});
 };
 
@@ -26,6 +27,14 @@ exports.createTrip = function(req, res){
 	if (typeof title === "undefined" ||
 	typeof startDate === "undefined" || typeof endDate === "undefined" || typeof privacy === "undefined") {
 		res.redirect(302, '/trip/create?error=1');
+		return;
+	} else if (title === "" || startDate === "" || endDate === "" ){
+		res.redirect(302, '/trip/create?error=1');
+		return;
+	}
+	var dateformat = /^\d{4}-\d{1,2}-\d{1,2}$/;
+	if(!dateformat.test(startDate) || !dateformat.test(endDate)){
+		res.redirect(302, '/trip/create?error=3');
 		return;
 	}
 	var tripJson = {title: title, startDate: startDate, endDate: endDate, time: time,
@@ -56,6 +65,42 @@ exports.mine = function(req,res){
 		return;
 	}.bind(this));
 };
+
+exports.schedules = function(req,res){
+	if(!req.user.login){
+		res.json({
+			code: 500,
+			msg: 'Access Denied. Not logged in'
+		});
+		return;
+	}
+	var target = req.param('id');
+	var tripinst = new triplib(req.db);
+	tripinst.canView(req.user.user.uid, target, function(can){
+		if(!can){
+			res.json({
+				code: 500,
+				msg: 'Access Denied. Not permitted to view trip'
+			});
+			return;
+		}
+		tripinst.getSchedule(target, function(schedules, err){
+			if(schedules === null){
+				res.json({
+					code: 400,
+					msg: err
+				});
+				return;
+			}
+			res.json({
+				code: 200,
+				schedules: schedules
+			});
+			return;
+		});
+	});
+};
+
 
 exports.invitables = function(req,res){
 	if(!req.user.login){

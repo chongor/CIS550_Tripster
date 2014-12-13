@@ -8,15 +8,19 @@ block content
 			div.col-md-2
 			div.col-md-6
 				h1 Create Trip
-					- if(error === "1") {
-						div.alert.alert-danger
-							strong Error
-							p Please fill in all fields
-					- } else if(error  === "2"){
-						div.alert.alert-danger
-							Strong Oops!
-							p Something weird went wrong. Try again later!
-					- }
+				- if(error === "1") {
+					div.alert.alert-danger
+						strong Error
+						p Please fill in all fields
+				- } else if(error  === "2"){
+					div.alert.alert-danger
+						strong Oops!
+						p Something weird went wrong. Try again later!
+				- } else if(error === "3"){
+					div.alert.alert-danger
+						strong Date format incorrect
+						p Date format is incorrect! Please use the date picker to select a proper start and end date.
+				- }
 				form.form-group(action="", method="POST")
 					div.form-group
 						label(for="title") Trip Title
@@ -25,11 +29,11 @@ block content
 					div.form-group
 						label(for="startdate") Start Date
 							sup *
-						input.form-control(name="startdate", id="startdate", type="text", placeholder="Start Date")
+						input.form-control(name="startdate", id="startdate", type="text", placeholder="Start Date (YYYY-mm-dd)")
 					div.form-group
 						label(for="enddate") End Date
 							sup *
-						input.form-control(name="enddate", id="enddate", type="text", placeholder="End Date")
+						input.form-control(name="enddate", id="enddate", type="text", placeholder="End Date (YYYY-mm-dd)")
 					div.form-group
 						label(for"description") Description
 						input.form-control(name="description", id="description", type="text", placeholder="Get ready for the trip folks!")

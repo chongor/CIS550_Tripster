@@ -11,9 +11,13 @@ block content
 					div.col-md-12
 						p
 							span.glyphicon.glyphicon-calendar
-							span &nbsp;#{trip.start.toDateString()} - #{trip.end.toDateString()}&nbsp;&nbsp;&nbsp;
+							span &nbsp;#{trip.start.toDateString ? trip.start.toDateString() : trip.start} - #{trip.end.toDateString ? trip.end.toDateString() : trip.end}&nbsp;&nbsp;&nbsp;
 							span.glyphicon.glyphicon-eye-open
 							span &nbsp;#{trip.privacy === 0 ? "Public": "Limited"}
+						div.pull-right
+							- if (trip.owner === user.uid ) {
+								a.btn.btn-danger Delete Trip
+							- }
 						blockquote #{trip.description}
 				div.row
 					div.col-md-8
@@ -21,9 +25,18 @@ block content
 							div.col-md-12
 								h2 Schedule
 								div#schedule
+								- if (trip.owner === user.uid ) {
+									div#schedule-add
+										a.btn.btn-default Add new schedule item
+								- }
+						div.row
+							div.col-md-12
+								h2 Albums
+								div#albums
 						div.row
 							div.col-md-6
 								h3 Ratings
+								div#ratings
 							div.col-md-6
 								h3 Checklist
 								div#checklist

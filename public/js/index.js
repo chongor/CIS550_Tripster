@@ -1,4 +1,32 @@
+function updateFeed(){
+	$.ajax({
+		type:"GET",
+		url:"/api/user/newsfeed",
+		dataType:"json",
+		success: function(data){
+			if(typeof data === "string"){
+				try{
+					data = JSON.parse(data);
+				}catch(e){
+					return;
+				}
+			}
+			if(data.code === 200){
+				$("#feed-stream").empty();
+				for(var i = 0; i < data.feed.length; i++){
+					var feeditem = data.feed[i];
+					$("#feed-stream").append("<div class='status panel panel-default'>"
+						+ "<div class='panel-body'>" + feeditem.newsfeed
+						+ "</div><div class='panel-heading'>Created " + (new Date(feeditem.time)).toLocaleString()
+						+ "</div></div>");
+				}
+			}
+		}
+	});
+};
+
 window.addEventListener('load', function(){
+	updateFeed();
 	$.ajax({
 		type: "GET",
 		url: "/api/user/trips",
@@ -92,4 +120,5 @@ window.addEventListener('load', function(){
 		$("#post-privacy").val('1');
 		$("#btn-privacy").html($(this).html() + "<span class='caret'></span>");
 	});
+	
 });
