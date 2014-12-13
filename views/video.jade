@@ -7,30 +7,37 @@ block content
 			div.col-md-12
 				div.row
 					div.col-md-12
-						h2 Video
+						h2 #{media.title}
 						p
 							span.glyphicon.glyphicon-user
-							span &nbsp;Owner: #{"unknown"}&nbsp;&nbsp;&nbsp;
+							span &nbsp;Owner: 
+								a(href="/profile/#{media.owner.login}") #{media.owner.name}
+							span &nbsp;&nbsp;&nbsp;
 							span.glyphicon.glyphicon-calendar
-							span &nbsp;Time: #{"unknown"}&nbsp;&nbsp;&nbsp;
+							span &nbsp;Time: #{media.time ? media.time.toLocaleString() : "Error"}&nbsp;&nbsp;&nbsp;
 							span.glyphicon.glyphicon-heart
-							span &nbsp;Likes: #{"unknown"}&nbsp;&nbsp;&nbsp;
+							span &nbsp;Likes: #{""}&nbsp;&nbsp;&nbsp;
+							span.glyphicon.glyphicon-star
+							span.glyphicon.glyphicon-star
+							span.glyphicon.glyphicon-star
+							span.glyphicon.glyphicon-star
+							span.glyphicon.glyphicon-star
+							span &nbsp;Rating: #{"unknown"}&nbsp;&nbsp;&nbsp;
 				div.row.photoviewer
 					div.col-md-12
 						div.row
 							div.col-md-1
 							div.col-md-10
-								div(style="min-height:600px;")
-									video
+								div(style="min-height:400px;max-height:600px;overflow:auto;")
+									img.img-responsive(src="#{media.url}")
 							div.col-md-1
-				div.row.viewer
-					div.col-md-1
+				div.row.ratingviewer
 					div.col-md-10
 						div.row
 							div.col-md-12
 								h2 Comments
-						div.row.rating1
-							div.col-md-2
+						div.row.rating(style="border-top:1px solid #000;")
+							div.col-md-2(style="border-right:1px solid #000;")
 								div.row
 									div.col-md-12
 										img(src="#{user.avatar}")
@@ -40,17 +47,19 @@ block content
 											strong Username
 							div.col-md-10
 								div.row
-									div.col-md-12
-										span.glyphicon.glyphicon-star
-										span.glyphicon.glyphicon-star
-										span.glyphicon.glyphicon-star
-										span.glyphicon.glyphicon-star
-										span.glyphicon.glyphicon-star
+									div.col-md-12(style="border-bottom:1px solid #888;padding-top:10px;")
+										div.ratings.pull-right
+											span.glyphicon.glyphicon-star
+											span.glyphicon.glyphicon-star
+											span.glyphicon.glyphicon-star
+											span.glyphicon.glyphicon-star
+											span.glyphicon.glyphicon-star
+										p Sent on: 
 								div.row
-									div.col-md-12
+									div.col-md-12(style="padding-top:10px;")
 										p &nbsp;HI GAIS #{"unknown"}&nbsp;&nbsp;&nbsp;
-						div.row.rating1
-							div.col-md-2
+						div.row.rating(style="border-top:1px solid #000;")
+							div.col-md-2(style="border-right:1px solid #000;")
 								div.row
 									div.col-md-12
 										img(src="#{user.avatar}")
@@ -60,13 +69,18 @@ block content
 											strong Username
 							div.col-md-10
 								div.row
-									div.col-md-12
-										span.glyphicon.glyphicon-star
-										span.glyphicon.glyphicon-star
-										span.glyphicon.glyphicon-star
-										span.glyphicon.glyphicon-star
-										span.glyphicon.glyphicon-star
+									div.col-md-12(style="border-bottom:1px solid #888;padding-top:10px;")
+										div.ratings.pull-right
+											span.glyphicon.glyphicon-star
+											span.glyphicon.glyphicon-star
+											span.glyphicon.glyphicon-star
+											span.glyphicon.glyphicon-star
+											span.glyphicon.glyphicon-star
+										p Sent on: 
 								div.row
-									div.col-md-12
-										p &nbsp;WHO ARE YOU?! #{"unknown"}&nbsp;&nbsp;&nbsp;
-					div.col-md-1
+									div.col-md-12(style="padding-top:10px;")
+										p &nbsp;Lolz #{"unknown"}&nbsp;&nbsp;&nbsp;
+					div.col-md-2
+						div.row
+							div.col-md-12
+								h2 Share

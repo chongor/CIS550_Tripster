@@ -1,0 +1,35 @@
+extends layout
+block scripts
+	script(src="/js/tripcreate.js")
+
+block content
+	div.container
+		div.row
+			div.col-md-2
+			div.col-md-6
+				h1 Create Album
+					- if(error === "1") {
+						div.alert.alert-danger
+							strong Error
+							p Please fill in all fields
+					- } else if(error  === "2"){
+						div.alert.alert-danger
+							Strong Oops!
+							p Something weird went wrong. Try again later!
+					- }
+				form.form-group(action="", method="POST")
+					div.form-group
+						label(for="title") Album Title
+							sup *
+						input.form-control(name="title", id="title", type="text", placeholder="My Family Trips")
+					div.form-group
+						label(for"description") Description
+						textarea.form-control(name="description", id="description", type="text", placeholder="This is where you describe the album", style="height:80px;" rows="3")
+					div.form-group
+						label(for="parent") Associate with Trip:
+						select.form-control(name="parent", id="parent")
+							option(value="") None
+							option(value="") Trip 1s
+					div.form-group
+						button(id="createtrip", type="submit").btn.btn-primary.btn-block Create Album
+			div.col-md-4

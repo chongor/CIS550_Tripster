@@ -57,6 +57,7 @@ app.get('/register', routes.register);
 app.post('/register', routes.registerPost);
 app.get('/logout', routes.logout);
 
+
 // -- User Stuff
 app.get('/user/settings', routes_users.settings);
 app.get('/profile/:login', routes_users.profile);
@@ -66,7 +67,14 @@ app.get('/search', routes_search.search);
 
 // -- Media Stuff (shares)
 app.get('/photo/:id', routes_media.photos);
+app.get('/video/:id', routes_media.videos);
+
+app.get('/album/create', routes_media.createAlbum);
+app.post('/album/create', routes_media.createAlbumPost);
+
 app.get('/album/:id', routes_media.albums);
+
+app.post('/media/post', routes_media.post);
 
 // -- Trip Stuff
 app.get('/trip/create', routes_trips.create);
