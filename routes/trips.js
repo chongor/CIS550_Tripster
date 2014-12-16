@@ -55,12 +55,12 @@ exports.createTrip = function(req, res){
 		}
 		// adding newsfeed when creating trip
 		newsinst = new newslib(req.db);
-		newsinst.post(req.user.user.uid, privacy, {
-			"type" : "createTrip",
+		newsinst.post(req.user.user.uid, privacy, JSON.stringify({
+			"type" : "Trip",
 			"title" : title,
 			"description" : description
-		}, function(success) {
-			if (success) {
+		}), function(success) {
+			if (!success) {
 				req.db.end();
 				res.redirect(302, '/trip/create?error=3');
 			} else {
