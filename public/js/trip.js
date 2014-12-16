@@ -169,7 +169,9 @@ window.addEventListener('load', function(){
 						}
 					}
 					if(data.code === 200){
-						$("#checklist ul").append('<li>' + data.desc + '</li>');
+						$("#checklist ul").append('<li>' + data.desc.toLowerCase().trim() + '</li>');
+						// Remove nothing in checklist if its there
+						$('#nothingInCheckList').hide();
 					} else {
 						if (data.msg) {
 							alert(data.msg);
@@ -202,20 +204,20 @@ window.addEventListener('load', function(){
 				}
 				$("#checklist").append(list);
 				if(data.checklist.length === 0){
-					$("#checklist").append("<small>Nothing In Checklist</small>");
+					$("#checklist").append("<div id='nothingInCheckList'><small>Nothing In Checklist</small></div>");
 				}
 			}else{
 				$("#checklist").append("<p>Unable to get checklist</p>");
 			}
 		}
 	});
-	
+
 	// Get trip ratings
 	var rindex = 0;
 	getRatings(rindex, function(count){
 		rindex += count;
 	});
-	
+
 	// Get schedules
 	$.ajax({
 		type: "GET",
@@ -247,7 +249,7 @@ window.addEventListener('load', function(){
 			}
 		}
 	});
-	
+
 	// Get albums
 	$.ajax({
 		type: "GET",
@@ -309,7 +311,7 @@ window.addEventListener('load', function(){
 			}
 		});
 	});
-	
+
 	$("#rate-button").click(function(e){
 		e.preventDefault();
 		$.ajax({
@@ -319,7 +321,7 @@ window.addEventListener('load', function(){
 				'comment':$("#rate-comment").val(),
 				'rating':$("#rate-rating").val()
 			},
-			dataType:"json", 
+			dataType:"json",
 			success:function(data){
 				if(data.code === 200){
 					window.location.reload();
@@ -329,7 +331,7 @@ window.addEventListener('load', function(){
 			}
 		});
 	});
-	
+
 	$("#more-button").click(function(e){
 		getRatings(rindex, function(loaded){
 			rindex += loaded;
@@ -344,18 +346,18 @@ window.addEventListener('load', function(){
 		if(sched_hidden){
 			$("#schedule-add").show();
 			$(this).text("- Add new schedule day");
-		} else { 
+		} else {
 			$("#schedule-add").hide();
 			$(this).text("+ Add new schedule day");
 		};
 		sched_hidden = !sched_hidden
 	});
-	
+
 	$("#schedule-add-date").datepicker({format: "yyyy-mm-dd"});
-	
+
 	$("#schedule-add-button").click(function(e){
 		e.preventDefault();
-		//check 
+		//check
 		if($("#schedule-add-location").val() === ""){
 			alert('You must give a valid location name!');
 			return;
@@ -372,7 +374,7 @@ window.addEventListener('load', function(){
 				'location':$("#schedule-add-location").val(),
 				'type':$("#schedule-add-type").val()
 			},
-			dataType:"json", 
+			dataType:"json",
 			success:function(data){
 				if(data.code === 200){
 					window.location.reload();
