@@ -21,16 +21,16 @@ block content
 					div.col-md-6
 						div.status.panel.panel-default
 							div.panel-heading Profile Information
-							div.panel-body 
+							div.panel-body
 								p Full Name : #{target.fullname}
-								p Email : 
+								p Email :
 									a(href="mailto:#{target.email}") #{target.email}
-								p Affiliation : 
+								p Affiliation :
 									strong #{target.affiliation}
 								p Interests : #{target.interests.join(',')}
 								- if(target.isFriend || target.friendType === "from"){
 									p Phone : #{target.phone}
-								- } 
+								- }
 							- if(!target.isFriend) {
 								- if(target.friendType === "to") {
 									div.panel-body
@@ -47,9 +47,13 @@ block content
 							- } else if(target.uid !== user.uid){
 								div.panel-body
 									button#remove-friend.btn.btn-warning.pull-right Remove Friend
-							- } 
+								div.panel-body
+									button#invite-trip.btn.btn-primary.pull-right Invite to Trip(s) ↓
+								div.panel-body
+									div#invitables
+							- }
 						div#col-left
-					div.col-md-6 
+					div.col-md-6
 						- if(target.isFriend) {
 							div.status.panel.panel-default
 								div.panel-body
