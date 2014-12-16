@@ -1,6 +1,7 @@
 var userlib = require("../lib/users.js");
 var sharelib= require("../lib/shares.js");
 var triplib = require("../lib/trips.js");
+var newslib = require("../lib/newsfeed.js");
 exports.photos = function(req, res){
 	if(!req.user.login){
 		req.db.end();
@@ -132,8 +133,26 @@ exports.createAlbumPost = function(req, res){
 			res.redirect(302, '/album/create?error=3');
 			return;
 		}
-		req.db.end();
-		res.redirect(302,'/album/' + id);
+		shareInst.getAlbum(id, function(result){
+			if(!result){
+				req.db.end();
+				res.redirect(302, '/album/create?error=4');
+				return;
+			}
+			else{
+				console.log(result);
+				var newsInst = new newslib(req.db);
+				newsInst.post(req.user.user.uid, 0, JSON.stringify(result),function(result, bool){
+					if(!result){
+						req.db.end();
+						res.redirect(302, '/album/create?error=5');
+						return;
+					}
+					req.db.end();
+					res.redirect(302,'/album/' + id);
+				});
+			}
+		});
 	});
 };
 
