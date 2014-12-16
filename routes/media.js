@@ -2,6 +2,8 @@ var userlib = require("../lib/users.js");
 var sharelib= require("../lib/shares.js");
 var triplib = require("../lib/trips.js");
 var newslib = require("../lib/newsfeed.js");
+var notelib = require("../lib/notifications.js");
+
 exports.photos = function(req, res){
 	if(!req.user.login){
 		req.db.end();
@@ -403,9 +405,25 @@ exports.ratings = function(req, res){
 				});
 				return;
 			}
-			req.db.end();
-			res.json({
-				code:200
+			var noteinst = new notelib(req.db);
+			shareInst.getShareable(req.param('id'), function(sb){
+				if(sb === null || sb.owner === req.user.user.uid){	
+					req.db.end();
+					res.json({
+						code:200
+					});
+					return;
+				};
+				noteinst.send(sb.owner, {
+					"text":req.user.user.fullname + " added a rating to your " + sb.type,
+					"url":"/" + sb.type + "/" + req.param('id'),
+					"meta":"mediaRating"
+				}, function(){	
+					req.db.end();
+					res.json({
+						code:200
+					});
+				});
 			});
 		});
 	}
