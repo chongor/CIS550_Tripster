@@ -85,7 +85,7 @@ window.addEventListener('load', function(){
 			}
 			if(d.code === 200){
 				var memberDiv = null, j = 0, requestNum = 0;
-				if (d.isAdmin) {
+				if (d.role && d.role.isAdmin) {
 					$('#requests').append('<h3>Requests</h3>');
 				}
 				if (d.role && !d.role.isMember) {
