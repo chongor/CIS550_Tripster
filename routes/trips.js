@@ -58,6 +58,7 @@ exports.createTrip = function(req, res){
 };
 
 exports.mine = function(req,res){
+	// Returns both the trips you manage, and the trips you are only a member of
 	if(!req.user.login){
 		req.db.end();
 		res.json({code: 500});
@@ -65,15 +66,21 @@ exports.mine = function(req,res){
 	}
 	var uid = req.user.user.uid;
 	var tripinst = new triplib(req.db);
-	tripinst.getTripByOwner(uid, function(data) {
-		if (data === null) {
+	tripinst.getTripByOwner(uid, function(ownTrips) {
+		if (ownTrips === null) {
 			req.db.end();
 			res.json({code: 400});
 			return;
 		}
-		req.db.end();
-		res.json({code: 200, trips: data});
-		return;
+		tripinst.getTripByMembership(uid, function(memberTrips) {
+			if (memberTrips === null) {
+				req.db.end();
+				res.json({code: 400});
+				return;
+			}
+			req.db.end();
+			res.json({code:200, owntrips: ownTrips, membertrips: memberTrips});
+		}.bind(this));
 	}.bind(this));
 };
 
