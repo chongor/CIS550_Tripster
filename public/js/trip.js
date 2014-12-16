@@ -53,7 +53,7 @@ window.addEventListener('load', function(){
 						$(memberDiv).append('<div class="col-md-4"><div class="thumbnail">'
 							+ '<a href="/profile/' + d.members[i].user.login + '" >'
 							+ '<img src="' + d.members[i].user.avatar + '?s=128" style="width:100%"/></a>'
-							+ '<h4>' + d.members[i].user.fullname + '</h4>'
+							+ '<h4>' + $("<div></div>").text(d.members[i].user.fullname).html() + '</h4>'
 							+ '</div></div>');
 						j ++;
 					} else {
@@ -62,7 +62,7 @@ window.addEventListener('load', function(){
 						$(requestDiv).append('<div class="col-md-4"><div class="thumbnail">'
 							+ '<a href="/profile/' + d.members[i].user.login + '" >'
 							+ '<img src="' + d.members[i].user.avatar + '?s=128"/></a></div><div>');
-						$(requestDiv).append('<div class="col-md-8"><h4>' + d.members[i].user.fullname + '</h4><br/>');
+						$(requestDiv).append('<div class="col-md-8"><h4>' + $("<div></div>").text(d.members[i].user.fullname).html() + '</h4><br/>');
 						$(requestDiv).append('<button class="btn btn-primary" onclick="approve(' + d.members[i].user.uid + ')" style="margin-left:7px;">Approve</button></div>');
 						$('#requests').append(requestDiv);
 					}
@@ -138,7 +138,7 @@ window.addEventListener('load', function(){
 			if(data.code === 200){
 				var list = $("<ul></ul>");
 				for(var i = 0; i < data.checklist.length; i++){
-					list.append("<li>" + data.checklist[i].desc + "</li>");
+					list.append("<li>" + $("<div></div>").text(data.checklist[i].desc).html() + "</li>");
 				}
 				$("#checklist").append(list);
 				if(data.checklist.length === 0){
