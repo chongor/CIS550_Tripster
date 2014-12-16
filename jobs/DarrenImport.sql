@@ -49,17 +49,17 @@ INSERT INTO users (name, login, password, privacy, address, phone, email, affili
 INSERT INTO users (name, login, password, privacy, address, phone, email, affiliation, interests) VALUES ('Zhouying Fan', 'fanzyland2004@gmail.com', '', 0, '', '', 'fanzyland2004@gmail.com', 'UPenn', 'Travel');
 INSERT INTO users (name, login, password, privacy, address, phone, email, affiliation, interests) VALUES ('Yi Peng', 'peng1@seas.upenn.com', '', 0, '', '', 'peng1@seas.upenn.edu', 'Upenn', 'Fashion');
 INSERT INTO users (name, login, password, privacy, address, phone, email, affiliation, interests) VALUES ('Yan Li', 'liyan6@seas.upenn.edu', '', 0, '' , '', 'liyan6@seas.upenn.edu', 'Upenn', 'Sports');
-INSERT INTO users (name, login, password, privacy, address, phone, email, affiliation, interests) VALUES ('Taorui Cui', 'terrycui0811@gmail.com', '', 0, '', '', 'terrycui0811@gmail.com',, 'Upenn', 'Eating');
+INSERT INTO users (name, login, password, privacy, address, phone, email, affiliation, interests) VALUES ('Taorui Cui', 'terrycui0811@gmail.com', '', 0, '', '', 'terrycui0811@gmail.com', 'Upenn', 'Eating');
 INSERT INTO users (name, login, password, privacy, address, phone, email, affiliation, interests) VALUES ('Guagua Er', 'guaguaer01@gmail.com', '', 0, '', '', 'guaguaer01@gmail.com', 'Upenn', 'null');
 
--- Trip ratings
+-- Media ratings
 INSERT INTO shareable_ratings (item_id, rating, comment, time, rater_id) VALUES (1, 10, 'great', NOW(), 1);
 INSERT INTO shareable_ratings (item_id, rating, comment, time, rater_id) VALUES (1, 5, 'just so so', NOW(), 2);
-INSERT INTO shareable_ratings (item_id, rating, comment, time, rater_id) VALUES (2, 5, "Dude, that's a shark", NOW(), 3);
-INSERT INTO shareable_ratings (item_id, rating, comment, time, rater_id) VALUES (2, 3, 'Kittens are dumb', NOW(), 2);
-INSERT INTO shareable_ratings (item_id, rating, comment, time, rater_id) VALUES (2, 2, "Hey, that's me", NOW(), 4);
+INSERT INTO shareable_ratings (item_id, rating, comment, time, rater_id) VALUES (5, 5, "Dude, that's a shark", NOW(), 3);
+INSERT INTO shareable_ratings (item_id, rating, comment, time, rater_id) VALUES (5, 3, 'Kittens are dumb', NOW(), 2);
+INSERT INTO shareable_ratings (item_id, rating, comment, time, rater_id) VALUES (5, 2, "Hey, that's me", NOW(), 4);
 INSERT INTO shareable_ratings (item_id, rating, comment, time, rater_id) VALUES (4, 2, 'so huge', NOW(), 5);
 INSERT INTO shareable_ratings (item_id, rating, comment, time, rater_id) VALUES (4, 0, 'NULL', NOW(), 6);
-INSERT INTO shareable_ratings (item_id, rating, comment, time, rater_id) VALUES (1, 10, 'beautiful', NOW(), 1);
-INSERT INTO shareable_ratings (item_id, rating, comment, time, rater_id) VALUES (1, 6, 'so cold', NOW(), 2);
-INSERT INTO shareable_ratings (item_id, rating, comment, time, rater_id) VALUES (1, 8, 'Was an awesome experience', NOW(), 4);
+INSERT INTO shareable_ratings (item_id, rating, comment, time, rater_id) VALUES (3, 10, 'beautiful', NOW(), 1);
+INSERT INTO shareable_ratings (item_id, rating, comment, time, rater_id) VALUES (3, 6, 'so cold', NOW(), 2);
+INSERT INTO shareable_ratings (item_id, rating, comment, time, rater_id) VALUES (3, 8, 'Was an awesome experience', NOW(), 4);
