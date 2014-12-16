@@ -352,3 +352,51 @@ exports.checklist = function(req, res){
 		}
 	});
 };
+
+exports.rating = function(req, res){
+	if(!req.user.login){
+		res.end(JSON.stringify({
+			code:503,
+			msg:"Access denied."
+		}));
+		return;
+	}
+	console.log(req.body);
+	var tripinst = new triplib(req.db);
+	var trip = req.param('id');
+	if(req.method == "GET"){
+		tripinst.getRating(trip, 1, 24, function(ratings, err){
+			if(ratings == null){
+				res.end(JSON.stringify({
+					code:400,
+					msg:err
+				}));
+				return;
+			} else {
+				res.end(JSON.stringify({
+					code:200,
+					rating: ratings
+				}));
+				return;
+			}
+		});
+	} else {
+		// Post request
+		var rating = req.body.rating;
+		console.log(rating);
+		var comment = req.body.comment;
+		tripinst.addRating(trip, req.user.user.uid, rating, comment, function(success) {
+			if (success) {
+				res.json({code: 200});
+			} else {
+				res.json({code: 500});
+			}
+		});
+	}
+};
+
+
+
+
+
+
