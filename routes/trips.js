@@ -270,6 +270,7 @@ exports.members = function(req, res){
 					req.db.end();
 					res.end(JSON.stringify({
 						code:200,
+						role:usermap[req.user.user.uid],
 						isAdmin:(trip.owner === req.user.user.uid),
 						members:[]
 					}));
@@ -282,7 +283,6 @@ exports.members = function(req, res){
 					usermap[members[i].uid] = members[i].role;
 				}
 				var isAdmin = (usermap[req.user.user.uid] && usermap[req.user.user.uid].isAdmin) || req.user.user.uid === trip.owner;
-				var isMember = (usermap[req.user.user.uid] && usermap[req.user.user.uid].isMember);
 				userinst.getUsers(userlist, function(users) {
 					if(users === null){
 						req.db.end();
@@ -304,7 +304,7 @@ exports.members = function(req, res){
 								uid:users[i].uid,
 								login:users[i].username,
 								fullname:users[i].fullname,
-								avatar:users[i].avatar
+								avatar:users[i].avatar,
 							},
 							role: usermap[users[i].uid]
 						});
@@ -313,8 +313,8 @@ exports.members = function(req, res){
 					res.end(JSON.stringify({
 						code:200,
 						members:list,
-						isAdmin:isAdmin,
-						isMember: isMember
+						role: usermap[req.user.user.uid],
+						isAdmin:isAdmin
 					}));
 					return;
 				}.bind(this));
@@ -351,4 +351,25 @@ exports.checklist = function(req, res){
 			return;
 		}
 	});
+};
+
+exports.addItem = function(req, res){
+	if(!req.user.login){
+		req.db.end();
+		res.end(JSON.stringify({
+			code:503,
+			msg:"Access denied."
+		}));
+		return;
+	}
+	var tripinst = new triplib(req.db);
+	var tid = req.body.tid;
+	var description = req.body.description;
+	tripinst.addItem(tid, description, function(success, err){
+		if(success){
+			res.json({code: 200, desc: description});
+			return;
+		}
+		res.json({code: 400, msg: err});
+	}.bind(this));
 };
