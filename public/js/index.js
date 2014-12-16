@@ -32,28 +32,40 @@ window.addEventListener('load', function(){
 		url: "/api/user/trips",
 		dataType: "json",
 		success: function(data){
+			// Assemble both own and participating in
 			if(typeof data === "string"){
 				try{
 					data = JSON.parse(data);
 				}catch(e){}
 			}
-			$("#mytrips").empty();
+			$("#owntrips").empty();
+			$("#membertrips").empty();
 			if(data.code === 200){
-				for(var i = 0; i < data.trips.length; i++){
-					$("#mytrips").append(""
-						+ "<a class='list-group-item' href='/trip/" + data.trips[i].trip_id + "'>"
-						+ $("<div></div>").text(data.trips[i].name).html()
+				for(var i = 0; i < data.owntrips.length; i++){
+					$("#owntrips").append(""
+						+ "<a class='list-group-item' href='/trip/" + data.owntrips[i].trip_id + "'>"
+						+ $("<div></div>").text(data.owntrips[i].name).html()
 						+ "</a>");
 				}
-				if(data.trips.length === 0){
-					$("#mytrips").append("<div class='list-group-item'>No Records</div>");
-				};
+				for(var i = 0; i < data.membertrips.length; i++){
+					$("#membertrips").append(""
+						+ "<a class='list-group-item' href='/trip/" + data.membertrips[i].trip_id + "'>"
+						+ $("<div></div>").text(data.membertrips[i].name).html()
+						+ "</a>");
+				}
+				if(data.owntrips.length === 0){
+					$("#owntrips").append("<div class='list-group-item'>No Records</div>");
+				}
+				if(data.membertrips.length === 0){
+					$("#membertrips").append("<div class='list-group-item'>No Records</div>");
+				}
 			}else{
-				$("#mytrips").append("<div class='list-group-item'>No Records</div>");
+				$("#owntrips").append("<div class='list-group-item'>No Records</div>");
+				$("#membertrips").append("<div class='list-group-item'>No Records</div>");
 			}
 		}
 	});
-	
+
 	// Friend recommendations
 	$.ajax({
 		type: "GET",
@@ -82,7 +94,7 @@ window.addEventListener('load', function(){
 			}
 		}
 	});
-	
+
 	// Bind the ui
 	$("#post-type-link").click(function(e){
 		e.preventDefault();
@@ -93,7 +105,7 @@ window.addEventListener('load', function(){
 		$("#url").show();
 		$("#upload").hide();
 	});
-	
+
 	$("#post-type-image").click(function(e){
 		e.preventDefault();
 		$("#album-picker").show();
@@ -103,7 +115,7 @@ window.addEventListener('load', function(){
 		$("#url").hide();
 		$("#upload").show();
 	});
-	
+
 	$("#post-type-video").click(function(e){
 		e.preventDefault();
 		$("#album-picker").show();
@@ -113,7 +125,7 @@ window.addEventListener('load', function(){
 		$("#url").hide();
 		$("#upload").show();
 	});
-	
+
 	$("#privacy-public").click(function(e){
 		e.preventDefault();
 		$(this).parent().addClass('active');
@@ -121,7 +133,7 @@ window.addEventListener('load', function(){
 		$("#post-privacy").val('0');
 		$("#btn-privacy").html($(this).html() + "<span class='caret'></span>");
 	});
-	
+
 	$("#privacy-private").click(function(e){
 		e.preventDefault();
 		$(this).parent().addClass('active');
@@ -129,5 +141,5 @@ window.addEventListener('load', function(){
 		$("#post-privacy").val('1');
 		$("#btn-privacy").html($(this).html() + "<span class='caret'></span>");
 	});
-	
+
 });

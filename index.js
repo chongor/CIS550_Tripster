@@ -102,9 +102,11 @@ app.post('/api/trip/:id/checklist', routes_trips.addItem);
 app.get('/api/trip/:id/members', routes_trips.members);
 app.get('/api/trip/:id/requests', routes_trips.members);
 app.get('/api/trip/:id/schedule', routes_trips.schedules);
+app.get('/api/trip/:id/rating', routes_trips.rating);
 
 app.post('/api/trip/request', routes_trips.requestJoin);
 app.post('/api/trip/approve', routes_trips.approveJoin);
+app.post('/api/trip/:id/rating', routes_trips.rating);
 
 // -- Error and bad url handling
 app.get('*', routes.fourohfour);
