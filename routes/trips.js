@@ -3,9 +3,11 @@ var triplib = require("../lib/trips.js");
 
 exports.create = function(req, res){
 	if(!req.user.login){
+		req.db.end();
 		res.redirect(302, '/login');
 		return;
 	}
+	req.db.end();
 	res.render('trip-create', {
 		login:req.user.login,
 		user:req.user.user,
@@ -15,6 +17,7 @@ exports.create = function(req, res){
 
 exports.createTrip = function(req, res){
 	if(!req.user.login){
+		req.db.end();
 		res.redirect(302, '/login');
 		return;
 	}
@@ -26,14 +29,17 @@ exports.createTrip = function(req, res){
 	var privacy = +req.body.privacy;
 	if (typeof title === "undefined" ||
 	typeof startDate === "undefined" || typeof endDate === "undefined" || typeof privacy === "undefined") {
+		req.db.end();
 		res.redirect(302, '/trip/create?error=1');
 		return;
 	} else if (title === "" || startDate === "" || endDate === "" ){
+		req.db.end();
 		res.redirect(302, '/trip/create?error=1');
 		return;
 	}
 	var dateformat = /^\d{4}-\d{1,2}-\d{1,2}$/;
 	if(!dateformat.test(startDate) || !dateformat.test(endDate)){
+		req.db.end();
 		res.redirect(302, '/trip/create?error=3');
 		return;
 	}
@@ -42,15 +48,18 @@ exports.createTrip = function(req, res){
 	var tripinst = new triplib(req.db);
 	tripinst.createTrip(req.user.user.uid, tripJson, function(success, tid) {
 		if (!success || tid === null) {
+			req.db.end();
 			res.redirect(302, '/trip/create?error=2');
 			return;
 		}
+		req.db.end();
 		res.redirect(302, '/trip/' + tid);
 	}.bind(this));
 };
 
 exports.mine = function(req,res){
 	if(!req.user.login){
+		req.db.end();
 		res.json({code: 500});
 		return;
 	}
@@ -58,9 +67,11 @@ exports.mine = function(req,res){
 	var tripinst = new triplib(req.db);
 	tripinst.getTripByOwner(uid, function(data) {
 		if (data === null) {
+			req.db.end();
 			res.json({code: 400});
 			return;
 		}
+		req.db.end();
 		res.json({code: 200, trips: data});
 		return;
 	}.bind(this));
@@ -68,6 +79,7 @@ exports.mine = function(req,res){
 
 exports.schedules = function(req,res){
 	if(!req.user.login){
+		req.db.end();
 		res.json({
 			code: 500,
 			msg: 'Access Denied. Not logged in'
@@ -78,6 +90,7 @@ exports.schedules = function(req,res){
 	var tripinst = new triplib(req.db);
 	tripinst.canView(req.user.user.uid, target, function(can){
 		if(!can){
+			req.db.end();
 			res.json({
 				code: 500,
 				msg: 'Access Denied. Not permitted to view trip'
@@ -86,12 +99,14 @@ exports.schedules = function(req,res){
 		}
 		tripinst.getSchedule(target, function(schedules, err){
 			if(schedules === null){
+				req.db.end();
 				res.json({
 					code: 400,
 					msg: err
 				});
 				return;
 			}
+			req.db.end();
 			res.json({
 				code: 200,
 				schedules: schedules
@@ -104,6 +119,7 @@ exports.schedules = function(req,res){
 
 exports.invitables = function(req,res){
 	if(!req.user.login){
+		req.db.end();
 		res.json({code: 500});
 		return;
 	}
@@ -112,9 +128,11 @@ exports.invitables = function(req,res){
 	var tripinst = new triplib(req.db);
 	tripinst.getInvitables(inviter, target, function(data) {
 		if (data === null) {
+			req.db.end();
 			res.json({code: 500});
 			return;
 		}
+		req.db.end();
 		res.json({code: 200, invitables: data});
 		return;
 	}.bind(this));
@@ -122,6 +140,7 @@ exports.invitables = function(req,res){
 
 exports.inviteJoin = function(req, res){
 	if(!req.user.login){
+		req.db.end();
 		res.json({code: 500});
 		return;
 	}
@@ -131,9 +150,10 @@ exports.inviteJoin = function(req, res){
 	var tripinst = new triplib(req.db);
 	tripinst.inviteJoin(inviter, target, tid, function(success) {
 		if (success) {
+			req.db.end();
 			res.json({code: 200});
-		}
-		else {
+		} else {
+			req.db.end();
 			res.json({code: 500});
 		}
 	}.bind(this));
@@ -141,6 +161,7 @@ exports.inviteJoin = function(req, res){
 
 exports.requestJoin = function(req, res){
 	if(!req.user.login){
+		req.db.end();
 		res.json({code: 500});
 		return;
 	}
@@ -152,8 +173,10 @@ exports.requestJoin = function(req, res){
 	var tripinst = new triplib(req.db);
 	tripinst.requestJoin(requester, tid, function(success) {
 		if (success) {
+			req.db.end();
 			res.json({code: 200});
 		} else {
+			req.db.end();
 			res.json({code: 500});
 		}
 	}.bind(this));
@@ -161,6 +184,7 @@ exports.requestJoin = function(req, res){
 
 exports.approveJoin = function(req, res){
 	if(!req.user.login){
+		req.db.end();
 		res.json({code: 500});
 		return;
 	}
@@ -169,8 +193,10 @@ exports.approveJoin = function(req, res){
 	var tripinst = new triplib(req.db);
 	tripinst.approveJoin(newmember, tid, function(success) {
 		if (success) {
+			req.db.end();
 			res.json({code: 200});
 		} else {
+			req.db.end();
 			res.json({code: 500});
 		}
 	}.bind(this));
@@ -178,12 +204,14 @@ exports.approveJoin = function(req, res){
 
 exports.view = function(req, res){
 	if(!req.user.login){
+		req.db.end();
 		res.redirect(302, '/login');
 		return;
 	}
 	var tripinst = new triplib(req.db);
 	tripinst.canView(req.user.user.uid, req.param("id"), function(canView, trip, msg){
 		if(!canView){
+			req.db.end();
 			res.render('500', {
 				login:req.user.login,
 				user:req.user.user,
@@ -192,12 +220,14 @@ exports.view = function(req, res){
 			return;
 		}
 		if(trip !== null){
+			req.db.end();
 			res.render('trip', {
 				login:req.user.login,
 				user:req.user.user,
 				trip:trip
 			});
 		}else{
+			req.db.end();
 			res.render('404', {
 				login:req.user.login,
 				user:req.user.user
@@ -208,6 +238,7 @@ exports.view = function(req, res){
 
 exports.members = function(req, res){
 	if(!req.user.login){
+		req.db.end();
 		res.end(JSON.stringify({
 			code:503,
 			msg:"Access denied."
@@ -219,6 +250,7 @@ exports.members = function(req, res){
 
 	tripinst.canView(req.user.user.uid, tripid, function(canView, trip, msg){
 		if(!canView){
+			req.db.end();
 			res.end(JSON.stringify({
 				code:500,
 				msg:(trip === null ? "Nonexistant Trip" : "Not authorized")
@@ -227,6 +259,7 @@ exports.members = function(req, res){
 		}
 		tripinst.getMembers(tripid, function(members){
 			if(members === null){
+				req.db.end();
 				res.end(JSON.stringify({
 					code:500,
 					msg:"Failed to get member list"
@@ -234,6 +267,7 @@ exports.members = function(req, res){
 				return;
 			}else{
 				if(members.length === 0){
+					req.db.end();
 					res.end(JSON.stringify({
 						code:200,
 						isAdmin:(trip.owner === req.user.user.uid),
@@ -251,6 +285,7 @@ exports.members = function(req, res){
 				var isMember = (usermap[req.user.user.uid] && usermap[req.user.user.uid].isMember);
 				userinst.getUsers(userlist, function(users) {
 					if(users === null){
+						req.db.end();
 						res.end(JSON.stringify({
 							code:500,
 							msg:"Failed to get user data"
@@ -274,6 +309,7 @@ exports.members = function(req, res){
 							role: usermap[users[i].uid]
 						});
 					};
+					req.db.end();
 					res.end(JSON.stringify({
 						code:200,
 						members:list,
@@ -289,6 +325,7 @@ exports.members = function(req, res){
 
 exports.checklist = function(req, res){
 	if(!req.user.login){
+		req.db.end();
 		res.end(JSON.stringify({
 			code:503,
 			msg:"Access denied."
@@ -299,12 +336,14 @@ exports.checklist = function(req, res){
 	var trip = req.param('id');
 	tripinst.getChecklist(trip, function(items, err){
 		if(items === null){
+			req.db.end();
 			res.end(JSON.stringify({
 				code:400,
 				msg:err
 			}));
 			return;
 		} else {
+			req.db.end();
 			res.end(JSON.stringify({
 				code:200,
 				checklist: items
