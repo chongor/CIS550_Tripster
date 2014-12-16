@@ -14,10 +14,6 @@ block content
 							span &nbsp;#{trip.start.toDateString ? trip.start.toDateString() : trip.start} - #{trip.end.toDateString ? trip.end.toDateString() : trip.end}&nbsp;&nbsp;&nbsp;
 							span.glyphicon.glyphicon-eye-open
 							span &nbsp;#{trip.privacy === 0 ? "Public": "Limited"}
-						div.pull-right
-							- if (trip.owner === user.uid ) {
-								a.btn.btn-danger Delete Trip
-							- }
 						blockquote #{trip.description}
 				div.row
 					div.col-md-8
