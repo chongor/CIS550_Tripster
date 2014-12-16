@@ -57,7 +57,7 @@ exports.createTrip = function(req, res){
 		newsinst = new newslib(req.db);
 		newsinst.post(req.user.user.uid, privacy, JSON.stringify({
 			"type" : "trip",
-			"owner": owner,
+			"owner": req.user.user.uid,
 			"trip_id": tid,
 			"name" : title,
 			"description" : description
