@@ -52,7 +52,7 @@ window.addEventListener('load', function(){
 	$("#invite-trip").click(function(){
 		inviteIsOpen = !inviteIsOpen;
 		if (!inviteIsOpen) {
-			$("#invite-trip").text('Invite to Trip(s) ↓');
+			$("#invite-trip").text('Invite to ...');
 			$("#invitables").html('');
 			$("#invitables").hide();
 			return;
@@ -61,15 +61,15 @@ window.addEventListener('load', function(){
 			type: "GET",
 			url: "/api/user/" + $("#uid").text() + "/invitables",
 		 	success: function(data){
- 				$("#invite-trip").text('Invite to Trip(s) ↑');
+ 				$("#invite-trip").text('Hide List');
 		 		var trips = data.invitables;
 		 		if (trips && trips.length > 0) {
 		 			$("#invitables").html('');
 		 			console.log(trips);
 		 			for (var i = 0; i < trips.length; i++) {
 		 				var trip = $('<div class="row"></div>');
-		 				var buttonCol = $('<div class="col-md-12">' + trips[i].description + '</div>');
-		 				var button = $('<button class="btn btn-default pull-right">' + trips[i].description+ '</button>');
+		 				var buttonCol = $('<div class="col-md-12">' + $("<div></div>").text(trips[i].description).html() + '</div>');
+		 				var button = $('<button class="btn btn-default pull-right">' + $("<div></div>").text(trips[i].description).html() + '</button>');
 		 				buttonCol.append(button);
 		 				trip.append(buttonCol);
 		 				$(button).click((function(){
@@ -99,6 +99,7 @@ window.addEventListener('load', function(){
 		 					}
 		 				})());
 		 				$("#invitables").append(trip);
+		 				$("#invitables").show();
 		 			}
 		 		} else {
 			 		var error = 'No trip to invite to.';
