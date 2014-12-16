@@ -38,15 +38,31 @@ INSERT INTO shareable_ratings (item_id, rating, comment, time, rater_id) VALUES 
 INSERT INTO share (id, src_uid, dest_uid, time) VALUES (?)
 
 -- Actual commands below
-INSERT INTO trips (1, "A COOL TRIP", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "MOUNTAINS", 1)
+INSERT INTO trips (owner_uid, title, start_date, end_date, time, description, privacy) VALUES (1, "A COOL TRIP", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "MOUNTAINS", 1)
 INSERT INTO trips (1, "SWIMMING", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "LAKE", 1)
-INSERT INTO trips (2, "NO GOOD", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "MOUNTAINS", 1)
-INSERT INTO trips (3, "LET'S GO", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "MOUNTAINS", 1)
-INSERT INTO trips (4, "DIVE", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "MOUNTAINS", 1)
-INSERT INTO trips (6, "Japan Trip", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "null", 1)
-INSERT INTO trips (7, "Hawaii Trip", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "null", 1)
-INSERT INTO trips (7, "San Francisco", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "null", 1)
-INSERT INTO trips (8, "China Trip", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "null", 1)
-INSERT INTO trips (9, "Mexico Trip", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "null", 1)
+INSERT INTO trips (owner_uid, title, start_date, end_date, time, description, privacy) VALUES (2, "NO GOOD", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "MOUNTAINS", 1)
+INSERT INTO trips (owner_uid, title, start_date, end_date, time, description, privacy) VALUES (3, "LET'S GO", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "MOUNTAINS", 1)
+INSERT INTO trips (owner_uid, title, start_date, end_date, time, description, privacy) VALUES (4, "DIVE", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "MOUNTAINS", 1)
+INSERT INTO trips (owner_uid, title, start_date, end_date, time, description, privacy) VALUES (6, "Japan Trip", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "null", 1)
+INSERT INTO trips (owner_uid, title, start_date, end_date, time, description, privacy) VALUES (7, "Hawaii Trip", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "null", 1)
+INSERT INTO trips (owner_uid, title, start_date, end_date, time, description, privacy) VALUES (7, "San Francisco", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "null", 1)
+INSERT INTO trips (owner_uid, title, start_date, end_date, time, description, privacy) VALUES (8, "China Trip", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "null", 1)
+INSERT INTO trips (owner_uid, title, start_date, end_date, time, description, privacy) VALUES (9, "Mexico Trip", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "2014-09-15T00:00:00.000Z", "null", 1)
+
+INSERT INTO trip_ratings (trip_id, uid, rating, comment, time) VALUES (1, 6, 10, "Excellent", "2014-09-15T00:00:00.000Z")
+INSERT INTO trip_ratings (trip_id, uid, rating, comment, time) VALUES (2, 6, 5, "just so so", "2014-09-15T00:00:00.000Z")
+INSERT INTO trip_ratings (trip_id, uid, rating, comment, time) VALUES (2, 6, 5, "Crazy trip", "2014-09-15T00:00:00.000Z")
+INSERT INTO trip_ratings (trip_id, uid, rating, comment, time) VALUES (1, 12, 5, "Enjoyed", "2014-09-15T00:00:00.000Z")
+INSERT INTO trip_ratings (trip_id, uid, rating, comment, time) VALUES (3, 6, 5, "Loads of fun", "2014-09-15T00:00:00.000Z")
+INSERT INTO trip_ratings (trip_id, uid, rating, comment, time) VALUES (4, 6, 6, "I like it", "2014-09-15T00:00:00.000Z")
+INSERT INTO trip_ratings (trip_id, uid, rating, comment, time) VALUES (1, 6, 1, "Fantastic", "2014-09-15T00:00:00.000Z")
+INSERT INTO trip_ratings (trip_id, uid, rating, comment, time) VALUES (1, 6, 5, "Decent", "2014-09-15T00:00:00.000Z")
+INSERT INTO trip_ratings (trip_id, uid, rating, comment, time) VALUES (1, 6, 3, "Very nice", "2014-09-15T00:00:00.000Z")
+INSERT INTO trip_ratings (trip_id, uid, rating, comment, time) VALUES (1, 6, 2, "Not bad", "2014-09-15T00:00:00.000Z")
+
+
+
+
+
 
 

@@ -56,7 +56,7 @@ window.addEventListener('load', function(){
 							+ '<h4>' + $("<div></div>").text(d.members[i].user.fullname).html() + '</h4>'
 							+ '</div></div>');
 						j ++;
-					} else {
+					} else if (d.members[i].role.isRequested) {
 						// Add requests
 						requestNum += 1;
 						var requestDiv = $('<div class="row"></div>');

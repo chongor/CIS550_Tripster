@@ -1,5 +1,6 @@
 var userlib = require("../lib/users.js");
 var triplib = require("../lib/trips.js");
+var newslib = require("../lib/newsfeed.js");
 
 exports.create = function(req, res){
 	if(!req.user.login){
@@ -52,8 +53,21 @@ exports.createTrip = function(req, res){
 			res.redirect(302, '/trip/create?error=2');
 			return;
 		}
-		req.db.end();
-		res.redirect(302, '/trip/' + tid);
+		// adding newsfeed when creating trip
+		newsinst = new newslib(req.db);
+		newsinst.post(req.user.user.uid, privacy, {
+			"type" : "createTrip",
+			"title" : title,
+			"description" : description
+		}, function(success) {
+			if (success) {
+				req.db.end();
+				res.redirect(302, '/trip/create?error=3');
+			} else {
+				req.db.end();
+				res.redirect(302,'/trip/' + tid);
+			}
+		});
 	}.bind(this));
 };
 

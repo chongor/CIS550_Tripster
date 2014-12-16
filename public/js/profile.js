@@ -120,9 +120,9 @@ window.addEventListener('load', function(){
 		 			$("#invitables").html('');
 		 			console.log(trips);
 		 			for (var i = 0; i < trips.length; i++) {
-		 				var trip = $('<div class="row"></div>');
+		 				var trip = $('<div class="row" id="tripid' + trips[i].trip_id +'"></div>');
 		 				var buttonCol = $('<div class="col-md-12">' + $("<div></div>").text(trips[i].description).html() + '</div>');
-		 				var button = $('<button class="btn btn-default pull-right">' + $("<div></div>").text(trips[i].description).html() + '</button>');
+		 				var button = $('<button class="btn btn-default pull-right">Invite</button>');
 		 				buttonCol.append(button);
 		 				trip.append(buttonCol);
 		 				$(button).click((function(){
@@ -143,7 +143,7 @@ window.addEventListener('load', function(){
 								 			}catch(e){}
 								 		}
 								 		if(data.code === 200){
-								 			console.log('Successfully invited');
+								 			$('#tripid' + tid).fadeOut();
 								 		} else  {
 								 			alert(data.msg);
 								 		}
