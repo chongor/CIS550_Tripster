@@ -37,6 +37,12 @@ function updateFeed(){
 							pbody.append("<div>" + $("<div></div>").text(itemdata.data).html() + "</div>");
 						}
 						break;
+						case 'video':{
+							var main = $("<div></div>");
+							main.append("<strong><a href='/profile/" + $("<div></div>").text(itemdata.owner.login).html() + "'>" + $("<div></div>").text(itemdata.owner.name).html() + "</a></strong> uploaded a video:");
+							main.append("<div class='innerbox'><h2><a href='/video/" + $("<div></div>").text(itemdata.id).html() + "'>" +$("<div></div>").text(itemdata.title).html() +"</a></h2><video controls='true' style='width:100%'><source src='" + $("<div></div>").text(itemdata.url).html() + "'/></video></div>");
+							pbody.append(main);
+						}break;
 						case 'photo':{
 							var main = $("<div></div>");
 							main.append("<strong><a href='/profile/" + $("<div></div>").text(itemdata.owner.login).html() + "'>" + $("<div></div>").text(itemdata.owner.name).html() + "</a></strong> uploaded a photo:");

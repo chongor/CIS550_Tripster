@@ -1,7 +1,8 @@
 var userlib = require("../lib/users.js");
 var reclib = require("../lib/recommendations.js");
-var newslib = require("../lib/newsfeed");
-var tripslib = require('../lib/trips');
+var newslib = require("../lib/newsfeed.js");
+var notelib = require("../lib/notifications.js");
+var triplib = require('../lib/trips.js');
 
 exports.profile = function(req, res){
 	var userInst = new userlib(req.db);
@@ -192,11 +193,25 @@ exports.addfriend = function(req, res){
 	var userInst = new userlib(req.db);
 	userInst.friendRequest(req.user.user.uid, parseInt(req.body.friend), function(success, msg){
 		if(success){
-			req.db.end();
-			res.end(JSON.stringify({
-				code:200,
-				msg:"Added"
-			}));
+			userInst.getRelationship(req.user.user.uid, parseInt(req.body.friend), function(rel){
+				if(rel === "friend"){
+					var msg = req.user.user.fullname + " has approved your friend request.";
+				} else {
+					var msg = req.user.user.fullname + " has sent you a friend request.";
+				}
+				var noteinst = new notelib(req.db);
+				noteinst.send(parseInt(req.body.friend), {
+					"text":msg,
+					"url":"/profile/" + req.user.user.username,
+					"meta":"friendRequest"
+				}, function(){			
+					req.db.end();
+					res.end(JSON.stringify({
+						code:200,
+						msg:"Added"
+					}));
+				});
+			});
 		} else {
 			req.db.end();
 			res.end(JSON.stringify({

@@ -27,6 +27,7 @@ var routes_media = require('./routes/media.js');
 var routes_trips = require('./routes/trips.js');
 var routes_search = require('./routes/search.js');
 var routes_locations = require('./routes/locations.js');
+var routes_notify = require('./routes/notify.js');
 // Setup app
 var app = express();
 
@@ -96,12 +97,16 @@ app.post('/api/user/update', routes_users.update);
 app.post('/api/user/invite', routes_trips.inviteJoin);
 
 app.get('/api/user/newsfeed', routes_users.newsfeed);
+app.get('/api/user/notifications', routes_notify.get);
+app.post('/api/user/notifications/read', routes_notify.read);
 app.get('/api/user/recommend/friends', routes_users.recommendFriend);
+app.get('/api/user/trips', routes_trips.mine);
 app.get('/api/user/:id/invitables', routes_trips.invitables);
 app.get('/api/user/:id/albums', routes_media.userAlbums);
 app.get('/api/user/:id/friends', routes_users.friends);
 app.get('/api/user/trips', routes_trips.mine);
 app.get('/api/user/:id/recommendtrips', routes_users.recommendTrip);
+
 
 app.get('/api/media/:id/ratings', routes_media.ratings);
 app.post('/api/media/:id/ratings', routes_media.ratings);
