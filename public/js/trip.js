@@ -22,6 +22,48 @@ var showStars = function(rating){
 	return starsCont;
 }
 
+var getRatings = function(start){
+	if(typeof start === "undefined" || start === null){
+		start = 0;
+	}
+	$.ajax({
+		type: "GET",
+		url: "/api/trip/" + $("#trip_id").text() + "/rating?start=" + start,
+		dataType:"json",
+		success: function(data){
+			if(typeof data === "string"){
+				try{
+					data = JSON.parse(data);
+				}catch(e){
+					console.log('Parse ratings failed!');
+					return;
+				}
+			}
+			if(data.code === 200){
+				for(var i = 0; i < data.rating.length; i++){
+					var panel = $("<div class='panel panel-default'></div>");
+					var pbody = $("<div class='panel-body'></div>");
+					var pfoot = $("<div class='panel-heading'></div>");
+					panel.append(pbody);
+					panel.append(pfoot);
+					pbody.append($("<a href='/profile/" + $("<div></div>").text(data.rating[i].user.login).html() + "'><img src='" + $("<div></div>").text(data.rating[i].user.avatar).html() + "' style='width:80px' class='pull-left' /></a>"));
+					pbody.append($("<div style='margin-left: 85px; padding:10px;'>" + $("<div></div>").text(data.rating[i].comment).html() + "</div>"));
+					pfoot.append($("<strong>" + $("<div></div>").text(data.rating[i].user.name).html() + " </strong>"));
+					pfoot.append($("<span>" + (new Date(data.rating[i].time)).toLocaleString() + "</span>"));
+					pfoot.append($("<div class='pull-right'>" + showStars(data.rating[i].rating).html() + "</div>"));
+					$("#ratings").append(panel);
+				}
+				if(data.rating.length === 0){
+					$("#ratings").append("<div class='well'>No ratings yet!</div>");
+				}
+			}else{
+				$("#ratings").empty();
+				$("#ratings").append("<div class='well'>Error getting ratings!</div>");
+			}
+		}
+	});
+}
+
 window.addEventListener('load', function(){
 
 	// Get trip members
@@ -163,40 +205,37 @@ window.addEventListener('load', function(){
 	});
 	
 	// Get trip ratings
+	var rindex = 0;
+	getRatings(rindex);
+	
+	// Get schedules
 	$.ajax({
 		type: "GET",
-		url: "/api/trip/" + $("#trip_id").text() + "/rating",
+		url: "/api/trip/" + $("#trip_id").text() + "/schedule",
 		dataType:"json",
 		success: function(data){
 			if(typeof data === "string"){
 				try{
 					data = JSON.parse(data);
 				}catch(e){
-					console.log('Parse ratings failed!');
+					console.log('Parse schedule failed!');
 					return;
 				}
 			}
 			if(data.code === 200){
-				$("#ratings").empty();
-				for(var i = 0; i < data.rating.length; i++){
-					var panel = $("<div class='panel panel-default'></div>");
-					var pbody = $("<div class='panel-body'></div>");
-					var pfoot = $("<div class='panel-heading'></div>");
-					panel.append(pbody);
-					panel.append(pfoot);
-					pbody.append($("<a href='/profile/" + $("<div></div>").text(data.rating[i].user.login).html() + "'><img src='" + $("<div></div>").text(data.rating[i].user.avatar).html() + "' style='width:80px' class='pull-left' /></a>"));
-					pbody.append($("<div style='margin-left: 85px; padding:10px;'>" + $("<div></div>").text(data.rating[i].comment).html() + "</div>"));
-					pfoot.append($("<strong>" + $("<div></div>").text(data.rating[i].user.name).html() + " </strong>"));
-					pfoot.append($("<span>" + (new Date(data.rating[i].time)).toLocaleString() + "</span>"));
-					pfoot.append($("<div class='pull-right'>" + showStars(data.rating[i].rating).html() + "</div>"));
-					$("#ratings").append(panel);
+				$("#schedule").empty();
+				var list = $("<div class='list-group'></div>");
+				for(var i = 0; i < data.schedules.length; i++){
+					var item = $("<a class='list-group-item' href='/location/" + $("<div></div>").text(data.schedules[i].lid).html() + "'>" + (new Date(data.schedules[i].trip_date)).toDateString() + ": " + $("<div></div>").text(data.schedules[i].name).html() + "</div>");
+					$(list).append(item);
 				}
-				if(data.rating.length === 0){
-					$("#ratings").append("<div class='well'>No ratings yet!</div>");
+				$("#schedule").append(list);
+				if(data.schedules.length === 0){
+					$("#schedule").append("<div class='well'>No schedules yet!</div>");
 				}
 			}else{
-				$("#ratings").empty();
-				$("#ratings").append("<div class='well'>Error getting ratings!</div>");
+				$("#schedule").empty();
+				$("#schedule").append("<div class='well'>Error getting schedule!</div>");
 			}
 		}
 	});

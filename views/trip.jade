@@ -26,8 +26,19 @@ block content
 								h2 Schedule
 								div#schedule
 								- if (trip.owner === user.uid ) {
-									div#schedule-add
+									div#schedule-add-expand
 										a.btn.btn-default.btn-block + Add new schedule day
+									div#schedule-add
+										div.panel.panel-default(style="margin-top:10px;")
+											div.panel-body
+												div.form-group
+													label Date
+													input#schedule-add-date.form-control(type="text")
+												div.form-group
+													label Location
+													input#schedule-add-location.form-control(type="text")
+												div.form-group
+													button.btn.btn-primary(type="submit") Add Schedule
 								- }
 						div.row
 							div.col-md-12
@@ -53,8 +64,7 @@ block content
 															option(value="#{10 - i}") #{10 - i}
 														- }
 												div.form-group
-													button.btn.btn-primary(type="submit")
-														Add Rating
+													button.btn.btn-primary(type="submit") Add Rating
 							div.col-md-6
 								h3 Checklist
 								div#checklist
