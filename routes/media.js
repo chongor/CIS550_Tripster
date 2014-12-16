@@ -143,9 +143,23 @@ exports.post = function(req, res){
 		res.redirect(302, '/login');
 		return;
 	}
-	console.log(req.body);
-	req.db.end();
-	res.redirect(302, '/');
+	// Create temp store for fields
+	var fields = {};
+	req.pipe(req.busboy);
+	req.busboy.on('file', function(name, handle, filename){
+		console.log(name);
+		handle.resume();
+	});
+	req.busboy.on('field', function(name, val){
+		fields[name] = val;
+		console.log(name);
+	});
+	req.busboy.on('finish', function(){
+		console.log(fields);
+		req.db.end();
+		res.redirect(302, '/');
+	});
+	
 };
 
 exports.ratings = function(req, res){

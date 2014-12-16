@@ -90,6 +90,8 @@ window.addEventListener('load', function(){
 		$(".ptype").removeClass('btn-info').addClass('btn-default');
 		$(this).addClass('btn-info').removeClass('btn-default');;
 		$("#post-type").val('url');
+		$("#url").show();
+		$("#upload").hide();
 	});
 	
 	$("#post-type-image").click(function(e){
@@ -98,6 +100,8 @@ window.addEventListener('load', function(){
 		$(".ptype").removeClass('btn-info').addClass('btn-default');
 		$(this).addClass('btn-info').removeClass('btn-default');
 		$("#post-type").val('image');
+		$("#url").hide();
+		$("#upload").show();
 	});
 	
 	$("#post-type-video").click(function(e){
@@ -106,6 +110,8 @@ window.addEventListener('load', function(){
 		$(".ptype").removeClass('btn-info').addClass('btn-default');
 		$(this).addClass('btn-info').removeClass('btn-default');
 		$("#post-type").val('video');
+		$("#url").hide();
+		$("#upload").show();
 	});
 	
 	$("#privacy-public").click(function(e){

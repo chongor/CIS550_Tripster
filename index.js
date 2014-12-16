@@ -14,6 +14,7 @@ var rstore = require('connect-redis')(esession);
 var cparser = require('cookie-parser');
 var elogger = require('morgan');
 var bparser = require('body-parser');
+var busboy = require('connect-busboy');
 // Load our own middleware
 var users = require('./middle/users.js');
 var db = require('./middle/db.js');
@@ -42,6 +43,7 @@ app.use(esession({
 app.use(estatic(__dirname + '/public', {maxAge:86400000}));
 app.use(elogger('dev'));
 app.use(bparser.json());
+app.use(busboy());
 app.use(bparser.urlencoded({ extended: false }));
 // Load our user middleware
 app.use(db());

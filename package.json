@@ -32,6 +32,7 @@
     "mysql":"*",
     "node-redis":"*",
     "connect-redis":"*",
-    "node-s3":"*"
+    "node-s3":"*",
+    "connect-busboy":"*"
   }
 }

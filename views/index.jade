@@ -21,11 +21,12 @@ block content
 			div.col-md-7
 				div.row
 					div.col-md-12
-						form(id="new-post" action="/media/post", method="POST")
+						form(id="new-post" action="/media/post", method="POST", enctype="multipart/form-data")
 							input(name="type", id="post-type", value="photo", type="hidden")
 							input(name="privacy", id="post-privacy", value="0", type="hidden")
 							div.form-group
-								input.form-control(name="url",placeholder="http://")
+								input.form-control(type="file", name="upload", id="upload", style="display:none;")
+								input.form-control(name="url",placeholder="http://", id="url")
 							div.form-group
 								textarea.form-control(name="description" placeholder="Write Description", style="resize: none;height:80px;")
 							div.form-group
