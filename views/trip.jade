@@ -27,7 +27,7 @@ block content
 								div#schedule
 								- if (trip.owner === user.uid ) {
 									div#schedule-add
-										a.btn.btn-default Add new schedule item
+										a.btn.btn-default.btn-block + Add new schedule day
 								- }
 						div.row
 							div.col-md-12
@@ -37,6 +37,24 @@ block content
 							div.col-md-6
 								h3 Ratings
 								div#ratings
+								div#ratings-load(style="margin:5px 0 20px 0;")
+									button.btn.btn-default.btn-block Load More ... 
+								div#rating-form
+									div.panel.panel-default
+										div.panel-body
+											form
+												div.form-group
+													label Comment:
+													textarea.form-control(rows="5", name="comment")
+												div.form-group
+													label Rating:
+													select.form-control(name="rating")
+														- for(var i = 0; i <= 10; i++){
+															option(value="#{10 - i}") #{10 - i}
+														- }
+												div.form-group
+													button.btn.btn-primary(type="submit")
+														Add Rating
 							div.col-md-6
 								h3 Checklist
 								div#checklist

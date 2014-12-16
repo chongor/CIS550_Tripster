@@ -8,7 +8,9 @@ exports.main = function(req, res){
 			res.render('index', {
 				login:req.user.login,
 				user:req.user.user,
-				albums:albums
+				albums:albums,
+				success:req.query.success,
+				error:req.query.error
 			});
 		});
 	} else {

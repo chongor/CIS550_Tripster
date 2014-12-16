@@ -35,6 +35,9 @@ window.addEventListener('load', function (){
 					var panel = $("<div class='panel panel-default'></div>").append(pbody).append(pfoot);
 					$("#comments").append(panel);
 				}
+				if(data.comments.length === 0){
+					$("#comments").append("<div class='well'>No Ratings Yet</div>");
+				}
 			}else{
 				console.log(data);
 			}

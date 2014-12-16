@@ -202,14 +202,28 @@ exports.post = function(req, res){
 		console.log(fields);
 		var shareinst = new sharelib(req.db);
 		var aid = parseInt(fields.album);
-		shareinst.createMediaShare(fields.type, req.user.user.uid, fields.description, req.s3.url + fn, aid < 0 ? null : aid, function(success){
+		shareinst.createMediaShare(fields.type, req.user.user.uid, fields.description, req.s3.url + fn, aid < 0 ? null : aid, function(success, sid){
 			if(!success){
 				req.db.end();
 				res.redirect(302, '/?error=1');
 				return;
 			}
-			req.db.end();
-			res.redirect(302, '/');
+			shareinst.getMultimedia(sid, function(data){
+				if(data === null){
+					req.db.end();
+					res.redirect(302, '/?error=2');
+					return;
+				}
+				var newsInst = new newslib(req.db);
+				newsInst.post(req.user.user.uid, 0, JSON.stringify(data), function(result, err) {
+					if(!result){
+						console.log(err);
+					}
+					req.db.end();
+					res.redirect(302, '/?success=1');
+					return;
+				});
+			});
 		});
 		returned = true;
 	};

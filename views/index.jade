@@ -16,11 +16,25 @@ block content
 					div.col-md-12
 						div.list-group
 							a.filters-list-item.list-group-item.active(id="filter-newsfeed",href="#") News Feed
-							a.filters-list-item.list-group-item(id="filter-trips",href="#") Trips
-							a.filters-list-item.list-group-item(id="filter-albums",href="#") Albums
+							a.filters-list-item.list-group-item(id="filter-trip",href="#") Trips
+							a.filters-list-item.list-group-item(id="filter-photo",href="#") Photos
+							a.filters-list-item.list-group-item(id="filter-album",href="#") Albums
 			div.col-md-7
 				div.row
 					div.col-md-12
+						- if(success === '1') {
+							div.alert.alert-success
+								strong Success
+								p Upload successful!
+						- } else if (error === '1') {
+							div.alert.alert-danger
+								strong Error
+								p Failed to upload file
+						- } else if (error === '2') {
+							div.alert.alert-danger
+								strong Error
+								p Upload check failed. File may not have been successfully uploaded
+						- }
 						form(id="new-post" action="/media/post", method="POST", enctype="multipart/form-data")
 							input(name="type", id="post-type", value="photo", type="hidden")
 							input(name="privacy", id="post-privacy", value="0", type="hidden")

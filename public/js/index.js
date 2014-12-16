@@ -20,9 +20,6 @@ function updateFeed(){
 					} catch(e) {
 						var itemdata = {'type':'text', 'data': feeditem.newsfeed };
 					}
-					var panel = $("<div class='status panel panel-default'></div>");
-					var pbody = $("<div class='panel-body'></div>");
-					var pfoot = $("<div class='panel-heading'></div>");
 					// Guess some facts about item
 					if(!itemdata.type){
 						if(itemdata.trip_id){
@@ -31,11 +28,21 @@ function updateFeed(){
 							itemdata.type = 'album';
 						}
 					}
+					var panel = $("<div class='status panel panel-default group-filter-newsfeed group-filter-" + itemdata.type + "'></div>");
+					var pbody = $("<div class='panel-body'></div>");
+					var pfoot = $("<div class='panel-heading'></div>");
+					
 					switch(itemdata.type){
 						case 'text':{
 							pbody.append("<div>" + $("<div></div>").text(itemdata.data).html() + "</div>");
 						}
 						break;
+						case 'photo':{
+							var main = $("<div></div>");
+							main.append("<strong><a href='/profile/" + $("<div></div>").text(itemdata.owner.login).html() + "'>" + $("<div></div>").text(itemdata.owner.name).html() + "</a></strong> uploaded a photo:");
+							main.append("<div class='innerbox'><h2><a href='/photo/" + $("<div></div>").text(itemdata.id).html() + "'>" +$("<div></div>").text(itemdata.title).html() +"</a></h2><img class='img-responsive' src='" + $("<div></div>").text(itemdata.url).html() + "'/></div>");
+							pbody.append(main);
+						}break;
 						case 'album':{
 							var main = $("<div></div>");
 							main.append("<strong><a href='/profile/" + $("<div></div>").text(itemdata.owner.login).html() + "'>" + $("<div></div>").text(itemdata.owner.name).html() + "</a></strong> uploaded an album:");
@@ -180,4 +187,12 @@ window.addEventListener('load', function(){
 		$("#btn-privacy").html($(this).html() + "<span class='caret'></span>");
 	});
 
+	$(".filters-list-item").click(function(e){
+		e.preventDefault();
+		$(".filters-list-item").removeClass('active');
+		$(this).addClass('active');
+		var id = $(this).attr("id");
+		$(".group-filter-newsfeed").hide();
+		$(".group-" + id).show();
+	});
 });
