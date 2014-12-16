@@ -18,6 +18,7 @@ var busboy = require('connect-busboy');
 // Load our own middleware
 var users = require('./middle/users.js');
 var db = require('./middle/db.js');
+var s3 = require('./middle/s3.js');
 var nonce = require('./middle/nonce.js');
 // Load routest
 var routes = require('./routes/routes.js');
@@ -47,6 +48,7 @@ app.use(busboy());
 app.use(bparser.urlencoded({ extended: false }));
 // Load our user middleware
 app.use(db());
+app.use(s3());
 app.use(users());
 app.use(nonce());
 
@@ -91,6 +93,7 @@ app.post('/api/user/invite', routes_trips.inviteJoin);
 
 app.get('/api/user/newsfeed', routes_users.newsfeed);
 app.get('/api/user/:id/invitables', routes_trips.invitables);
+app.get('/api/user/:id/albums', routes_media.albums);
 app.get('/api/user/trips', routes_trips.mine);
 app.get('/api/user/recommend/friends', routes_users.recommendFriend);
 

@@ -111,7 +111,7 @@ window.addEventListener('load', function(){
 		$("#album-picker").show();
 		$(".ptype").removeClass('btn-info').addClass('btn-default');
 		$(this).addClass('btn-info').removeClass('btn-default');
-		$("#post-type").val('image');
+		$("#post-type").val('photo');
 		$("#url").hide();
 		$("#upload").show();
 	});
