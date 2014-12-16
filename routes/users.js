@@ -2,6 +2,7 @@ var userlib = require("../lib/users.js");
 var reclib = require("../lib/recommendations.js");
 var newslib = require("../lib/newsfeed.js");
 var notelib = require("../lib/notifications.js");
+var triplib = require('../lib/trips.js');
 
 exports.profile = function(req, res){
 	var userInst = new userlib(req.db);
@@ -295,6 +296,50 @@ exports.recommendFriend = function(req, res){
 					res.end(JSON.stringify({
 						code:200,
 						recommend:users
+					}));
+				}
+			});
+		}
+	});
+};
+
+exports.recommendTrip = function(req, res){
+	if(!req.user.login){
+		req.db.end();
+		res.end(JSON.stringify({
+			code:503,
+			msg:"Access denied."
+		}));
+		return;
+	}
+	var tripInst = new triplib(req.db);
+	var recInst = new reclib(req.db);
+	recInst.recommendTrip(req.user.user.uid, 20, function(data){
+		if(data.length === 0){
+			req.db.end();
+			res.end(JSON.stringify({
+				code:200,
+				recommend:data
+			}));
+			return;
+		} else {
+			tripInst.getTripList(data, function(result){
+				if(result === null){
+					req.db.end();
+					res.end(JSON.stringify({
+						code:400,
+						msg:'Error: Could not get user data'
+					}));
+					return;
+				}else{
+					var trips = [];
+					for(var i = 0; i < result.length; i++){
+						trips.push(result[i]);
+					}
+					req.db.end();
+					res.end(JSON.stringify({
+						code:200,
+						recommend:trips
 					}));
 				}
 			});
