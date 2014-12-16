@@ -22,7 +22,7 @@ var showStars = function(rating){
 	return starsCont;
 }
 
-var getRatings = function(start){
+var getRatings = function(start, callback){
 	if(typeof start === "undefined" || start === null){
 		start = 0;
 	}
@@ -54,11 +54,17 @@ var getRatings = function(start){
 					$("#ratings").append(panel);
 				}
 				if(data.rating.length === 0){
-					$("#ratings").append("<div class='well'>No ratings yet!</div>");
+					if(start === 0){
+						$("#ratings").append("<div class='well'>No ratings yet!</div>");
+					}
+					callback(data.rating.length);
+				}else{
+					callback(data.rating.length);
 				}
 			}else{
 				$("#ratings").empty();
 				$("#ratings").append("<div class='well'>Error getting ratings!</div>");
+				callback(0);
 			}
 		}
 	});
@@ -206,7 +212,9 @@ window.addEventListener('load', function(){
 	
 	// Get trip ratings
 	var rindex = 0;
-	getRatings(rindex);
+	getRatings(rindex, function(count){
+		rindex += count;
+	});
 	
 	// Get schedules
 	$.ajax({
@@ -239,7 +247,42 @@ window.addEventListener('load', function(){
 			}
 		}
 	});
-
+	
+	// Get albums
+	$.ajax({
+		type: "GET",
+		url: "/api/trip/" + $("#trip_id").text() + "/albums",
+		dataType:"json",
+		success: function(data){
+			if(typeof data === "string"){
+				try{
+					data = JSON.parse(data);
+				}catch(e){
+					console.log('Parse albums failed!');
+					return;
+				}
+			}
+			if(data.code === 200){
+				var curRow = null;
+				for(var i = 0; i < data.albums.length; i++){
+					if(i % 3 === 0){
+						curRow = $("<div class='row'></div>");
+						$("#albums").append(curRow);
+					}
+					var col = $('<div class="col-md-4"></div>');
+					var panel = $("<div class='panel panel-default'><div class='panel-body'><a href='/album/" + data.albums[i].item_id + "'><img class='img-responsive' src='/album/" + data.albums[i].item_id + "/cover'/></a><strong>" + data.albums[i].title + "</strong></div></div>");
+					col.append(panel);
+					curRow.append(col);
+				}
+				$("#checklist").append(list);
+				if(data.checklist.length === 0){
+					$("#checklist").append("<small>Nothing In Checklist</small>");
+				}
+			}else{
+				$("#albums").append("<div class='well'>Unable to get albums</div>");
+			}
+		}
+	});
 	// Bind buttons
 	$("#join-btn").click(function(e){
 		e.preventDefault();
@@ -262,6 +305,79 @@ window.addEventListener('load', function(){
 					window.location.reload();
 				}else{
 					alert('Join trip failed. Please try again later.');
+				}
+			}
+		});
+	});
+	
+	$("#rate-button").click(function(e){
+		e.preventDefault();
+		$.ajax({
+			type:"POST",
+			url: "/api/trip/" + $("#trip_id").text() + "/rating",
+			data:{
+				'comment':$("#rate-comment").val(),
+				'rating':$("#rate-rating").val()
+			},
+			dataType:"json", 
+			success:function(data){
+				if(data.code === 200){
+					window.location.reload();
+				}else{
+					alert('Failed to rate trip.\n' + data.msg);
+				}
+			}
+		});
+	});
+	
+	$("#more-button").click(function(e){
+		getRatings(rindex, function(loaded){
+			rindex += loaded;
+			if(!loaded){
+				alert('No more ratings');
+			}
+		});
+	});
+	var sched_hidden = true;
+	$("#schedule-add-expand-button").click(function(e){
+		e.preventDefault();
+		if(sched_hidden){
+			$("#schedule-add").show();
+			$(this).text("- Add new schedule day");
+		} else { 
+			$("#schedule-add").hide();
+			$(this).text("+ Add new schedule day");
+		};
+		sched_hidden = !sched_hidden
+	});
+	
+	$("#schedule-add-date").datepicker({format: "yyyy-mm-dd"});
+	
+	$("#schedule-add-button").click(function(e){
+		e.preventDefault();
+		//check 
+		if($("#schedule-add-location").val() === ""){
+			alert('You must give a valid location name!');
+			return;
+		}
+		if(!/^\d{4}-\d{1,2}-\d{1,2}$/.test($("#schedule-add-date").val())){
+			alert('You must give a valid formatted date (YYYY-mm-dd)!');
+			return;
+		}
+		$.ajax({
+			type:"POST",
+			url: "/api/trip/" + $("#trip_id").text() + "/schedule",
+			data:{
+				'date':$("#schedule-add-date").val(),
+				'location':$("#schedule-add-location").val(),
+				'type':$("#schedule-add-type").val()
+			},
+			dataType:"json", 
+			success:function(data){
+				if(data.code === 200){
+					window.location.reload();
+				}else{
+					alert('Failed to add schedule.\n' + data.msg);
 				}
 			}
 		});

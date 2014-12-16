@@ -213,7 +213,43 @@ exports.createAlbumPost = function(req, res){
 			res.redirect(302, '/album/create?error=3');
 			return;
 		}
-		shareInst.getAlbum(id, function(result){
+		var parent = parseInt(req.body.parent);
+		var privacy = parseInt(req.body.privacy);
+		if(parent >= 0){
+			// We need to parent this to a trip
+			shareInst.parentShareable(id, parent, privacy, function(success, err){
+				if(!success){
+					req.db.end();
+					res.redirect(302, '/album/' + id);
+					return;
+				}
+				// parented 
+				shareInst.getAlbum(id, function(result){
+					console.log(result);
+					if(!result){
+						req.db.end();
+						res.redirect(302, '/album/' + id);
+						return;
+					}
+					result.type = 'album';
+					var newsInst = new newslib(req.db);
+					newsInst.post(req.user.user.uid, 0, JSON.stringify(result),function(result, err){
+						if(!result){
+							console.log('Error adding album to newsfeed!');
+							req.db.end();
+							res.redirect(302,'/album/' + id);
+							return;
+						}
+						req.db.end();
+						res.redirect(302,'/album/' + id);
+						return;
+					});
+				});
+				
+				// yeah
+			})
+		}else{
+			shareInst.getAlbum(id, function(result){
 				console.log(result);
 				if(!result){
 					req.db.end();
@@ -233,7 +269,8 @@ exports.createAlbumPost = function(req, res){
 					res.redirect(302,'/album/' + id);
 					return;
 				});
-		});
+			});
+		}
 	});
 };
 

@@ -28,12 +28,17 @@ block content
 					div.form-group
 						label(for="parent") Associate with Trip:
 						select.form-control(name="parent", id="parent")
-							option(value="") None
+							option(value="-1") None
 							- if(trips && trips.length > 0) {
 								- for(var i = 0; i < trips.length; i++){
 									option(value="#{trips[i].trip_id}") #{trips[i].name}
 								- }
 							- }
+					div.form-group
+						label(for="privacy") Privacy (only in effect if associated with trip)
+						select.form-control(name="privacy", id="privacy")
+							option(value="0") Public
+							option(value="1") Private
 					div.form-group
 						button(id="createtrip", type="submit").btn.btn-primary.btn-block Create Album
 			div.col-md-4

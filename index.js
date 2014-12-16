@@ -98,6 +98,7 @@ app.post('/api/user/invite', routes_trips.inviteJoin);
 app.get('/api/user/newsfeed', routes_users.newsfeed);
 app.get('/api/user/:id/invitables', routes_trips.invitables);
 app.get('/api/user/:id/albums', routes_media.userAlbums);
+app.get('/api/user/:id/friends', routes_users.friends);
 app.get('/api/user/trips', routes_trips.mine);
 app.get('/api/user/recommend/friends', routes_users.recommendFriend);
 
@@ -115,6 +116,7 @@ app.get('/api/trip/:id/albums', routes_trips.albums);
 app.post('/api/trip/request', routes_trips.requestJoin);
 app.post('/api/trip/approve', routes_trips.approveJoin);
 app.post('/api/trip/:id/rating', routes_trips.rating);
+app.post('/api/trip/:id/schedule', routes_trips.schedules);
 
 // -- Error and bad url handling
 app.get('*', routes.fourohfour);

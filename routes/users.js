@@ -97,6 +97,50 @@ exports.update = function(req, res){
 	});
 };
 
+exports.friends = function(req, res){
+	if(!req.user.login){
+		req.db.end();
+		res.json({
+			code:503,
+			msg:"Access denied. Not logged in."
+		});
+		return;
+	}
+	var userInst = new userlib(req.db);
+	var target = req.param('id');
+	userInst.getRelationship(req.user.user.uid, parseInt(target), function(rel){
+		if(rel !== 'friend' && req.user.user.uid !== parseInt(target)){
+			req.db.end();
+			res.json({
+				code:503,
+				msg:"Access denied. Not a friend."
+			});
+			return;
+		}
+		userInst.getFriends(target, function(friends){
+			if(!friends){
+				req.db.end();
+				res.json({
+					code:400,
+					msg:"DB error"
+				});
+				return;
+			}
+			var f = [];
+			for(var i = 0 ; i < friends.length; i++){
+				delete friends[i].password;
+				f.push(friends[i]);
+			}
+			req.db.end();
+			res.json({
+				code:200,
+				friends:f
+			});
+			return;
+		});
+	});
+};
+
 exports.newsfeed = function(req, res){
 	if(!req.user.login){
 		req.db.end();

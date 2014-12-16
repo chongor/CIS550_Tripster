@@ -118,22 +118,44 @@ exports.schedules = function(req,res){
 			});
 			return;
 		}
-		tripinst.getSchedule(target, function(schedules, err){
-			if(schedules === null){
+		if(req.method.toUpperCase() === "GET"){
+			tripinst.getSchedule(target, function(schedules, err){
+				if(schedules === null){
+					req.db.end();
+					res.json({
+						code: 400,
+						msg: err
+					});
+					return;
+				}
 				req.db.end();
 				res.json({
-					code: 400,
-					msg: err
+					code: 200,
+					schedules: schedules
 				});
 				return;
-			}
-			req.db.end();
-			res.json({
-				code: 200,
-				schedules: schedules
 			});
-			return;
-		});
+		} else {
+			tripinst.addSchedule(target, req.body.date, req.body.location, req.body.type, function(success, data){
+				if(success){
+					req.db.end();
+					res.json({
+						code:200,
+						schedule: {
+							date: req.body.date,
+							location: req.body.location,
+							lid: data
+						}
+					});
+					return;
+				}
+				req.db.end();
+				res.json({
+					code:400,
+					err: data
+				});
+			});
+		}
 	});
 };
 
@@ -415,8 +437,9 @@ exports.rating = function(req, res){
 	console.log(req.body);
 	var tripinst = new triplib(req.db);
 	var trip = req.param('id');
-	if(req.method == "GET"){
-		tripinst.getRating(trip, 1, 24, function(ratings, err){
+	var offset = req.query.start ? parseInt(req.query.start) : 0;
+	if(req.method.toUpperCase() === "GET"){
+		tripinst.getRating(trip, offset, offset + 5, function(ratings, err){
 			if(ratings == null){
 				res.end(JSON.stringify({
 					code:400,
@@ -436,7 +459,7 @@ exports.rating = function(req, res){
 		var rating = req.body.rating;
 		console.log(rating);
 		var comment = req.body.comment;
-		tripinst.addRating(trip, req.user.user.uid, rating, comment, function(success) {
+		tripinst.addRating(trip, req.user.user.uid, rating, comment, function(success, data) {
 			if (success) {
 				res.json({code: 200});
 			} else {
