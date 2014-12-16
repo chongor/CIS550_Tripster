@@ -46,7 +46,7 @@ function updateFeed(){
 						case 'album':{
 							var main = $("<div></div>");
 							main.append("<strong><a href='/profile/" + $("<div></div>").text(itemdata.owner.login).html() + "'>" + $("<div></div>").text(itemdata.owner.name).html() + "</a></strong> uploaded an album:");
-							main.append("<div class='innerbox'><h2><a href='/album/" + $("<div></div>").text(itemdata.id).html() + "'>" +$("<div></div>").text(itemdata.title).html() +"</a></h2><p>" + $("<div></div>").text(itemdata.description).html() + "</p></div>");
+							main.append("<div class='innerbox'><h2><a href='/album/" + $("<div></div>").text(itemdata.id).html() + "'>" +$("<div></div>").text(itemdata.title).html() +"</a></h2><img class='img-responsive' src='/album/" + $("<div></div>").text(itemdata.id).html() + "/cover'/><p>" + $("<div></div>").text(itemdata.description).html() + "</p></div>");
 							pbody.append(main);
 						}break;
 						case 'trip':{

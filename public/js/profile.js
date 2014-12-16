@@ -47,13 +47,32 @@ window.addEventListener('load', function(){
 		});
 	});
 
-
-
+	// Get user's albums
+	$.ajax({
+		type: "GET",
+		url: "/api/user/" + $("#uid").text() + "/albums",
+		dataType:"json",
+	 	success: function(data){
+	 		if(data.code !== 200){
+	 			return;
+	 		}
+	 		var albumlist = $("<div class='list-group'></div>");
+	 		for(var i = 0; i < data.albums.length; i++){
+	 			albumlist.append("<a href='/album/" + $("<div></div>").text(data.albums[i].id).html() + "' class='list-group-item'>" + $("<div></div>").text(data.albums[i].title).html() + "</a>");
+	 		}
+	 		$("#albums").empty();
+	 		$("#albums").append(albumlist);
+	 	}
+	 });
 	// Upon page load, get invitables
 	$.ajax({
 		type: "GET",
 		url: "/api/user/" + $("#uid").text() + "/invitables",
 	 	success: function(data){
+	 		if(data.code !== 200){
+	 			alert('Read Invite List Failed');
+	 			return;
+	 		}
 	 		var trips = data.invitables;
 	 		if (trips && trips.length > 0) {
 	 			$("#invitables").html('');
@@ -61,7 +80,7 @@ window.addEventListener('load', function(){
 	 			console.log(trips);
 	 			for (var i = 0; i < trips.length; i++) {
 	 				var trip = $('<div class="row" style="padding-bottom:4px;" id="tripid' + trips[i].trip_id + '"></div>');
-	 				var buttonCol = $('<div class="col-md-12">' + trips[i].description + '</div>');
+	 				var buttonCol = $('<div class="col-md-12">' + $("<div></div>").text(trips[i].description).html() + '</div>');
 	 				var button = $('<button class="btn btn-default pull-right">Invite</button>');
 	 				buttonCol.append(button);
 	 				trip.append(buttonCol);

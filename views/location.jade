@@ -1,0 +1,23 @@
+extends layout
+block scripts
+	script(src="/js/locations.js")
+block content
+	div.container(style="min-height:800px;")
+		div#lid(style="display:none") #{location.lid}
+		div.row
+			div.col-md-12
+				h2 #{location.name}
+				div.row
+					div.col-md-12
+						blockquote #{location.type}
+				div.row
+					div.col-md-6
+						div.row
+							div.col-md-12
+								h2 Ratings
+								div#ratings
+					div.col-md-6
+						div.row
+							div.col-md-12
+								h2 Trips
+								div#trips

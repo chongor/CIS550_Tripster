@@ -9,20 +9,32 @@ block content
 				div.row
 					div.col-md-12
 						h2 Users
-						-if (!resultsUsers || resultsUsers.length === 0) { 
-							div.status.panel.panel-default
-								div.panel-body No Hits Found
-						-} else {
-							-for(var i = 0; i < resultsUsers.length; i++){ 
-								a(href="/profile/#{resultsUsers[i].username}",style="text-decoration:none;")
+						div.row
+							div.col-md-6
+								-if (!resultsUsers || resultsUsers.length === 0) { 
 									div.status.panel.panel-default
-										div.panel-body
-											img.pull-left(src="#{resultsUsers[i].avatar}",style="margin-right:10px;")
-											h3(style="margin:0") #{resultsUsers[i].fullname}
-							-}
-						-}
+										div.panel-body No Hits Found
+								-} else {
+									-for(var i = 0; i < resultsUsers.length; i++){ if (i % 2 != 0 ) { continue; }
+										a(href="/profile/#{resultsUsers[i].username}",style="text-decoration:none;")
+											div.status.panel.panel-default
+												div.panel-body
+													img.pull-left(src="#{resultsUsers[i].avatar}",style="margin-right:10px;")
+													h3(style="margin:0") #{resultsUsers[i].fullname}
+									-}
+								-}
+							div.col-md-6
+								-if (resultsUsers && resultsUsers.length > 0) { 
+									-for(var i = 0; i < resultsUsers.length; i++){ if (i % 2 == 0 ) { continue; }
+										a(href="/profile/#{resultsUsers[i].username}",style="text-decoration:none;")
+											div.status.panel.panel-default
+												div.panel-body
+													img.pull-left(src="#{resultsUsers[i].avatar}",style="margin-right:10px;")
+													h3(style="margin:0") #{resultsUsers[i].fullname}
+									-}
+								-}
 				div.row
-					div.col-md-12
+					div.col-md-6
 						h2 Trips
 						-if (!resultsTrips || resultsTrips.length === 0) { 
 							div.status.panel.panel-default
@@ -34,5 +46,19 @@ block content
 										div.panel-body
 											h3(style="margin:0") #{resultsTrips[i].name}
 											p #{resultsTrips[i].description}
+							-}
+						-}
+					div.col-md-6
+						h2 Locations
+						-if (!resultsLocations || resultsLocations.length === 0) { 
+							div.status.panel.panel-default
+								div.panel-body No Hits Found
+						-} else {
+							-for(var i = 0; i < resultsLocations.length; i++){ 
+								a(href="/location/#{resultsLocations[i].lid}",style="text-decoration:none;color:#000;")
+									div.status.panel.panel-default
+										div.panel-body
+											h3(style="margin:0") #{resultsLocations[i].name}
+											p #{resultsLocations[i].type}
 							-}
 						-}

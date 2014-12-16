@@ -26,6 +26,7 @@ var routes_users = require('./routes/users.js');
 var routes_media = require('./routes/media.js');
 var routes_trips = require('./routes/trips.js');
 var routes_search = require('./routes/search.js');
+var routes_locations = require('./routes/locations.js');
 // Setup app
 var app = express();
 
@@ -77,13 +78,16 @@ app.get('/album/create', routes_media.createAlbum);
 app.post('/album/create', routes_media.createAlbumPost);
 
 app.get('/album/:id', routes_media.albums);
-
+app.get('/album/:id/cover', routes_media.cover);
 app.post('/media/post', routes_media.post);
 
 // -- Trip Stuff
 app.get('/trip/create', routes_trips.create);
 app.post('/trip/create', routes_trips.createTrip);
 app.get('/trip/:id', routes_trips.view);
+
+// -- Locations stuff
+app.get('/location/:id', routes_locations.location);
 
 // -- JS Endpoints
 app.post('/api/user/friend', routes_users.addfriend);
@@ -93,7 +97,7 @@ app.post('/api/user/invite', routes_trips.inviteJoin);
 
 app.get('/api/user/newsfeed', routes_users.newsfeed);
 app.get('/api/user/:id/invitables', routes_trips.invitables);
-app.get('/api/user/:id/albums', routes_media.albums);
+app.get('/api/user/:id/albums', routes_media.userAlbums);
 app.get('/api/user/trips', routes_trips.mine);
 app.get('/api/user/recommend/friends', routes_users.recommendFriend);
 

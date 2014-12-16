@@ -34,7 +34,25 @@ block content
 						div.row
 							div.col-md-12
 								h2 Comments
-						div#comments.row(style="min-height:600px;")
+						div.row(style="min-height:600px;")
+							div.col-md-12
+								div#comments
+								div#rating-add
+									div.panel.panel-default
+										div.panel-body
+											form
+												div.form-group
+													label Comment:
+													textarea.form-control(rows="5", name="comment")
+												div.form-group
+													label Rating:
+													select.form-control(name="rating")
+														- for(var i = 0; i <= 10; i++){
+															option(value="#{10 - i}") #{10 - i}
+														- }
+												div.form-group
+													button.btn.btn-primary(type="submit")
+														Add Rating
 					div.col-md-4
 						div.row
 							div.col-md-12

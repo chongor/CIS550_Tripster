@@ -92,6 +92,58 @@ exports.albums = function(req, res){
 	});
 };
 
+exports.cover = function(req, res){
+	if(!req.user.login){
+		req.db.end();
+		res.redirect(302, '/img/album-empty.jpg');
+		return;
+	}
+	var shareInst = new sharelib(req.db);
+	shareInst.getAlbumCover(req.param('id'), function(items){
+		if(!items){
+			req.db.end();
+			res.redirect(302, '/img/album-empty.jpg');
+			return;
+		}
+		if(items.length === 0){
+			req.db.end();
+			res.redirect(302, '/img/album-empty.jpg');
+			return;
+		}else{
+			req.db.end();
+			res.redirect(302, items[0].url);
+			return;
+		}
+	});
+};
+
+exports.userAlbums = function(req, res){
+	if(!req.user.login){
+		req.db.end();
+		res.json({
+			code:503,
+			msg:"Permission Denied. Not logged in."
+		});
+		return;
+	}
+	var shareInst = new sharelib(req.db);
+	shareInst.getAlbumsByOwner(req.param('id'), function(data){
+		if(data === null){
+			req.db.end();
+			res.json({
+				code:404,
+				msg:"Read albums failed"
+			});
+			return;
+		}
+		req.db.end();
+		res.json({
+			code:200,
+			albums: data
+		});
+	});
+};
+
 exports.listAlbums = function(req, res){
 	if(!req.user.login){
 		req.db.end();

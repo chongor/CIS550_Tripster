@@ -53,15 +53,15 @@ block content
 							- }
 						div#col-left
 					div.col-md-6
-						- if(target.isFriend) {
+						- if(target.isFriend || target.privacy == 0) {
 							div.status.panel.panel-default
 								div.panel-body
-									form(action="", method="POST")
-										div.form-group
-											textarea.form-control(id="statustext", name="statustext", placeholder="Post on wall", style="resize: none;height:80px;")
-											input(id="pusername", type="hidden", value="#{target.username}")
-										div.form-group
-											button#post-btn.pull-right.btn.btn-primary Post
+									h3 Albums
+									div#albums
+							div.status.panel.panel-default
+								div.panel-body
+									h3 Friends
+									div#friends
 						- } else {
 							input(id="pusername", type="hidden", value="#{target.username}")
 						- }
