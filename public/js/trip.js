@@ -28,12 +28,20 @@ window.addEventListener('load', function(){
 				return;
 			}
 			if(d.code === 200){
-				var memberDiv = null, j = 0;
+				var memberDiv = null, j = 0, requestNum = 0;
 				if (d.isAdmin) {
 					$('#requests').append('<h3>Requests</h3>');
 				}
-				if (!d.isMember) {
+				if (d.role && !d.role.isMember) {
 					$("#join-btn").show();
+					if (d.role.isInvited) {
+						$("#join-btn").text('Accept Invite');
+					} else if (d.role.isRequested) {
+						$("#join-btn").text('Request Sent');
+						$('#join-btn').attr("disabled", "disabled");
+					} else {
+						$("#join-btn").click(requestJoin(e));
+					}
 				}
 				for(var i = 0; i < d.members.length; i++){
 					// Add members
@@ -45,25 +53,77 @@ window.addEventListener('load', function(){
 						$(memberDiv).append('<div class="col-md-4"><div class="thumbnail">'
 							+ '<a href="/profile/' + d.members[i].user.login + '" >'
 							+ '<img src="' + d.members[i].user.avatar + '?s=128" style="width:100%"/></a>'
-							+ '<h4>' + d.members[i].user.fullname + '</h4>'
+							+ '<h4>' + $("<div></div>").text(d.members[i].user.fullname).html() + '</h4>'
 							+ '</div></div>');
 						j ++;
 					} else {
 						// Add requests
+						requestNum += 1;
 						var requestDiv = $('<div class="row"></div>');
 						$(requestDiv).append('<div class="col-md-4"><div class="thumbnail">'
 							+ '<a href="/profile/' + d.members[i].user.login + '" >'
 							+ '<img src="' + d.members[i].user.avatar + '?s=128"/></a></div><div>');
-						$(requestDiv).append('<div class="col-md-8"><h4>' + d.members[i].user.fullname + '</h4><br/>');
+						$(requestDiv).append('<div class="col-md-8"><h4>' + $("<div></div>").text(d.members[i].user.fullname).html() + '</h4><br/>');
 						$(requestDiv).append('<button class="btn btn-primary" onclick="approve(' + d.members[i].user.uid + ')" style="margin-left:7px;">Approve</button></div>');
 						$('#requests').append(requestDiv);
 					}
+				}
+				if(requestNum === 0){
+					$("#requests").append("<div class='well'>No Requests</div>");
 				}
 			}else{
 				$("#members").append("<div class='alert alert-danger'>" + d.msg + "</div>");
 			}
 		}
 	});
+
+	// Add new item to trip checklist
+	var addItemIsHidden = true;
+
+	$('#additem').click(function(e) {
+		if (addItemIsHidden) {
+			$('#newitem').show();
+			$('#additem').text('- Add Item')
+		} else {
+			$('#newitem').hide();
+			$('#additem').text('+ Add Item')
+		}
+		addItemIsHidden = !addItemIsHidden;
+	});
+
+	$('#itemdescription').keypress(function(e) {
+		if (e.which === 13) {
+			if ($('#itemdescription').val() === '') {
+				alert('Please fill in an item');
+				return;
+			}
+			e.preventDefault();
+			$.ajax({
+				type: "POST",
+				url: "/api/trip/" + $("#trip_id").text() + "/checklist",
+				dataType:"json",
+				data: {tid: $("#trip_id").text(), description: $('#itemdescription').val()},
+				success: function(data){
+					if(typeof data === "string"){
+						try{
+							data = JSON.parse(data);
+						}catch(e){
+							console.log('Parse checklist failed!');
+							return;
+						}
+					}
+					if(data.code === 200){
+						$("#checklist ul").append('<li>' + data.desc + '</li>');
+					} else {
+						if (data.msg) {
+							alert(data.msg);
+						}
+					}
+				}
+			});
+		}
+	});
+
 
 	// Get trip checklist
 	$.ajax({
@@ -82,7 +142,7 @@ window.addEventListener('load', function(){
 			if(data.code === 200){
 				var list = $("<ul></ul>");
 				for(var i = 0; i < data.checklist.length; i++){
-					list.append("<li>" + data.checklist[i].desc + "</li>");
+					list.append("<li>" + $("<div></div>").text(data.checklist[i].desc).html() + "</li>");
 				}
 				$("#checklist").append(list);
 				if(data.checklist.length === 0){

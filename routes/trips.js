@@ -395,6 +395,27 @@ exports.rating = function(req, res){
 	}
 };
 
+exports.addItem = function(req, res){
+	if(!req.user.login){
+		req.db.end();
+		res.end(JSON.stringify({
+			code:503,
+			msg:"Access denied."
+		}));
+		return;
+	}
+	var tripinst = new triplib(req.db);
+	var tid = req.body.tid;
+	var description = req.body.description;
+	tripinst.addItem(tid, description, function(success, err){
+		if(success){
+			res.json({code: 200, desc: description});
+			return;
+		}
+		res.json({code: 400, msg: err});
+	}.bind(this));
+};
+
 
 
 

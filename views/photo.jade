@@ -1,5 +1,6 @@
 extends layout
 block scripts
+	script(src="/js/media.js")
 	link(rel="stylesheet", href="/css/photoviewer.css")
 block content
 	div.container(style="min-height:800px;")
@@ -7,22 +8,19 @@ block content
 			div.col-md-12
 				div.row
 					div.col-md-12
+						div#media-id(style="display:none;") #{media.id}
 						h2 #{media.title}
-						p
+						div.well
 							span.glyphicon.glyphicon-user
 							span &nbsp;Owner: 
 								a(href="/profile/#{media.owner.login}") #{media.owner.name}
-							span &nbsp;&nbsp;&nbsp;
+							| &nbsp;&nbsp;&nbsp;
 							span.glyphicon.glyphicon-calendar
-							span &nbsp;Time: #{media.time ? media.time.toLocaleString() : "Error"}&nbsp;&nbsp;&nbsp;
-							span.glyphicon.glyphicon-heart
-							span &nbsp;Likes: #{""}&nbsp;&nbsp;&nbsp;
-							span.glyphicon.glyphicon-star
-							span.glyphicon.glyphicon-star
-							span.glyphicon.glyphicon-star
-							span.glyphicon.glyphicon-star
-							span.glyphicon.glyphicon-star
-							span &nbsp;Rating: #{"unknown"}&nbsp;&nbsp;&nbsp;
+							| &nbsp;Time: #{media.time ? media.time.toLocaleString() : "Error"}&nbsp;&nbsp;&nbsp;
+							| Rating: 
+							span#rating-value ?
+							| &nbsp;
+							div#rating-star(style="display:inline")
 				div.row.photoviewer
 					div.col-md-12
 						div.row
@@ -32,55 +30,12 @@ block content
 									img.img-responsive(src="#{media.url}")
 							div.col-md-1
 				div.row.ratingviewer
-					div.col-md-10
+					div.col-md-8
 						div.row
 							div.col-md-12
 								h2 Comments
-						div.row.rating(style="border-top:1px solid #000;")
-							div.col-md-2(style="border-right:1px solid #000;")
-								div.row
-									div.col-md-12
-										img(src="#{user.avatar}")
-								div.row
-									div.col-md-12
-										p
-											strong Username
-							div.col-md-10
-								div.row
-									div.col-md-12(style="border-bottom:1px solid #888;padding-top:10px;")
-										div.ratings.pull-right
-											span.glyphicon.glyphicon-star
-											span.glyphicon.glyphicon-star
-											span.glyphicon.glyphicon-star
-											span.glyphicon.glyphicon-star
-											span.glyphicon.glyphicon-star
-										p Sent on: 
-								div.row
-									div.col-md-12(style="padding-top:10px;")
-										p &nbsp;HI GAIS #{"unknown"}&nbsp;&nbsp;&nbsp;
-						div.row.rating(style="border-top:1px solid #000;")
-							div.col-md-2(style="border-right:1px solid #000;")
-								div.row
-									div.col-md-12
-										img(src="#{user.avatar}")
-								div.row
-									div.col-md-12
-										p
-											strong Username
-							div.col-md-10
-								div.row
-									div.col-md-12(style="border-bottom:1px solid #888;padding-top:10px;")
-										div.ratings.pull-right
-											span.glyphicon.glyphicon-star
-											span.glyphicon.glyphicon-star
-											span.glyphicon.glyphicon-star
-											span.glyphicon.glyphicon-star
-											span.glyphicon.glyphicon-star
-										p Sent on: 
-								div.row
-									div.col-md-12(style="padding-top:10px;")
-										p &nbsp;Lolz #{"unknown"}&nbsp;&nbsp;&nbsp;
-					div.col-md-2
+						div#comments.row(style="min-height:600px;")
+					div.col-md-4
 						div.row
 							div.col-md-12
 								h2 Share

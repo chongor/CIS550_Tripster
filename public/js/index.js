@@ -16,7 +16,7 @@ function updateFeed(){
 				for(var i = 0; i < data.feed.length; i++){
 					var feeditem = data.feed[i];
 					$("#feed-stream").append("<div class='status panel panel-default'>"
-						+ "<div class='panel-body'>" + feeditem.newsfeed
+						+ "<div class='panel-body'>" + $("<div></div>").text(feeditem.newsfeed).html()
 						+ "</div><div class='panel-heading'>Created " + (new Date(feeditem.time)).toLocaleString()
 						+ "</div></div>");
 				}
@@ -42,7 +42,7 @@ window.addEventListener('load', function(){
 				for(var i = 0; i < data.trips.length; i++){
 					$("#mytrips").append(""
 						+ "<a class='list-group-item' href='/trip/" + data.trips[i].trip_id + "'>"
-						+ data.trips[i].name
+						+ $("<div></div>").text(data.trips[i].name).html()
 						+ "</a>");
 				}
 				if(data.trips.length === 0){

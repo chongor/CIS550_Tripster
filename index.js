@@ -93,8 +93,10 @@ app.get('/api/user/trips', routes_trips.mine);
 app.get('/api/user/recommend/friends', routes_users.recommendFriend);
 
 app.get('/api/media/:id/ratings', routes_media.ratings);
+app.post('/api/media/:id/ratings', routes_media.ratings);
 
 app.get('/api/trip/:id/checklist', routes_trips.checklist);
+app.post('/api/trip/:id/checklist', routes_trips.addItem);
 app.get('/api/trip/:id/members', routes_trips.members);
 app.get('/api/trip/:id/requests', routes_trips.members);
 app.get('/api/trip/:id/schedule', routes_trips.schedules);
