@@ -32,8 +32,16 @@ window.addEventListener('load', function(){
 				if (d.isAdmin) {
 					$('#requests').append('<h3>Requests</h3>');
 				}
-				if (!d.isMember) {
+				if (d.role && !d.role.isMember) {
 					$("#join-btn").show();
+					if (d.role.isInvited) {
+						$("#join-btn").text('Accept Invite');
+					} else if (d.role.isRequested) {
+						$("#join-btn").text('Request Sent');
+						$('#join-btn').attr("disabled", "disabled");
+					} else {
+						$("#join-btn").click(requestJoin(e));
+					}
 				}
 				for(var i = 0; i < d.members.length; i++){
 					// Add members
@@ -64,6 +72,54 @@ window.addEventListener('load', function(){
 			}
 		}
 	});
+
+	// Add new item to trip checklist
+	var addItemIsHidden = true;
+
+	$('#additem').click(function(e) {
+		if (addItemIsHidden) {
+			$('#newitem').show();
+			$('#additem').text('Add Item ↑')
+		} else {
+			$('#newitem').hide();
+			$('#additem').text('Add Item ↓')
+		}
+		addItemIsHidden = !addItemIsHidden;
+	});
+
+	$('#itemdescription').keypress(function(e) {
+		if (e.which === 13) {
+			if ($('#itemdescription').val() === '') {
+				alert('Please fill in an item');
+				return;
+			}
+			e.preventDefault();
+			$.ajax({
+				type: "POST",
+				url: "/api/trip/" + $("#trip_id").text() + "/checklist",
+				dataType:"json",
+				data: {tid: $("#trip_id").text(), description: $('#itemdescription').val()},
+				success: function(data){
+					if(typeof data === "string"){
+						try{
+							data = JSON.parse(data);
+						}catch(e){
+							console.log('Parse checklist failed!');
+							return;
+						}
+					}
+					if(data.code === 200){
+						$("#checklist ul").append('<li>' + data.desc + '</li>');
+					} else {
+						if (data.msg) {
+							alert(data.msg);
+						}
+					}
+				}
+			});
+		}
+	});
+
 
 	// Get trip checklist
 	$.ajax({
