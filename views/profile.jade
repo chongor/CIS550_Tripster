@@ -38,7 +38,6 @@ block content
 								- } else if (target.friendType === "from") {
 									div.panel-body
 										button#add-friend.btn.btn-success.pull-right Confirm Friend Request
-									div.panel-body
 										button#remove-friend.btn.btn-warning.pull-right Decline Friend Request
 								- } else {
 									div.panel-body
@@ -48,9 +47,9 @@ block content
 								div.panel-body
 									button#remove-friend.btn.btn-warning.pull-right Remove Friend
 								div.panel-body
-									button#invite-trip.btn.btn-primary.pull-right Invite to Trip(s) ↓
+									button#invite-trip.btn.btn-primary.block(style="display:none;") Invite to ...
 								div.panel-body
-									div#invitables
+									div#invitables(style="display:none;")
 							- }
 						div#col-left
 					div.col-md-6
