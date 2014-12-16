@@ -31,7 +31,7 @@ function updateFeed(){
 					var panel = $("<div class='status panel panel-default group-filter-newsfeed group-filter-" + itemdata.type + "'></div>");
 					var pbody = $("<div class='panel-body'></div>");
 					var pfoot = $("<div class='panel-heading'></div>");
-					
+
 					switch(itemdata.type){
 						case 'text':{
 							pbody.append("<div>" + $("<div></div>").text(itemdata.data).html() + "</div>");
@@ -66,7 +66,7 @@ function updateFeed(){
 						}break;
 					}
 					pfoot.append($("<span>Created " + (new Date(feeditem.time)).toLocaleString() + "</span>"));
-					
+
 					panel.append(pbody);
 					panel.append(pfoot);
 					$("#feed-stream").append(panel);
@@ -142,6 +142,35 @@ window.addEventListener('load', function(){
 				};
 			}else{
 				$("#recommend-friends").append("<div class='list-group-item'>No Records</div>");
+			}
+		}
+	});
+
+	// Trip recommendations
+	$.ajax({
+		type: "GET",
+		url: "/api/user/recommend/trips",
+		dataType: "json",
+		success: function(data){
+			if(typeof data === "string"){
+				try{
+					data = JSON.parse(data);
+				}catch(e){}
+			}
+			$("#recommend-trips").empty();
+
+			if(data.code === 200){
+				for(var i = 0; i < data.recommend.length; i++){
+					$("#recommend-trips").append(""
+						+ "<a class='list-group-item' href='/trip/" + data.recommend[i].trip_id + "'>"
+						+ "<div style='margin-left:40px; margin-bottom:12px;'>" + $("<div></div>").text(data.recommend[i].title).html() + "</div>"
+						+ "</a>");
+				}
+				if(data.recommend.length === 0){
+					$("#recommend-trips").append("<div class='list-group-item'>No Records</div>");
+				};
+			}else{
+				$("#recommend-trips").append("<div class='list-group-item'>No Records</div>");
 			}
 		}
 	});

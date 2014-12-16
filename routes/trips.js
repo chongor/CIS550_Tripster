@@ -1,6 +1,7 @@
 var userlib = require("../lib/users.js");
 var triplib = require("../lib/trips.js");
 var newslib = require("../lib/newsfeed.js");
+var reclib = require("../lib/recommendations.js");
 
 exports.create = function(req, res){
 	if(!req.user.login){
@@ -496,5 +497,25 @@ exports.addItem = function(req, res){
 		}
 		res.json({code: 400, msg: err});
 	}.bind(this));
+};
+
+
+exports.recommendTrip = function(req, res){
+	if(!req.user.login){
+		req.db.end();
+		res.end(JSON.stringify({
+			code:503,
+			msg:"Access denied."
+		}));
+		return;
+	}
+	var recInst = new reclib(req.db);
+	recInst.recommendTrip(req.user.user.uid, 5, function(data){
+		req.db.end();
+		res.end(JSON.stringify({
+			code:200,
+			recommend:data
+		}));
+	});
 };
 
