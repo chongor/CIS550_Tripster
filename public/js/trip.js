@@ -1,5 +1,3 @@
-window.addEventListener('load', function(){
-
 	var approve = function(uid) {
 		$.ajax({
 			type: "POST",
@@ -16,6 +14,8 @@ window.addEventListener('load', function(){
 		})
 	};
 
+window.addEventListener('load', function(){
+
 	// Get trip members
 	$.ajax({
 		type: "GET",
@@ -31,6 +31,9 @@ window.addEventListener('load', function(){
 				var memberDiv = null, j = 0;
 				if (d.isAdmin) {
 					$('#requests').append('<h3>Requests</h3>');
+				}
+				if (!d.isMember) {
+					$("#join-btn").show();
 				}
 				for(var i = 0; i < d.members.length; i++){
 					// Add members
@@ -61,7 +64,7 @@ window.addEventListener('load', function(){
 			}
 		}
 	});
-	
+
 	// Get trip checklist
 	$.ajax({
 		type: "GET",
@@ -90,7 +93,7 @@ window.addEventListener('load', function(){
 			}
 		}
 	});
-	
+
 	// Bind buttons
 	$("#join-btn").click(function(e){
 		e.preventDefault();

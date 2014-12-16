@@ -248,6 +248,7 @@ exports.members = function(req, res){
 					usermap[members[i].uid] = members[i].role;
 				}
 				var isAdmin = (usermap[req.user.user.uid] && usermap[req.user.user.uid].isAdmin) || req.user.user.uid === trip.owner;
+				var isMember = (usermap[req.user.user.uid] && usermap[req.user.user.uid].isMember);
 				userinst.getUsers(userlist, function(users) {
 					if(users === null){
 						res.end(JSON.stringify({
@@ -276,7 +277,8 @@ exports.members = function(req, res){
 					res.end(JSON.stringify({
 						code:200,
 						members:list,
-						isAdmin:isAdmin
+						isAdmin:isAdmin,
+						isMember: isMember
 					}));
 					return;
 				}.bind(this));
