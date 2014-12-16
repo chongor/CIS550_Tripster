@@ -375,20 +375,38 @@ exports.ratings = function(req, res){
 		return;
 	}
 	var shareInst = new sharelib(req.db);
-	shareInst.getRating(req.param('id'), 0, 100, function(list, rating){
-		if(list === null){
+	if(req.method.toUpperCase() === "GET"){
+		shareInst.getRating(req.param('id'), 0, 100, function(list, rating){
+			if(list === null){
+				req.db.end();
+				res.end(JSON.stringify({
+					code:400,
+					msg:'Read Error!'
+				}));
+				return;
+			}
 			req.db.end();
 			res.end(JSON.stringify({
-				code:400,
-				msg:'Read Error!'
+				code:200,
+				comments:list,
+				rating:rating
 			}));
-			return;
-		}
-		req.db.end();
-		res.end(JSON.stringify({
-			code:200,
-			comments:list,
-			rating:rating
-		}));
-	});
+		});
+	} else {
+		shareInst.addRating(req.param('id'), req.body.rating, req.body.comment, req.user.user.uid, function(success,err){
+			if(!success){
+				req.db.end();
+				console.log(err);
+				res.json({
+					code:400,
+					msg:err
+				});
+				return;
+			}
+			req.db.end();
+			res.json({
+				code:200
+			});
+		});
+	}
 }

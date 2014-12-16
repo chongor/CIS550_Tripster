@@ -43,4 +43,25 @@ window.addEventListener('load', function (){
 			}
 		}
 	});
+	
+	// Hook rating button
+	$("#rate-button").click(function(e){
+		e.preventDefault();
+		$.ajax({
+			type:"POST",
+			url: "/api/media/" + $("#media-id").text() + "/ratings",
+			data:{
+				'comment':$("#rate-comment").val(),
+				'rating':$("#rate-rating").val()
+			},
+			dataType:"json", 
+			success:function(data){
+				if(data.code === 200){
+					window.location.reload();
+				}else{
+					alert('Failed to rate trip.\n' + data.msg);
+				}
+			}
+		});
+	});
 });
