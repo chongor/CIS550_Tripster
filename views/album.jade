@@ -22,13 +22,18 @@ block content
 							span Updated: #{album.updateTime}&nbsp;&nbsp;&nbsp;
 						blockquote #{album.description !== "" ? album.description : "(No Description)"}
 				- if ( albumitems && albumitems.length > 0 ) {
-					- for (var i = 0; i <= Math.floor(albumitems.length / 3); i++) {
+					- for (var i = 0; i <= Math.floor(albumitems.length / 4); i++) {
 						div.row
-							- for (var j = 0; j < 3; j++){
-								- if(albumitems.length > i * 3 + j){
+							- for (var j = 0; j < 4; j++){
+								- if(albumitems.length > i * 4 + j){
 									div.col-md-3
 										div.thumbnail
-											img.img-responsive(src="#{albumitems[i * 3 + j].url}")
+											- if (albumitems[i * 3 + j].type == "photo") {
+												img.img-responsive(src="#{albumitems[i * 3 + j].url}")
+											- } else if (albumitems[i * 3 + j].type == "video") {
+												video(style="width:100%", controls="auto")
+													source(src="#{albumitems[i * 3 + j].url}")
+											- }
 											div.caption 
 												a(href="/photo/#{albumitems[i * 3 + j].id}") 
 													strong #{albumitems[i * 3 + j].title}
