@@ -499,7 +499,6 @@ exports.addItem = function(req, res){
 	}.bind(this));
 };
 
-
 exports.recommendTrip = function(req, res){
 	if(!req.user.login){
 		req.db.end();
