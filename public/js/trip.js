@@ -28,7 +28,7 @@ window.addEventListener('load', function(){
 				return;
 			}
 			if(d.code === 200){
-				var memberDiv = null, j = 0;
+				var memberDiv = null, j = 0, requestNum = 0;
 				if (d.isAdmin) {
 					$('#requests').append('<h3>Requests</h3>');
 				}
@@ -58,6 +58,7 @@ window.addEventListener('load', function(){
 						j ++;
 					} else {
 						// Add requests
+						requestNum += 1;
 						var requestDiv = $('<div class="row"></div>');
 						$(requestDiv).append('<div class="col-md-4"><div class="thumbnail">'
 							+ '<a href="/profile/' + d.members[i].user.login + '" >'
@@ -66,6 +67,9 @@ window.addEventListener('load', function(){
 						$(requestDiv).append('<button class="btn btn-primary" onclick="approve(' + d.members[i].user.uid + ')" style="margin-left:7px;">Approve</button></div>');
 						$('#requests').append(requestDiv);
 					}
+				}
+				if(requestNum === 0){
+					$("#requests").append("<div class='well'>No Requests</div>");
 				}
 			}else{
 				$("#members").append("<div class='alert alert-danger'>" + d.msg + "</div>");
@@ -79,10 +83,10 @@ window.addEventListener('load', function(){
 	$('#additem').click(function(e) {
 		if (addItemIsHidden) {
 			$('#newitem').show();
-			$('#additem').text('Add Item ↑')
+			$('#additem').text('- Add Item')
 		} else {
 			$('#newitem').hide();
-			$('#additem').text('Add Item ↓')
+			$('#additem').text('+ Add Item')
 		}
 		addItemIsHidden = !addItemIsHidden;
 	});

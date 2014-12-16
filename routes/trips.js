@@ -277,7 +277,6 @@ exports.members = function(req, res){
 					req.db.end();
 					res.end(JSON.stringify({
 						code:200,
-						role:usermap[req.user.user.uid],
 						isAdmin:(trip.owner === req.user.user.uid),
 						members:[]
 					}));
@@ -290,6 +289,7 @@ exports.members = function(req, res){
 					usermap[members[i].uid] = members[i].role;
 				}
 				var isAdmin = (usermap[req.user.user.uid] && usermap[req.user.user.uid].isAdmin) || req.user.user.uid === trip.owner;
+				var isMember = (usermap[req.user.user.uid] && usermap[req.user.user.uid].isMember);
 				userinst.getUsers(userlist, function(users) {
 					if(users === null){
 						req.db.end();
@@ -311,7 +311,7 @@ exports.members = function(req, res){
 								uid:users[i].uid,
 								login:users[i].username,
 								fullname:users[i].fullname,
-								avatar:users[i].avatar,
+								avatar:users[i].avatar
 							},
 							role: usermap[users[i].uid]
 						});
@@ -320,8 +320,8 @@ exports.members = function(req, res){
 					res.end(JSON.stringify({
 						code:200,
 						members:list,
-						role: usermap[req.user.user.uid],
-						isAdmin:isAdmin
+						isAdmin:isAdmin,
+						isMember: isMember
 					}));
 					return;
 				}.bind(this));
@@ -360,6 +360,48 @@ exports.checklist = function(req, res){
 	});
 };
 
+exports.rating = function(req, res){
+	if(!req.user.login){
+		res.end(JSON.stringify({
+			code:503,
+			msg:"Access denied."
+		}));
+		return;
+	}
+	console.log(req.body);
+	var tripinst = new triplib(req.db);
+	var trip = req.param('id');
+	if(req.method == "GET"){
+		tripinst.getRating(trip, 1, 24, function(ratings, err){
+			if(ratings == null){
+				res.end(JSON.stringify({
+					code:400,
+					msg:err
+				}));
+				return;
+			} else {
+				res.end(JSON.stringify({
+					code:200,
+					rating: ratings
+				}));
+				return;
+			}
+		});
+	} else {
+		// Post request
+		var rating = req.body.rating;
+		console.log(rating);
+		var comment = req.body.comment;
+		tripinst.addRating(trip, req.user.user.uid, rating, comment, function(success) {
+			if (success) {
+				res.json({code: 200});
+			} else {
+				res.json({code: 500});
+			}
+		});
+	}
+};
+
 exports.addItem = function(req, res){
 	if(!req.user.login){
 		req.db.end();
@@ -380,3 +422,9 @@ exports.addItem = function(req, res){
 		res.json({code: 400, msg: err});
 	}.bind(this));
 };
+
+
+
+
+
+
