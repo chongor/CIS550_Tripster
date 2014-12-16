@@ -100,10 +100,13 @@ app.get('/api/user/newsfeed', routes_users.newsfeed);
 app.get('/api/user/notifications', routes_notify.get);
 app.post('/api/user/notifications/read', routes_notify.read);
 app.get('/api/user/recommend/friends', routes_users.recommendFriend);
+app.get('/api/user/recommend/trips', routes_trips.recommendTrip);
 app.get('/api/user/trips', routes_trips.mine);
 app.get('/api/user/:id/invitables', routes_trips.invitables);
 app.get('/api/user/:id/albums', routes_media.userAlbums);
 app.get('/api/user/:id/friends', routes_users.friends);
+app.get('/api/user/trips', routes_trips.mine);
+app.get('/api/user/:id/recommendtrips', routes_users.recommendTrip);
 
 
 app.get('/api/media/:id/ratings', routes_media.ratings);
