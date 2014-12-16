@@ -1,7 +1,7 @@
 extends layout
 block scripts
 	script(src="/js/index.js")
-	
+
 block content
 	div.container(style="padding-top:20px;")
 		div.row
@@ -31,9 +31,9 @@ block content
 							div.form-group
 									div.btn-group.pull-right
 										div.btn-group
-											button.btn.btn-default.dropdown-toggle(id="btn-privacy",data-toggle="dropdown") 
-												span.glyphicon.glyphicon-eye-open 
-												| &nbsp;Public 
+											button.btn.btn-default.dropdown-toggle(id="btn-privacy",data-toggle="dropdown")
+												span.glyphicon.glyphicon-eye-open
+												| &nbsp;Public
 												span.caret
 											ul.dropdown-menu
 												li.active
@@ -79,11 +79,11 @@ block content
 				div.row
 					div.col-md-12
 						h3 Manage
-						div.list-group#mytrips
+						div.list-group#owntrips
 				div.row
 					div.col-md-12
 						h3 Participating In
-						div#managed
+						div.list-group#membertrips
 				div.row
 					div.col-md-12
 						h3 Recommendations
