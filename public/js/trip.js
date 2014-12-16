@@ -1,18 +1,26 @@
-	var approve = function(uid) {
-		$.ajax({
-			type: "POST",
-			url:"/api/trip/approve",
-			dataType:"json",
-			data:{newmember: uid, tid:+$("#trip_id").text()},
-			success: function(success) {
-				if (success) {
-					window.location.reload();
-				} else {
-					alert('Try approving again later');
-				}
+var approve = function(uid) {
+	$.ajax({
+		type: "POST",
+		url:"/api/trip/approve",
+		dataType:"json",
+		data:{newmember: uid, tid:+$("#trip_id").text()},
+		success: function(success) {
+			if (success) {
+				window.location.reload();
+			} else {
+				alert('Try approving again later');
 			}
-		})
-	};
+		}
+	})
+};
+
+var showStars = function(rating){
+	var starsCont = $("<div></div>");
+	for(var i = 1; i * 2 <= rating; i++){
+		starsCont.append($('<span class="glyphicon glyphicon-star"></span>'));
+	}
+	return starsCont;
+}
 
 window.addEventListener('load', function(){
 
@@ -150,6 +158,45 @@ window.addEventListener('load', function(){
 				}
 			}else{
 				$("#checklist").append("<p>Unable to get checklist</p>");
+			}
+		}
+	});
+	
+	// Get trip ratings
+	$.ajax({
+		type: "GET",
+		url: "/api/trip/" + $("#trip_id").text() + "/rating",
+		dataType:"json",
+		success: function(data){
+			if(typeof data === "string"){
+				try{
+					data = JSON.parse(data);
+				}catch(e){
+					console.log('Parse ratings failed!');
+					return;
+				}
+			}
+			if(data.code === 200){
+				$("#ratings").empty();
+				for(var i = 0; i < data.rating.length; i++){
+					var panel = $("<div class='panel panel-default'></div>");
+					var pbody = $("<div class='panel-body'></div>");
+					var pfoot = $("<div class='panel-heading'></div>");
+					panel.append(pbody);
+					panel.append(pfoot);
+					pbody.append($("<a href='/profile/" + $("<div></div>").text(data.rating[i].user.login).html() + "'><img src='" + $("<div></div>").text(data.rating[i].user.avatar).html() + "' style='width:80px' class='pull-left' /></a>"));
+					pbody.append($("<div style='margin-left: 85px; padding:10px;'>" + $("<div></div>").text(data.rating[i].comment).html() + "</div>"));
+					pfoot.append($("<strong>" + $("<div></div>").text(data.rating[i].user.name).html() + " </strong>"));
+					pfoot.append($("<span>" + (new Date(data.rating[i].time)).toLocaleString() + "</span>"));
+					pfoot.append($("<div class='pull-right'>" + showStars(data.rating[i].rating).html() + "</div>"));
+					$("#ratings").append(panel);
+				}
+				if(data.rating.length === 0){
+					$("#ratings").append("<div class='well'>No ratings yet!</div>");
+				}
+			}else{
+				$("#ratings").empty();
+				$("#ratings").append("<div class='well'>Error getting ratings!</div>");
 			}
 		}
 	});

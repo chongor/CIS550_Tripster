@@ -15,10 +15,48 @@ function updateFeed(){
 				$("#feed-stream").empty();
 				for(var i = 0; i < data.feed.length; i++){
 					var feeditem = data.feed[i];
-					$("#feed-stream").append("<div class='status panel panel-default'>"
-						+ "<div class='panel-body'>" + $("<div></div>").text(feeditem.newsfeed).html()
-						+ "</div><div class='panel-heading'>Created " + (new Date(feeditem.time)).toLocaleString()
-						+ "</div></div>");
+					try{
+						var itemdata = JSON.parse(feeditem.newsfeed);
+					} catch(e) {
+						var itemdata = {'type':'text', 'data': feeditem.newsfeed };
+					}
+					var panel = $("<div class='status panel panel-default'></div>");
+					var pbody = $("<div class='panel-body'></div>");
+					var pfoot = $("<div class='panel-heading'></div>");
+					// Guess some facts about item
+					if(!itemdata.type){
+						if(itemdata.trip_id){
+							itemdata.type = 'trip';
+						} else {
+							itemdata.type = 'album';
+						}
+					}
+					switch(itemdata.type){
+						case 'text':{
+							pbody.append("<div>" + $("<div></div>").text(itemdata.data).html() + "</div>");
+						}
+						break;
+						case 'album':{
+							var main = $("<div></div>");
+							main.append("<strong><a href='/profile/" + $("<div></div>").text(itemdata.owner.login).html() + "'>" + $("<div></div>").text(itemdata.owner.name).html() + "</a></strong> uploaded an album:");
+							main.append("<div class='innerbox'><h2><a href='/album/" + $("<div></div>").text(itemdata.id).html() + "'>" +$("<div></div>").text(itemdata.title).html() +"</a></h2><p>" + $("<div></div>").text(itemdata.description).html() + "</p></div>");
+							pbody.append(main);
+						}break;
+						case 'trip':{
+							var main = $("<div></div>");
+							main.append("<strong>" + $("<div></div>").text(itemdata.owner).html() + "</strong> uploaded an album:");
+							main.append("<div class='innerbox'><h2><a href='/trip/" + $("<div></div>").text(itemdata.trip_id).html() + "'>" +$("<div></div>").text(itemdata.name).html() +"</a></h2><p>" + $("<div></div>").text(itemdata.description).html() + "</p></div>");
+							pbody.append(main);
+						}break;
+						default: {
+							console.log(itemdata);
+						}break;
+					}
+					pfoot.append($("<span>Created " + (new Date(feeditem.time)).toLocaleString() + "</span>"));
+					
+					panel.append(pbody);
+					panel.append(pfoot);
+					$("#feed-stream").append(panel);
 				}
 			}
 		}

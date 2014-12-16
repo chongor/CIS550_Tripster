@@ -374,6 +374,36 @@ exports.checklist = function(req, res){
 	});
 };
 
+exports.albums = function(req, res){
+	if(!req.user.login){
+		req.db.end();
+		res.end(JSON.stringify({
+			code:503,
+			msg:"Access denied."
+		}));
+		return;
+	}
+	var tripinst = new triplib(req.db);
+	var trip = req.param('id');
+	tripinst.getAlbums(trip, function(items, err){
+		if(items === null){
+			req.db.end();
+			res.end(JSON.stringify({
+				code:400,
+				msg:err
+			}));
+			return;
+		} else {
+			req.db.end();
+			res.end(JSON.stringify({
+				code:200,
+				albums: items
+			}));
+			return;
+		}
+	});
+};
+
 exports.rating = function(req, res){
 	if(!req.user.login){
 		res.end(JSON.stringify({
@@ -436,9 +466,4 @@ exports.addItem = function(req, res){
 		res.json({code: 400, msg: err});
 	}.bind(this));
 };
-
-
-
-
-
 

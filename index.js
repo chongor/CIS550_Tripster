@@ -106,6 +106,7 @@ app.get('/api/trip/:id/members', routes_trips.members);
 app.get('/api/trip/:id/requests', routes_trips.members);
 app.get('/api/trip/:id/schedule', routes_trips.schedules);
 app.get('/api/trip/:id/rating', routes_trips.rating);
+app.get('/api/trip/:id/albums', routes_trips.albums);
 
 app.post('/api/trip/request', routes_trips.requestJoin);
 app.post('/api/trip/approve', routes_trips.approveJoin);

@@ -12,3 +12,9 @@ exports.redis = {
 	"port":6379,
 	"db":2,
 };
+
+exports.s3 = {
+	"key":"",
+	"secret":"",
+	"bucket":""
+};

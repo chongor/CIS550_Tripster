@@ -163,15 +163,23 @@ exports.createAlbumPost = function(req, res){
 		}
 		shareInst.getAlbum(id, function(result){
 				console.log(result);
+				if(!result){
+					req.db.end();
+					res.redirect(302, '/album/' + id);
+					return;
+				}
+				result.type = 'album';
 				var newsInst = new newslib(req.db);
 				newsInst.post(req.user.user.uid, 0, JSON.stringify(result),function(result, err){
 					if(!result){
+						console.log('Error adding album to newsfeed!');
 						req.db.end();
-						res.redirect(302, '/album/create?error=5');
+						res.redirect(302,'/album/' + id);
 						return;
 					}
 					req.db.end();
 					res.redirect(302,'/album/' + id);
+					return;
 				});
 		});
 	});
