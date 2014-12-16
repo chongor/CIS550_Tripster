@@ -53,18 +53,20 @@ exports.createTrip = function(req, res){
 			res.redirect(302, '/trip/create?error=2');
 			return;
 		}
-		tripinst.getTrip(tid, function(result){
-			console.log(result);
-				var newsInst = new newslib(req.db);
-				newsInst.post(req.user.user.uid, 0, JSON.stringify(result),function(result, err){
-					if(!result){
-						req.db.end();
-						res.redirect(302, '/trip/create?error=3');
-						return;
-					}
-					req.db.end();
-					res.redirect(302,'/trip/' + tid);
-				});
+		// adding newsfeed when creating trip
+		newsinst = new newslib(req.db);
+		newsinst.post(req.user.user.uid, privacy, {
+			"type" : "createTrip",
+			"title" : title,
+			"description" : description
+		}, function(success) {
+			if (success) {
+				req.db.end();
+				res.redirect(302, '/trip/create?error=3');
+			} else {
+				req.db.end();
+				res.redirect(302,'/trip/' + tid);
+			}
 		});
 	}.bind(this));
 };
