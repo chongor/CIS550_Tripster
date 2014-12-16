@@ -134,15 +134,9 @@ exports.createAlbumPost = function(req, res){
 			return;
 		}
 		shareInst.getAlbum(id, function(result){
-			if(!result){
-				req.db.end();
-				res.redirect(302, '/album/create?error=4');
-				return;
-			}
-			else{
 				console.log(result);
 				var newsInst = new newslib(req.db);
-				newsInst.post(req.user.user.uid, 0, JSON.stringify(result),function(result, bool){
+				newsInst.post(req.user.user.uid, 0, JSON.stringify(result),function(result, err){
 					if(!result){
 						req.db.end();
 						res.redirect(302, '/album/create?error=5');
@@ -151,7 +145,6 @@ exports.createAlbumPost = function(req, res){
 					req.db.end();
 					res.redirect(302,'/album/' + id);
 				});
-			}
 		});
 	});
 };
