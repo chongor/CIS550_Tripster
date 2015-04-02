@@ -64,6 +64,24 @@ window.addEventListener('load', function(){
 	 		$("#albums").append(albumlist);
 	 	}
 	 });
+	 
+	 // Get friends
+	$.ajax({
+		type: "GET",
+		url: "/api/user/" + $("#uid").text() + "/friends",
+		dataType:"json",
+	 	success: function(data){
+	 		if(data.code !== 200){
+	 			return;
+	 		}
+	 		var pflist = $("<div class='list-group'></div>");
+	 		for(var i = 0; i < data.friends.length; i++){
+	 			pflist.append("<a href='/profile/" + $("<div></div>").text(data.friends[i].username).html() + "' class='list-group-item'>" + $("<div></div>").text(data.friends[i].fullname).html() + "</a>");
+	 		}
+	 		$("#friends").empty();
+	 		$("#friends").append(pflist);
+	 	}
+	});
 	// Upon page load, get invitables
 	$.ajax({
 		type: "GET",

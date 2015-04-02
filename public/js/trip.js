@@ -85,7 +85,7 @@ window.addEventListener('load', function(){
 			}
 			if(d.code === 200){
 				var memberDiv = null, j = 0, requestNum = 0;
-				if (d.isAdmin) {
+				if (d.role && d.role.isAdmin) {
 					$('#requests').append('<h3>Requests</h3>');
 				}
 				if (d.role && !d.role.isMember) {
@@ -96,7 +96,7 @@ window.addEventListener('load', function(){
 						$("#join-btn").text('Request Sent');
 						$('#join-btn').attr("disabled", "disabled");
 					} else {
-						$("#join-btn").click(requestJoin(e));
+						// Dont bind
 					}
 				}
 				for(var i = 0; i < d.members.length; i++){
@@ -276,9 +276,8 @@ window.addEventListener('load', function(){
 					col.append(panel);
 					curRow.append(col);
 				}
-				$("#checklist").append(list);
-				if(data.checklist.length === 0){
-					$("#checklist").append("<small>Nothing In Checklist</small>");
+				if(data.albums.length === 0){
+					$("#albums").append("<div class='well'>No albums</div>");
 				}
 			}else{
 				$("#albums").append("<div class='well'>Unable to get albums</div>");

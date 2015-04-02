@@ -1,6 +1,7 @@
 var userlib = require("../lib/users.js");
 var triplib = require("../lib/trips.js");
 var newslib = require("../lib/newsfeed.js");
+var notelib = require("../lib/notifications.js");
 var reclib = require("../lib/recommendations.js");
 
 exports.create = function(req, res){
@@ -225,8 +226,24 @@ exports.requestJoin = function(req, res){
 	var tripinst = new triplib(req.db);
 	tripinst.requestJoin(requester, tid, function(success) {
 		if (success) {
-			req.db.end();
-			res.json({code: 200});
+			tripinst.getTrip(tid, function(trip){
+				if(trip === null){
+					console.log('No tid');
+					req.db.end();
+					res.json({code: 200});
+					return;
+				}
+				var inst = new notelib(req.db);
+				inst.send(trip.owner, {
+					"text":(requester === req.user.user.uid ? req.user.user.fullname : "#" + requester) + " requested to join your " + trip.name + " trip",
+					"url":"/trip/" + trip.trip_id,
+					"meta":"tripRequest"
+				}, function(){
+					req.db.end();
+					res.json({code: 200});
+					return;
+				});
+			});
 		} else {
 			req.db.end();
 			res.json({code: 500});
@@ -322,7 +339,12 @@ exports.members = function(req, res){
 					req.db.end();
 					res.end(JSON.stringify({
 						code:200,
-						isAdmin:(trip.owner === req.user.user.uid),
+						role:{
+							isAdmin:(trip.owner === req.user.user.uid),
+							isMember:(trip.owner === req.user.user.uid),
+							isRequested:false,
+							isInvited:false,
+						},
 						members:[]
 					}));
 					return;
@@ -365,8 +387,12 @@ exports.members = function(req, res){
 					res.end(JSON.stringify({
 						code:200,
 						members:list,
-						isAdmin:isAdmin,
-						isMember: isMember
+						role:{
+							isAdmin:isAdmin,
+							isMember:usermap[req.user.user.uid] ? usermap[req.user.user.uid].isMember : false,
+							isRequested:usermap[req.user.user.uid] ? usermap[req.user.user.uid].isRequested : false,
+							isInvited:usermap[req.user.user.uid] ? usermap[req.user.user.uid].isInvited : false,
+						}
 					}));
 					return;
 				}.bind(this));
