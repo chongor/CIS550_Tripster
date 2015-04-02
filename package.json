@@ -1,24 +1,23 @@
 {
-  "name": "Tripstery",
+  "name": "Metcha",
   "version": "0.1.0",
-  "description": "CIS 550",
-  "main": "index.js",
+  "description": "Make a friend from across the world",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/chongor/CIS550_Tripster.git"
+    "url": "git://github.com/leonardloo/metcha_API.git"
   },
   "keywords": [
-    "CIS550"
+    "Metcha"
   ],
-  "author": "Jim Chen <knh.jabbany@gmail.com> (http://kanoha.org/)",
+  "author": "Leonard Loo <leonard@metcha.net>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chongor/CIS550_Tripster/issues"
+    "url": "https://github.com/leonardloo/metcha_API/issues"
   },
-  "homepage": "https://github.com/chongor/CIS550_Tripster",
   "dependencies": {
     "xml-writer": "*",
     "node-xml": "*",
@@ -28,7 +27,6 @@
     "serve-static":"*",
     "morgan":"*",
     "body-parser":"*",
-    "jade": "*",
     "mysql":"*",
     "node-redis":"*",
     "connect-redis":"*",
