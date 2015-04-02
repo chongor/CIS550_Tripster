@@ -1,43 +1,142 @@
+var sharelib = require('../lib/shares.js');
 
-var userlib = require("../lib/users.js");
-// Update SQL user db with new info
-// TODO: Creates unique session id from user info and stores in Redis
-// TODO: Eventually host on images on S3
-// Have to send Content-Type: application/json
-exports.login = function(req, res) {
-	var fbid = req.body.uid;
-	var name = req.body.name;
-	var gender = req.body.gender;
-	// TODO: User needs a country
-	var country = req.body.country;
-	var profile_pic = req.body.profile_pic;
-	var age = req.body.age;
-	if (fbid == null || name == null) {
-		res.json({"sc": 400, "error": "No fbid and name"});
-		return;
-	}
-	var userinst = new userlib(req.db);
-	userinst.getUser(fbid, function(data) {
-		if (data == null) {
-			// Create new user
-			var userdata = {uid: fbid, name: name, gender: gender, country: country,
-				profile_pic: profile_pic, age: age};
-			userinst.insertUser(userdata, function(success) {
-				if (success) {
-					res.json({"sc": 200});
-				} else {
-					res.json({"sc": 500, "error": "Server error inserting user"});
-				}
+exports.main = function(req, res){
+	if(req.user.login){
+		var shareinst = new sharelib(req.db);
+		shareinst.getAlbumsByOwner(req.user.user.uid, function(albums){
+			req.db.end();
+			res.render('index', {
+				login:req.user.login,
+				user:req.user.user,
+				albums:albums,
+				success:req.query.success,
+				error:req.query.error
 			});
-		}
-		else {
-			res.json({"sc": 200, "data": data});
-		}
-	});
-
-
+		});
+	} else {
+		req.db.end();
+		res.redirect(302, '/login');
+	}
 };
 
-exports.fourohfour = function(req, res) {
-	res.json({"sc": 404, "error": "Page does not exist"});
-}
+exports.login = function(req, res){
+	if(req.user.login){
+		// Already logged in 
+		req.db.end();
+		res.redirect(302, '/');
+	} else {
+		req.db.end();
+		res.render('login', {
+			'referer':req.query.referer,
+			'error':req.query.error,
+			nonce: req.nonce.get('login')
+		});
+	}
+};
+
+exports.register = function(req, res){
+	if(req.user.login){
+		// Already logged in. Cannot register
+		req.db.end();
+		res.redirect(302, '/');
+	} else {
+		req.db.end();
+		res.render('register', {
+			error: req.query.error,
+			nonce: req.nonce.get('register')
+		});
+	}
+};
+
+exports.loginPost = function(req, res){
+	if(req.user.login){
+		req.db.end();
+		res.redirect(302, '/');
+	} else {
+		if(!req.body.username || !req.body.password || req.body.username === "" ||
+			req.body.password === ""){
+			req.db.end();
+			res.redirect(302, '/login?error=1');
+			return;	
+		}
+		req.user.authenticate(req.body.username, req.body.password, function(result, data){
+			if(result){
+				req.db.end();
+				res.redirect(302, '/');
+			}else{
+				req.db.end();
+				res.redirect(302, '/login?error=2');
+			}
+			console.log("LOGIN " + req.body.username + " " + (result ? "OK" : "FAIL") + " " + JSON.stringify(data));
+		});
+	}
+};
+
+exports.registerPost = function(req, res){
+	if(req.user.login){
+		req.db.end();
+		res.redirect(302, '/');
+	} else {
+		if(!req.body.fullname || !req.body.username || !req.body.password || 
+			req.body.fullname === "" || req.body.username === "" || req.body.password === ""){
+			req.db.end();
+			res.redirect(302, '/register?error=3');
+			return;	
+		}
+		if(req.body.password !== req.body.passwordrpt){
+			req.db.end();
+			res.redirect(302, '/register?error=1');
+			return;	
+		}
+		var userObj = {
+			fullname: req.body.fullname,
+			privacy: 0,
+			phone: req.body.phone,
+			affiliation: req.body.aff,
+			interests: req.body.interests ? req.body.interests.split(',') : [],
+			address: req.body.address,
+			email: req.body.email
+		};
+		var userlib = require('../lib/users.js');
+		userinst = new userlib(req.db);
+		userinst.createUser(req.body.username, req.body.password, userObj, function(result, data){
+			if(result){
+				if(req.session && req.session.user){
+					req.session.user.uid = data.uid;
+				}else{
+					req.session.user = {uid:data.uid};
+				}
+				req.db.end();
+				res.redirect(302, '/');
+			}else{
+				if(data !== null){
+					req.db.end();
+					res.redirect(302, '/register?error=2');
+				} else {
+					req.db.end();
+					res.redirect(302, '/register?error=4');
+				}
+			}
+			console.log("REGISTER " + req.body.username + " " + (result ? "OK" : "FAIL") + " " + JSON.stringify(data));
+		});
+	}
+};
+
+exports.logout = function(req, res){
+	req.user.logout();
+	req.db.end();
+	res.redirect(302,'/login?referer=logout');
+};
+
+exports.fourohfour = function(req, res){
+	if(!req.user.login){
+		req.db.end();
+		res.redirect(302, '/login');
+		return;
+	}
+	req.db.end();
+	res.render('404', {
+		login:req.user.login,
+		user:req.user.user
+	});
+};
